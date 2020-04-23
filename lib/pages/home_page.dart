@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text('Flutter login demo'),
+        title: new Text('EVER'),
         actions: <Widget>[
           new FlatButton(
               child: new Text('Logout',
