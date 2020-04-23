@@ -63,6 +63,7 @@ class _homeState extends State<home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.blue[900],
       body: Text('Hello World <<< CODE HERE'),
     );
   }
