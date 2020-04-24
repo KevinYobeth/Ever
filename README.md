@@ -19,10 +19,6 @@ Latest Version of *Android Studio*: https://developer.android.com/studio
 
 * [Flutter](https://flutter.dev/) - Flutter framework
 
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
 ## Authors
 
 * **Kevin Yobeth** - *Initial work* - [KevinYobeth](https://github.com/Kevinyobeth)
