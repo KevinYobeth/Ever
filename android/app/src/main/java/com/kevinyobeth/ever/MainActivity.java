@@ -1,4 +1,4 @@
-package com.example.flutterlogindemo;
+package com.kevinyobeth.ever;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;
