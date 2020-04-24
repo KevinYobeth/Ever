@@ -259,7 +259,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
           shape: new RoundedRectangleBorder(
               borderRadius: new BorderRadius.circular(20.0)),
           color: orange,
-          child: new Text(_isLoginForm ? 'Login' : 'Sign Up',
+          child: new Text(_isLoginForm ? 'Sign In' : 'Sign Up',
               style: new TextStyle(fontSize: 14.0, color: Colors.white)),
           onPressed: validateAndSubmit,
         ),
