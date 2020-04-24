@@ -270,13 +270,24 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
   Widget showSecondaryButton() {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10.0),
-      child: FlatButton(
-          child: Text(
-              _isLoginForm
-                  ? 'Don\'t have an account? Sign Up'
-                  : 'Already have an account? Sign In',
-              style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.w300)),
-          onPressed: toggleFormMode),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            _isLoginForm
+                ? 'Don\'t have an account? '
+                : 'Already have an account? ',
+            style: bottomText,
+          ),
+          InkWell(
+            child: Text(
+              _isLoginForm ? 'Sign Up' : 'Sign In',
+              style: bottomSign,
+            ),
+            onTap: toggleFormMode,
+          ),
+        ],
+      ),
     );
   }
 }

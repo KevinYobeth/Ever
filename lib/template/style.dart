@@ -18,3 +18,14 @@ TextStyle forgotPassword = TextStyle(
   fontSize: 16.0,
   fontFamily: 'Montserrat',
 );
+
+TextStyle bottomText = TextStyle(
+  fontSize: 12.0,
+  fontWeight: FontWeight.w300,
+);
+
+TextStyle bottomSign = TextStyle(
+  fontSize: 12.0,
+  fontWeight: FontWeight.bold,
+  color: orange,
+);
