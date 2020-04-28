@@ -41,21 +41,77 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(70),
-        child: AppBar(
-          backgroundColor: darkBackgroundColor,
-          title: new Text('EVER', style: TextStyle(fontFamily: 'Montserrat', color: white, fontSize: 40, fontWeight: FontWeight.bold),),
-          actions: <Widget>[
-            new FlatButton(
-              child: new Text('Logout',
-              style: new TextStyle(fontSize: 17.0, color: Colors.white)),
-              onPressed: signOut),
+    return Scaffold(
+      // appBar: PreferredSize(
+      //   preferredSize: Size.fromHeight(70),
+      //   child: AppBar(
+      //     backgroundColor: darkBackgroundColor,
+      //     title: new Text(
+      //       'EVER',
+      //       style: TextStyle(
+      //           fontFamily: 'Montserrat',
+      //           color: white,
+      //           fontSize: 40,
+      //           fontWeight: FontWeight.bold),
+      //     ),
+      //     actions: <Widget>[
+      //       new FlatButton(
+      //           child: new Text('Logout',
+      //               style: new TextStyle(fontSize: 17.0, color: Colors.white)),
+      //           onPressed: signOut),
+      //     ],
+      //   ),
+      // ),
+      body: Column(
+        children: <Widget>[
+          Stack(
+            children: <Widget>[
+              Container(
+                height: 100.0,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(20.0),
+                      bottomRight: Radius.circular(20.0)),
+                  color: darkBackgroundColor,
+                ),
+              ),
+              SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 30.0, vertical: 10.0),
+                  child: Text(
+                    'EVER',
+                    style: TextStyle(
+                        fontFamily: 'Montserrat',
+                        color: white,
+                        fontSize: 40,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+              Positioned(
+                right: 30.0,
+                bottom: 28.0,
+                child: InkWell(
+                  child: Text(
+                    'Log Out',
+                    style: TextStyle(
+                        fontFamily: 'Montserrat',
+                        fontSize: 18.0,
+                        color: Colors.white),
+                  ),
+                  onTap: () {
+                    signOut();
+                  },
+                ),
+              ),
+            ],
+          ),
+          Expanded(
+            child: home(),
+          ),
         ],
       ),
-      ),
-      body: home(),
     );
   }
 }
@@ -71,22 +127,30 @@ class _homeState extends State<home> {
     return Scaffold(
       backgroundColor: white,
       body: Container(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(0,20,0,0),
-          child: Center(
-            child: Column(
-              children: <Widget>[
-                FlatButton(child: eventCard(eventName: 'Event Name', category: 'non-profit')),
-                FlatButton(child: eventCard(eventName: 'Event Name', category: 'non-profit')),
-                FlatButton(child: eventCard(eventName: 'Event Name', category: 'non-profit')),
-                FlatButton(child: eventCard(eventName: 'Event Name', category: 'non-profit')),
-              ],
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              child: ListView(
+                physics: BouncingScrollPhysics(),
+                children: <Widget>[
+                  FlatButton(
+                      child: eventCard(
+                          eventName: 'Event Name', category: 'Non-profit')),
+                  FlatButton(
+                      child: eventCard(
+                          eventName: 'Event Name', category: 'Non-profit')),
+                  FlatButton(
+                      child: eventCard(
+                          eventName: 'Event Name', category: 'Non-profit')),
+                  FlatButton(
+                      child: eventCard(
+                          eventName: 'Event Name', category: 'Non-profit')),
+                ],
+              ),
             ),
-          ),
+          ],
         ),
-
-      )
-
+      ),
     );
   }
 }
