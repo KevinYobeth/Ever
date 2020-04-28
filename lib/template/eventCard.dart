@@ -14,11 +14,10 @@ class eventCard extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 10.0),
           child: Container(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: Stack(
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 125, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(10, 130, 0, 0),
                   child: Text(
                     "$eventName",
                     style: TextStyle(
@@ -29,7 +28,7 @@ class eventCard extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(60, 137, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(270, 145, 0, 0),
                   child: Container(
                     child: Center(
                         child: Text(
