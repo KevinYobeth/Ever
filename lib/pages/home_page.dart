@@ -67,7 +67,7 @@ class _HomePageState extends State<HomePage> {
           Stack(
             children: <Widget>[
               Container(
-                height: 100.0,
+                height: 120.0,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(20.0),
