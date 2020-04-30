@@ -1,17 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:Ever/template/colors.dart';
 
+Widget eventType(category){
+  if (category == 1){
+    return  Container(
+          child: Center(
+              child: Text( 'Non-profit',
+                style: TextStyle(
+                    fontSize: 10,
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.bold),
+              )
+          ),
+          width: 70,
+          height: 20,
+          decoration: BoxDecoration(
+            color: Colors.redAccent[100],
+            borderRadius: BorderRadius.circular(5),
+          ),
+      );
+  }
+}
+
 class eventCard extends StatelessWidget {
   final String eventName;
-  final String category;
+  final int category;
   eventCard({this.eventName, this.category});
 
   @override
   Widget build(BuildContext context) {
     //TODO Switch Column to stack
-    return Column(
-      children: <Widget>[
-        Padding(
+    return Padding(
           padding: const EdgeInsets.symmetric(vertical: 10.0),
           child: Container(
             child: Stack(
@@ -28,23 +47,8 @@ class eventCard extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(270, 145, 0, 0),
-                  child: Container(
-                    child: Center(
-                        child: Text(
-                      "$category",
-                      style: TextStyle(
-                          fontSize: 10,
-                          fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.bold),
-                    )),
-                    width: 70,
-                    height: 20,
-                    decoration: BoxDecoration(
-                      color: gray,
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                  ),
+                  padding: const EdgeInsets.fromLTRB(265,145,0,0),
+                  child: eventType(category),
                 )
               ],
             ),
@@ -55,8 +59,6 @@ class eventCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
             ),
           ),
-        ),
-      ],
-    );
+        );
   }
 }
