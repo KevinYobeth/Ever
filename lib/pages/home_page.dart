@@ -135,16 +135,16 @@ class _homeState extends State<home> {
                 children: <Widget>[
                   FlatButton(
                       child: eventCard(
-                          eventName: 'Event Name', category: 'Non-profit')),
+                          eventName: 'Event Name', category: 1)),
                   FlatButton(
                       child: eventCard(
-                          eventName: 'Event Name', category: 'Non-profit')),
+                          eventName: 'Event Name', category: 0)),
                   FlatButton(
                       child: eventCard(
-                          eventName: 'Event Name', category: 'Non-profit')),
+                          eventName: 'Event Name', category: 1)),
                   FlatButton(
                       child: eventCard(
-                          eventName: 'Event Name', category: 'Non-profit')),
+                          eventName: 'Event Name', category: 0)),
                 ],
               ),
             ),
