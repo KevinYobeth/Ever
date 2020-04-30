@@ -68,41 +68,46 @@ class _HomePageState extends State<HomePage> {
             children: <Widget>[
               Container(
                 height: 120.0,
+                child: SafeArea(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text(
+                              'EVER',
+                              style: TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  color: white,
+                                  fontSize: 40,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            InkWell(
+                              child: Text(
+                                'Log Out',
+                                style: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    fontSize: 18.0,
+                                    color: Colors.white),
+                              ),
+                              onTap: () {
+                                signOut();
+                              },
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(20.0),
                       bottomRight: Radius.circular(20.0)),
                   color: darkBackgroundColor,
-                ),
-              ),
-              SafeArea(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 30.0, vertical: 10.0),
-                  child: Text(
-                    'EVER',
-                    style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        color: white,
-                        fontSize: 40,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
-              Positioned(
-                right: 30.0,
-                bottom: 28.0,
-                child: InkWell(
-                  child: Text(
-                    'Log Out',
-                    style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        fontSize: 18.0,
-                        color: Colors.white),
-                  ),
-                  onTap: () {
-                    signOut();
-                  },
                 ),
               ),
             ],
@@ -134,17 +139,46 @@ class _homeState extends State<home> {
                 physics: BouncingScrollPhysics(),
                 children: <Widget>[
                   FlatButton(
-                      child: eventCard(
-                          eventName: 'Event Name', category: 1)),
+                    child: eventCard(
+                        eventName: 'Synchronity',
+                        isNonProfit: true,
+                        eventThumb:
+                            'https://raw.githubusercontent.com/KevinYobeth/kevinyobeth.github.io/master/Ever/Banner/Banner_Synchronity.jpg'),
+                    onPressed: () {
+                      print('Synchronity');
+                    },
+                  ),
                   FlatButton(
-                      child: eventCard(
-                          eventName: 'Event Name', category: 0)),
+                    child: eventCard(
+                        eventName: 'Rearthlity',
+                        isNonProfit: false,
+                        eventThumb:
+                            'https://raw.githubusercontent.com/KevinYobeth/kevinyobeth.github.io/master/Ever/Banner/Banner_Rearthlity.jpg'),
+                    onPressed: () {
+                      print('Rearthlity');
+                    },
+                  ),
                   FlatButton(
-                      child: eventCard(
-                          eventName: 'Event Name', category: 1)),
+                    child: eventCard(
+                        eventName: 'Computer Run',
+                        isNonProfit: false,
+                        eventThumb:
+                            'https://raw.githubusercontent.com/KevinYobeth/kevinyobeth.github.io/master/Ever/Banner/Banner_ComputerRun.jpg'),
+                    onPressed: () {
+                      print('Computer Run');
+                    },
+                  ),
                   FlatButton(
-                      child: eventCard(
-                          eventName: 'Event Name', category: 0)),
+                    child: eventCard(
+                      eventName: 'HISHOT',
+                      isNonProfit: false,
+                      eventThumb:
+                          'https://raw.githubusercontent.com/KevinYobeth/kevinyobeth.github.io/master/Ever/Banner/Banner_Hishot.jpg',
+                    ),
+                    onPressed: () {
+                      print('HISHOT');
+                    },
+                  )
                 ],
               ),
             ),
