@@ -4,7 +4,6 @@ import 'package:Ever/models/Events.dart';
 import 'package:flutter/material.dart';
 import 'package:Ever/services/authentication.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:Ever/models/todo.dart';
 import 'package:Ever/template/colors.dart';
 import 'package:Ever/template/eventCard.dart';
 import 'package:Ever/template/eventModalBottomSheet.dart';
@@ -26,14 +25,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<Todo> _todoList;
-
-  final FirebaseDatabase _database = FirebaseDatabase.instance;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   final _textEditingController = TextEditingController();
-  StreamSubscription<Event> _onTodoAddedSubscription;
-  StreamSubscription<Event> _onTodoChangedSubscription;
 
   Query _todoQuery;
 
@@ -120,6 +114,8 @@ class home extends StatefulWidget {
 }
 
 class _homeState extends State<home> {
+  final _eventDatabase = FirebaseDatabase.instance.reference().child("event");
+
   List<Events> _events = List<Events>();
 
   Future<List<Events>> fetchEvents() async {
@@ -179,6 +175,9 @@ class _homeState extends State<home> {
                         isNonProfit: _events[0].isNonProfit,
                         eventThumb: _events[0].eventThumb),
                     onPressed: () {
+                      _eventDatabase.once().then((DataSnapshot snapshot) {
+                        print('Data : ${snapshot.value}');
+                      });
                       eventModalBottomSheet(context,
                           eventName: _events[0].eventName,
                           isNonProfit: _events[0].isNonProfit,
