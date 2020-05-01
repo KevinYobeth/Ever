@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:Ever/template/colors.dart';
+import 'package:Ever/template/eventCard.dart';
 
 Widget eventButton(isNonProfit) {
   if (isNonProfit == true) {
@@ -47,9 +48,8 @@ void eventModalBottomSheet(context,
     String criteria,
     String division,
     String benefits}) {
-  showModalBottomSheet(
+  showBottomSheet(
     context: context,
-    isScrollControlled: true,
     elevation: 0,
     backgroundColor: Colors.transparent,
     builder: (BuildContext bc) {
@@ -86,15 +86,30 @@ void eventModalBottomSheet(context,
                           child: Container(
                             child: Padding(
                                 padding:
-                                    const EdgeInsets.fromLTRB(20,0,20,20),
+                                    const EdgeInsets.fromLTRB(30,0,30,20),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
-                                    Image(
-                                      image: NetworkImage(eventThumb),
-                                      height: 200,
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                        image: NetworkImage(eventThumb)
+                                        ),
+                                        borderRadius: BorderRadius.circular(10)
+                                      ),
                                       width: 350,
+                                      height: 180,
+                                      child: Stack(
+                                        children: <Widget>[
+                                          Positioned(
+                                              right: 10.0,
+                                              bottom: 10.0,
+                                              child: isNonProfit ? eventType(isNonProfit) : Text('')
+                                          ),
+                                        ],
+                                      ),
                                     ),
+                                    SizedBox(height: 5,),
                                     Text("$eventName",
                                         style: TextStyle(
                                           fontFamily: 'Montserrat',
@@ -173,45 +188,48 @@ void eventModalBottomSheet(context,
                                     SizedBox(
                                       height: 20,
                                     ),
-                                    Container(
-                                      height: 70,
-                                      child: Stack(
-                                        children: <Widget>[
-                                          Positioned(
-                                              left: 10,
+                                    Padding(
+                                      padding: const EdgeInsets.fromLTRB(0,0,0,0),
+                                      child: Container(
+                                        height: 70,
+                                        child: Stack(
+                                          children: <Widget>[
+                                            Positioned(
+                                                left: 10,
+                                                top: 10,
+                                                bottom: 10,
+                                                right: 180,
+                                                child: eventButton(isNonProfit)),
+                                            Positioned(
+                                              right: 10,
                                               top: 10,
                                               bottom: 10,
-                                              right: 180,
-                                              child: eventButton(isNonProfit)),
-                                          Positioned(
-                                            right: 10,
-                                            top: 10,
-                                            bottom: 10,
-                                            left: 180,
-                                            child: FlatButton(
-                                              color: orange,
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(10),
-                                                child: Text(
-                                                  'Volunteer',
-                                                  style: TextStyle(
-                                                      fontFamily: 'Montserrat',
-                                                      fontSize: 15,
-                                                      color: white,
-                                                      fontWeight:
-                                                          FontWeight.bold),
+                                              left: 180,
+                                              child: FlatButton(
+                                                color: orange,
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(10),
+                                                  child: Text(
+                                                    'Volunteer',
+                                                    style: TextStyle(
+                                                        fontFamily: 'Montserrat',
+                                                        fontSize: 15,
+                                                        color: white,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
                                                 ),
+                                                onPressed: () {},
                                               ),
-                                              onPressed: () {},
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
+                                        decoration: BoxDecoration(
+                                            color: Colors.blueGrey[800],
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
                                       ),
-                                      decoration: BoxDecoration(
-                                          color: Colors.blueGrey[800],
-                                          borderRadius:
-                                              BorderRadius.circular(10)),
                                     ),
                                   ],
                                 )),

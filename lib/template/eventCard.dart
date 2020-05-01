@@ -57,8 +57,8 @@ class eventCard extends StatelessWidget {
               ),
             ),
             Positioned(
-              right: 18.0,
-              bottom: 13.0,
+              right: 10.0,
+              bottom: 10.0,
               child: isNonProfit ? eventType(isNonProfit) : Text(''),
             ),
           ],
