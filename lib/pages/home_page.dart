@@ -7,6 +7,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:Ever/models/todo.dart';
 import 'package:Ever/template/colors.dart';
 import 'package:Ever/template/eventCard.dart';
+import 'package:Ever/template/eventModalBottomSheet.dart';
 import 'dart:async';
 import 'package:http/http.dart' as http;
 
@@ -171,37 +172,77 @@ class _homeState extends State<home> {
                         eventName: _events[0].eventName,
                         isNonProfit: _events[0].isNonProfit,
                         eventThumb: _events[0].eventThumb),
-                    onPressed: () {},
+                    onPressed: () {
+                      eventModalBottomSheet(context,
+                          eventName: 'Synchronity',
+                          isNonProfit: true,
+                          eventThumb: 'https://raw.githubusercontent.com/KevinYobeth/kevinyobeth.github.io/master/Ever/Banner/Banner_Synchronity.jpg',
+                          eventDate: 'Rabu, 18 Maret 2020',
+                          eventPlace: 'Indonesia Convention Exhibition Center BSD',
+                          eventDesc: 'This is the event description',
+                          criteria: 'This is our volunteer criteria',
+                          division: 'We need some division',
+                          benefits: 'If you join us, you will get this'
+                      );
+                    },
                   ),
                   FlatButton(
                     child: eventCard(
                         eventName: _events[1].eventName,
                         isNonProfit: _events[1].isNonProfit,
                         eventThumb: _events[1].eventThumb),
-                    onPressed: () {},
+                    onPressed: () {
+                      eventModalBottomSheet(context,
+                          eventName: 'Rearthlity',
+                          isNonProfit: false,
+                          eventThumb: 'https://raw.githubusercontent.com/KevinYobeth/kevinyobeth.github.io/master/Ever/Banner/Banner_Rearthlity.jpg',
+                          eventDate: 'Rabu, 18 Maret 2020',
+                          eventPlace: 'Indonesia Convention Exhibition Center BSD',
+                          eventDesc: 'This is the event description',
+                          criteria: 'This is our volunteer criteria',
+                          division: 'We need some division',
+                          benefits: 'If you join us, you will get this'
+                      );
+                    },
                   ),
                   FlatButton(
                     child: eventCard(
                         eventName: _events[2].eventName,
                         isNonProfit: _events[2].isNonProfit,
                         eventThumb: _events[2].eventThumb),
-                    onPressed: () {},
+                    onPressed: () {
+                      eventModalBottomSheet(context,
+                          eventName: 'Computer Run',
+                          isNonProfit: false,
+                          eventThumb: 'https://raw.githubusercontent.com/KevinYobeth/kevinyobeth.github.io/master/Ever/Banner/Banner_ComputerRun.jpg',
+                          eventDate: 'Rabu, 18 Maret 2020',
+                          eventPlace: 'Indonesia Convention Exhibition Center BSD',
+                          eventDesc: 'This is the event description',
+                          criteria: 'This is our volunteer criteria',
+                          division: 'We need some division',
+                          benefits: 'If you join us, you will get this'
+                      );
+                    },
                   ),
                   FlatButton(
                     child: eventCard(
                       eventName: _events[3].eventName,
                       isNonProfit: _events[3].isNonProfit,
-                      eventThumb: _events[3].eventThumb,
-                    ),
-                    onPressed: () {},
-                  ),
-                  FlatButton(
-                    child: eventCard(
-                      eventName: 'KevinYobeth',
-                      isNonProfit: true,
-                      eventThumb: '/',
-                    ),
-                  ),
+                      eventThumb: _events[3].eventThumb),
+                    onPressed: () {
+                      eventModalBottomSheet(context,
+                          eventName: 'HISHOT',
+                          isNonProfit: false,
+                          eventThumb: 'https://raw.githubusercontent.com/KevinYobeth/kevinyobeth.github.io/master/Ever/Banner/Banner_Hishot.jpg',
+                          eventDate: 'Rabu, 18 Maret 2020',
+                          eventPlace: 'Indonesia Convention Exhibition Center BSD',
+                          eventDesc: 'This is the event description',
+                          criteria: 'This is our volunteer criteria',
+                          division: 'We need some division',
+                          benefits: 'If you join us, you will get this'
+                      );
+                    },
+                  )
                 ],
               ),
             ),
