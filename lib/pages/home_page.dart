@@ -11,6 +11,8 @@ import 'package:Ever/template/eventModalBottomSheet.dart';
 import 'dart:async';
 import 'package:http/http.dart' as http;
 
+bool _eventCardIsUp = false;
+
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.auth, this.userId, this.logoutCallback})
       : super(key: key);
@@ -67,7 +69,9 @@ class _HomePageState extends State<HomePage> {
                                 'EVER',
                                 style: TextStyle(
                                     fontFamily: 'Montserrat',
-                                    color: white,
+                                    color: _eventCardIsUp
+                                        ? darkBackgroundColor
+                                        : Colors.white,
                                     fontSize: 40,
                                     fontWeight: FontWeight.bold),
                               ),
@@ -78,7 +82,9 @@ class _HomePageState extends State<HomePage> {
                                 style: TextStyle(
                                     fontFamily: 'Montserrat',
                                     fontSize: 18.0,
-                                    color: Colors.white),
+                                    color: _eventCardIsUp
+                                        ? darkBackgroundColor
+                                        : Colors.white),
                               ),
                               onTap: () {
                                 signOut();
@@ -94,7 +100,7 @@ class _HomePageState extends State<HomePage> {
                   borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(20.0),
                       bottomRight: Radius.circular(20.0)),
-                  color: darkBackgroundColor,
+                  color: _eventCardIsUp ? Colors.white : darkBackgroundColor,
                 ),
               ),
             ],
@@ -174,16 +180,16 @@ class _homeState extends State<home> {
                         eventThumb: _events[0].eventThumb),
                     onPressed: () {
                       eventModalBottomSheet(context,
-                          eventName: 'Synchronity',
-                          isNonProfit: true,
-                          eventThumb: 'https://raw.githubusercontent.com/KevinYobeth/kevinyobeth.github.io/master/Ever/Banner/Banner_Synchronity.jpg',
+                          eventName: _events[0].eventName,
+                          isNonProfit: _events[0].isNonProfit,
+                          eventThumb: _events[0].eventThumb,
                           eventDate: 'Rabu, 18 Maret 2020',
-                          eventPlace: 'Indonesia Convention Exhibition Center BSD',
+                          eventPlace:
+                              'Indonesia Convention Exhibition Center BSD',
                           eventDesc: 'This is the event description',
                           criteria: 'This is our volunteer criteria',
                           division: 'We need some division',
-                          benefits: 'If you join us, you will get this'
-                      );
+                          benefits: 'If you join us, you will get this');
                     },
                   ),
                   FlatButton(
@@ -193,16 +199,16 @@ class _homeState extends State<home> {
                         eventThumb: _events[1].eventThumb),
                     onPressed: () {
                       eventModalBottomSheet(context,
-                          eventName: 'Rearthlity',
-                          isNonProfit: false,
-                          eventThumb: 'https://raw.githubusercontent.com/KevinYobeth/kevinyobeth.github.io/master/Ever/Banner/Banner_Rearthlity.jpg',
+                          eventName: _events[1].eventName,
+                          isNonProfit: _events[1].isNonProfit,
+                          eventThumb: _events[1].eventThumb,
                           eventDate: 'Rabu, 18 Maret 2020',
-                          eventPlace: 'Indonesia Convention Exhibition Center BSD',
+                          eventPlace:
+                              'Indonesia Convention Exhibition Center BSD',
                           eventDesc: 'This is the event description',
                           criteria: 'This is our volunteer criteria',
                           division: 'We need some division',
-                          benefits: 'If you join us, you will get this'
-                      );
+                          benefits: 'If you join us, you will get this');
                     },
                   ),
                   FlatButton(
@@ -212,35 +218,35 @@ class _homeState extends State<home> {
                         eventThumb: _events[2].eventThumb),
                     onPressed: () {
                       eventModalBottomSheet(context,
-                          eventName: 'Computer Run',
-                          isNonProfit: false,
-                          eventThumb: 'https://raw.githubusercontent.com/KevinYobeth/kevinyobeth.github.io/master/Ever/Banner/Banner_ComputerRun.jpg',
+                          eventName: _events[2].eventName,
+                          isNonProfit: _events[2].isNonProfit,
+                          eventThumb: _events[2].eventThumb,
                           eventDate: 'Rabu, 18 Maret 2020',
-                          eventPlace: 'Indonesia Convention Exhibition Center BSD',
+                          eventPlace:
+                              'Indonesia Convention Exhibition Center BSD',
                           eventDesc: 'This is the event description',
                           criteria: 'This is our volunteer criteria',
                           division: 'We need some division',
-                          benefits: 'If you join us, you will get this'
-                      );
+                          benefits: 'If you join us, you will get this');
                     },
                   ),
                   FlatButton(
                     child: eventCard(
-                      eventName: _events[3].eventName,
-                      isNonProfit: _events[3].isNonProfit,
-                      eventThumb: _events[3].eventThumb),
+                        eventName: _events[3].eventName,
+                        isNonProfit: _events[3].isNonProfit,
+                        eventThumb: _events[3].eventThumb),
                     onPressed: () {
                       eventModalBottomSheet(context,
-                          eventName: 'HISHOT',
-                          isNonProfit: false,
-                          eventThumb: 'https://raw.githubusercontent.com/KevinYobeth/kevinyobeth.github.io/master/Ever/Banner/Banner_Hishot.jpg',
+                          eventName: _events[3].eventName,
+                          isNonProfit: _events[3].isNonProfit,
+                          eventThumb: _events[3].eventThumb,
                           eventDate: 'Rabu, 18 Maret 2020',
-                          eventPlace: 'Indonesia Convention Exhibition Center BSD',
+                          eventPlace:
+                              'Indonesia Convention Exhibition Center BSD',
                           eventDesc: 'This is the event description',
                           criteria: 'This is our volunteer criteria',
                           division: 'We need some division',
-                          benefits: 'If you join us, you will get this'
-                      );
+                          benefits: 'If you join us, you will get this');
                     },
                   )
                 ],
