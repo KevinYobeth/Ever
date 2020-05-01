@@ -7,7 +7,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:Ever/models/todo.dart';
 import 'package:Ever/template/colors.dart';
 import 'package:Ever/template/eventCard.dart';
-import 'package:Ever/template/eventModalBottomSheet.dart';
+import 'package:Ever/template/eventDetailBottomSheet.dart';
 import 'dart:async';
 import 'package:http/http.dart' as http;
 
@@ -186,10 +186,15 @@ class _homeState extends State<home> {
                           eventDate: 'Rabu, 18 Maret 2020',
                           eventPlace:
                               'Indonesia Convention Exhibition Center BSD',
-                          eventDesc: 'This is the event description lalalallalalallalaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-                          criteria: 'This is our volunteer criteriaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-                          division: 'We need some divisionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn',
-                          benefits: 'If you join us, you will get thisssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss');
+                          eventDesc:
+                              "Calling for volunteers! Let's become part of our team to support this charity concert. Your participation "
+                              "means a lot for those people in need. Don't miss the chance to have fun with us at #BiggestCharityVibes2020 ",
+                          criteria:
+                              'Gender: Male / Female \nAge: 18 - 35 years old',
+                          division:
+                              'Documentation \nLogistic \nLiaison Officer \nTicketing \nPublic Relation',
+                          benefits:
+                              'E-certificate \nT-shirt \nGoodie Bag \nFree Ticket');
                     },
                   ),
                   FlatButton(
@@ -204,11 +209,16 @@ class _homeState extends State<home> {
                           eventThumb: _events[1].eventThumb,
                           eventDate: 'Rabu, 18 Maret 2020',
                           eventPlace:
-                              'Indonesia Convention Exhibition Center BSD',
-                          eventDesc: 'This is the event description',
-                          criteria: 'This is our volunteer criteria',
-                          division: 'We need some division',
-                          benefits: 'If you join us, you will get this');
+                          'Indonesia Convention Exhibition Center BSD',
+                          eventDesc:
+                          "Calling for volunteers! Let's become part of our team to support this charity concert. Your participation "
+                              "means a lot for those people in need. Don't miss the chance to have fun with us at #BiggestCharityVibes2020 ",
+                          criteria:
+                          'Gender: Male / Female \nAge: 18 - 35 years old',
+                          division:
+                          'Documentation \nLogistic \nLiaison Officer \nTicketing \nPublic Relation',
+                          benefits:
+                          'E-certificate \nT-shirt \nGoodie Bag \nFree Ticket');
                     },
                   ),
                   FlatButton(
@@ -223,11 +233,16 @@ class _homeState extends State<home> {
                           eventThumb: _events[2].eventThumb,
                           eventDate: 'Rabu, 18 Maret 2020',
                           eventPlace:
-                              'Indonesia Convention Exhibition Center BSD',
-                          eventDesc: 'This is the event description',
-                          criteria: 'This is our volunteer criteria',
-                          division: 'We need some division',
-                          benefits: 'If you join us, you will get this');
+                          'Indonesia Convention Exhibition Center BSD',
+                          eventDesc:
+                          "Calling for volunteers! Let's become part of our team to support this charity concert. Your participation "
+                              "means a lot for those people in need. Don't miss the chance to have fun with us at #BiggestCharityVibes2020 ",
+                          criteria:
+                          'Gender: Male / Female \nAge: 18 - 35 years old',
+                          division:
+                          'Documentation \nLogistic \nLiaison Officer \nTicketing \nPublic Relation',
+                          benefits:
+                          'E-certificate \nT-shirt \nGoodie Bag \nFree Ticket');
                     },
                   ),
                   FlatButton(
@@ -242,11 +257,16 @@ class _homeState extends State<home> {
                           eventThumb: _events[3].eventThumb,
                           eventDate: 'Rabu, 18 Maret 2020',
                           eventPlace:
-                              'Indonesia Convention Exhibition Center BSD',
-                          eventDesc: 'This is the event description',
-                          criteria: 'This is our volunteer criteria',
-                          division: 'We need some division',
-                          benefits: 'If you join us, you will get this');
+                          'Indonesia Convention Exhibition Center BSD',
+                          eventDesc:
+                          "Calling for volunteers! Let's become part of our team to support this charity concert. Your participation "
+                              "means a lot for those people in need. Don't miss the chance to have fun with us at #BiggestCharityVibes2020 ",
+                          criteria:
+                          'Gender: Male / Female \nAge: 18 - 35 years old',
+                          division:
+                          'Documentation \nLogistic \nLiaison Officer \nTicketing \nPublic Relation',
+                          benefits:
+                          'E-certificate \nT-shirt \nGoodie Bag \nFree Ticket');
                     },
                   )
                 ],
