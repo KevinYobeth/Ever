@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:Ever/models/Events.dart';
 import 'package:flutter/material.dart';
 import 'package:Ever/services/authentication.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -6,6 +9,7 @@ import 'package:Ever/template/colors.dart';
 import 'package:Ever/template/eventCard.dart';
 import 'package:Ever/template/eventModalBottomSheet.dart';
 import 'dart:async';
+import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.auth, this.userId, this.logoutCallback})
@@ -43,26 +47,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: PreferredSize(
-      //   preferredSize: Size.fromHeight(70),
-      //   child: AppBar(
-      //     backgroundColor: darkBackgroundColor,
-      //     title: new Text(
-      //       'EVER',
-      //       style: TextStyle(
-      //           fontFamily: 'Montserrat',
-      //           color: white,
-      //           fontSize: 40,
-      //           fontWeight: FontWeight.bold),
-      //     ),
-      //     actions: <Widget>[
-      //       new FlatButton(
-      //           child: new Text('Logout',
-      //               style: new TextStyle(fontSize: 17.0, color: Colors.white)),
-      //           onPressed: signOut),
-      //     ],
-      //   ),
-      // ),
       body: Column(
         children: <Widget>[
           Stack(
@@ -78,13 +62,15 @@ class _HomePageState extends State<HomePage> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Text(
-                              'EVER',
-                              style: TextStyle(
-                                  fontFamily: 'Montserrat',
-                                  color: white,
-                                  fontSize: 40,
-                                  fontWeight: FontWeight.bold),
+                            InkWell(
+                              child: Text(
+                                'EVER',
+                                style: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    color: white,
+                                    fontSize: 40,
+                                    fontWeight: FontWeight.bold),
+                              ),
                             ),
                             InkWell(
                               child: Text(
@@ -128,8 +114,50 @@ class home extends StatefulWidget {
 }
 
 class _homeState extends State<home> {
+  List<Events> _events = List<Events>();
+
+  Future<List<Events>> fetchEvents() async {
+    var url =
+        'https://raw.githubusercontent.com/KevinYobeth/kevinyobeth.github.io/master/Ever/event.json';
+    var response = await http.get(url);
+
+    var events = List<Events>();
+
+    if (response.statusCode == 200) {
+      var eventsJson = json.decode(response.body);
+      for (var eventJson in eventsJson['event']) {
+        events.add(Events.fromJson(eventJson));
+      }
+    }
+    return events;
+  }
+
+  @override
+  void didUpdateWidget(home oldWidget) {
+    if (_events.isEmpty || _events.isNotEmpty) {
+      fetchEvents().then((value) {
+        print('Fetching Data');
+        setState(() {
+          _events.addAll(value);
+        });
+      });
+    }
+    super.didUpdateWidget(oldWidget);
+  }
+
   @override
   Widget build(BuildContext context) {
+    @override
+    void initState() {
+      fetchEvents().then((value) {
+        print('Fetching Data');
+        setState(() {
+          _events.addAll(value);
+        });
+      });
+      super.initState();
+    }
+
     return Scaffold(
       backgroundColor: white,
       body: Container(
@@ -141,10 +169,9 @@ class _homeState extends State<home> {
                 children: <Widget>[
                   FlatButton(
                     child: eventCard(
-                        eventName: 'Synchronity',
-                        isNonProfit: true,
-                        eventThumb:
-                            'https://raw.githubusercontent.com/KevinYobeth/kevinyobeth.github.io/master/Ever/Banner/Banner_Synchronity.jpg'),
+                        eventName: _events[0].eventName,
+                        isNonProfit: _events[0].isNonProfit,
+                        eventThumb: _events[0].eventThumb),
                     onPressed: () {
                       eventModalBottomSheet(context,
                           eventName: 'Synchronity',
@@ -161,10 +188,9 @@ class _homeState extends State<home> {
                   ),
                   FlatButton(
                     child: eventCard(
-                        eventName: 'Rearthlity',
-                        isNonProfit: false,
-                        eventThumb:
-                            'https://raw.githubusercontent.com/KevinYobeth/kevinyobeth.github.io/master/Ever/Banner/Banner_Rearthlity.jpg'),
+                        eventName: _events[1].eventName,
+                        isNonProfit: _events[1].isNonProfit,
+                        eventThumb: _events[1].eventThumb),
                     onPressed: () {
                       eventModalBottomSheet(context,
                           eventName: 'Rearthlity',
@@ -181,10 +207,9 @@ class _homeState extends State<home> {
                   ),
                   FlatButton(
                     child: eventCard(
-                        eventName: 'Computer Run',
-                        isNonProfit: false,
-                        eventThumb:
-                            'https://raw.githubusercontent.com/KevinYobeth/kevinyobeth.github.io/master/Ever/Banner/Banner_ComputerRun.jpg'),
+                        eventName: _events[2].eventName,
+                        isNonProfit: _events[2].isNonProfit,
+                        eventThumb: _events[2].eventThumb),
                     onPressed: () {
                       eventModalBottomSheet(context,
                           eventName: 'Computer Run',
@@ -201,11 +226,9 @@ class _homeState extends State<home> {
                   ),
                   FlatButton(
                     child: eventCard(
-                      eventName: 'HISHOT',
-                      isNonProfit: false,
-                      eventThumb:
-                          'https://raw.githubusercontent.com/KevinYobeth/kevinyobeth.github.io/master/Ever/Banner/Banner_Hishot.jpg',
-                    ),
+                      eventName: _events[3].eventName,
+                      isNonProfit: _events[3].isNonProfit,
+                      eventThumb: _events[3].eventThumb),
                     onPressed: () {
                       eventModalBottomSheet(context,
                           eventName: 'HISHOT',
