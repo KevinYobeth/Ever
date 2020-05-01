@@ -186,10 +186,10 @@ class _homeState extends State<home> {
                           eventDate: 'Rabu, 18 Maret 2020',
                           eventPlace:
                               'Indonesia Convention Exhibition Center BSD',
-                          eventDesc: 'This is the event description',
-                          criteria: 'This is our volunteer criteria',
-                          division: 'We need some division',
-                          benefits: 'If you join us, you will get this');
+                          eventDesc: 'This is the event description lalalallalalallalaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+                          criteria: 'This is our volunteer criteriaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+                          division: 'We need some divisionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn',
+                          benefits: 'If you join us, you will get thisssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss');
                     },
                   ),
                   FlatButton(
