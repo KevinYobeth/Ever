@@ -178,22 +178,26 @@ class _homeState extends State<home> {
                       _eventDatabase.once().then((DataSnapshot snapshot) {
                         print('Data : ${snapshot.value}');
                       });
-                      eventModalBottomSheet(context,
-                          eventName: _events[0].eventName,
-                          isNonProfit: _events[0].isNonProfit,
-                          eventThumb: _events[0].eventThumb,
-                          eventDate: 'Rabu, 18 Maret 2020',
-                          eventPlace:
-                              'Indonesia Convention Exhibition Center BSD',
-                          eventDesc:
-                              "Calling for volunteers! Let's become part of our team to support this charity concert. Your participation "
-                              "means a lot for those people in need. Don't miss the chance to have fun with us at #BiggestCharityVibes2020 ",
-                          criteria:
-                              'Gender: Male / Female \nAge: 18 - 35 years old',
-                          division:
-                              'Documentation \nLogistic \nLiaison Officer \nTicketing \nPublic Relation',
-                          benefits:
-                              'E-certificate \nT-shirt \nGoodie Bag \nFree Ticket');
+                      eventDetailBottomSheet(
+                        context,
+                        eventName: _events[0].eventName,
+                        isNonProfit: _events[0].isNonProfit,
+                        eventThumb: _events[0].eventThumb,
+                        eventDate: 'Rabu, 18 Maret 2020',
+                        eventPlace:
+                            'Indonesia Convention Exhibition Center BSD',
+                        eventDesc:
+                            "Calling for volunteers! Let's become part of our team to support this charity concert. Your participation "
+                            "means a lot for those people in need. Don't miss the chance to have fun with us at #BiggestCharityVibes2020 ",
+                        criteria:
+                            'Gender: Male / Female \nAge: 18 - 35 years old',
+                        division:
+                            'Documentation \nLogistic \nLiaison Officer \nTicketing \nPublic Relation',
+                        benefits:
+                            'E-certificate \nT-shirt \nGoodie Bag \nFree Ticket',
+                        bankAccount: '123456789',
+                        bankAccountName: 'Mesyella',
+                      );
                     },
                   ),
                   FlatButton(
@@ -202,22 +206,26 @@ class _homeState extends State<home> {
                         isNonProfit: _events[1].isNonProfit,
                         eventThumb: _events[1].eventThumb),
                     onPressed: () {
-                      eventModalBottomSheet(context,
-                          eventName: _events[1].eventName,
-                          isNonProfit: _events[1].isNonProfit,
-                          eventThumb: _events[1].eventThumb,
-                          eventDate: 'Rabu, 18 Maret 2020',
-                          eventPlace:
-                          'Indonesia Convention Exhibition Center BSD',
-                          eventDesc:
-                          "Calling for volunteers! Let's become part of our team to support this charity concert. Your participation "
-                              "means a lot for those people in need. Don't miss the chance to have fun with us at #BiggestCharityVibes2020 ",
-                          criteria:
-                          'Gender: Male / Female \nAge: 18 - 35 years old',
-                          division:
-                          'Documentation \nLogistic \nLiaison Officer \nTicketing \nPublic Relation',
-                          benefits:
-                          'E-certificate \nT-shirt \nGoodie Bag \nFree Ticket');
+                      eventDetailBottomSheet(
+                        context,
+                        eventName: _events[1].eventName,
+                        isNonProfit: _events[1].isNonProfit,
+                        eventThumb: _events[1].eventThumb,
+                        eventDate: 'Rabu, 18 Maret 2020',
+                        eventPlace:
+                            'Indonesia Convention Exhibition Center BSD',
+                        eventDesc:
+                            "Calling for volunteers! Let's become part of our team to support this charity concert. Your participation "
+                            "means a lot for those people in need. Don't miss the chance to have fun with us at #BiggestCharityVibes2020 ",
+                        criteria:
+                            'Gender: Male / Female \nAge: 18 - 35 years old',
+                        division:
+                            'Documentation \nLogistic \nLiaison Officer \nTicketing \nPublic Relation',
+                        benefits:
+                            'E-certificate \nT-shirt \nGoodie Bag \nFree Ticket',
+                        bankAccount: '123456789',
+                        bankAccountName: 'Mesyella',
+                      );
                     },
                   ),
                   FlatButton(
@@ -226,22 +234,26 @@ class _homeState extends State<home> {
                         isNonProfit: _events[2].isNonProfit,
                         eventThumb: _events[2].eventThumb),
                     onPressed: () {
-                      eventModalBottomSheet(context,
-                          eventName: _events[2].eventName,
-                          isNonProfit: _events[2].isNonProfit,
-                          eventThumb: _events[2].eventThumb,
-                          eventDate: 'Rabu, 18 Maret 2020',
-                          eventPlace:
-                          'Indonesia Convention Exhibition Center BSD',
-                          eventDesc:
-                          "Calling for volunteers! Let's become part of our team to support this charity concert. Your participation "
-                              "means a lot for those people in need. Don't miss the chance to have fun with us at #BiggestCharityVibes2020 ",
-                          criteria:
-                          'Gender: Male / Female \nAge: 18 - 35 years old',
-                          division:
-                          'Documentation \nLogistic \nLiaison Officer \nTicketing \nPublic Relation',
-                          benefits:
-                          'E-certificate \nT-shirt \nGoodie Bag \nFree Ticket');
+                      eventDetailBottomSheet(
+                        context,
+                        eventName: _events[2].eventName,
+                        isNonProfit: _events[2].isNonProfit,
+                        eventThumb: _events[2].eventThumb,
+                        eventDate: 'Rabu, 18 Maret 2020',
+                        eventPlace:
+                            'Indonesia Convention Exhibition Center BSD',
+                        eventDesc:
+                            "Calling for volunteers! Let's become part of our team to support this charity concert. Your participation "
+                            "means a lot for those people in need. Don't miss the chance to have fun with us at #BiggestCharityVibes2020 ",
+                        criteria:
+                            'Gender: Male / Female \nAge: 18 - 35 years old',
+                        division:
+                            'Documentation \nLogistic \nLiaison Officer \nTicketing \nPublic Relation',
+                        benefits:
+                            'E-certificate \nT-shirt \nGoodie Bag \nFree Ticket',
+                        bankAccount: '123456789',
+                        bankAccountName: 'Mesyella',
+                      );
                     },
                   ),
                   FlatButton(
@@ -250,22 +262,26 @@ class _homeState extends State<home> {
                         isNonProfit: _events[3].isNonProfit,
                         eventThumb: _events[3].eventThumb),
                     onPressed: () {
-                      eventModalBottomSheet(context,
-                          eventName: _events[3].eventName,
-                          isNonProfit: _events[3].isNonProfit,
-                          eventThumb: _events[3].eventThumb,
-                          eventDate: 'Rabu, 18 Maret 2020',
-                          eventPlace:
-                          'Indonesia Convention Exhibition Center BSD',
-                          eventDesc:
-                          "Calling for volunteers! Let's become part of our team to support this charity concert. Your participation "
-                              "means a lot for those people in need. Don't miss the chance to have fun with us at #BiggestCharityVibes2020 ",
-                          criteria:
-                          'Gender: Male / Female \nAge: 18 - 35 years old',
-                          division:
-                          'Documentation \nLogistic \nLiaison Officer \nTicketing \nPublic Relation',
-                          benefits:
-                          'E-certificate \nT-shirt \nGoodie Bag \nFree Ticket');
+                      eventDetailBottomSheet(
+                        context,
+                        eventName: _events[3].eventName,
+                        isNonProfit: _events[3].isNonProfit,
+                        eventThumb: _events[3].eventThumb,
+                        eventDate: 'Rabu, 18 Maret 2020',
+                        eventPlace:
+                            'Indonesia Convention Exhibition Center BSD',
+                        eventDesc:
+                            "Calling for volunteers! Let's become part of our team to support this charity concert. Your participation "
+                            "means a lot for those people in need. Don't miss the chance to have fun with us at #BiggestCharityVibes2020 ",
+                        criteria:
+                            'Gender: Male / Female \nAge: 18 - 35 years old',
+                        division:
+                            'Documentation \nLogistic \nLiaison Officer \nTicketing \nPublic Relation',
+                        benefits:
+                            'E-certificate \nT-shirt \nGoodie Bag \nFree Ticket',
+                        bankAccount: '123456789',
+                        bankAccountName: 'Mesyella',
+                      );
                     },
                   )
                 ],
