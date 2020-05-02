@@ -57,7 +57,6 @@ void eventDetailBottomSheet(context,
   showBottomSheet(
     context: context,
     elevation: 0,
-    backgroundColor: Colors.transparent,
     builder: (BuildContext bc) {
       return FractionallySizedBox(
         heightFactor: (MediaQuery.of(context).size.height - 120) /
