@@ -116,6 +116,39 @@ class home extends StatefulWidget {
 class _homeState extends State<home> {
   final _eventDatabase = FirebaseDatabase.instance.reference().child("event");
 
+  void getData() {
+    // _eventDatabase.once().then((DataSnapshot snapshot) {
+    //   Map<dynamic, dynamic> values = snapshot.value;
+    //   values.forEach((key, values) {
+    //     print(values["eventID"]);
+    //   });
+    //   print('Data : ${snapshot.value}');
+    // });
+    print('HELLO WORLD');
+
+    StreamBuilder(
+      stream: _eventDatabase.onValue,
+      builder: (context, snap) {
+        if (snap.hasData) {
+          DataSnapshot snapshot = snap.data.snapshot;
+
+          List item = [];
+          List _list = [];
+
+          _list = snapshot.value;
+
+          _list.forEach((f) {
+            if (f != null) {
+              item.add(f);
+            }
+          });
+
+          print(item);
+        }
+      },
+    );
+  }
+
   List<Events> _events = List<Events>();
 
   Future<List<Events>> fetchEvents() async {
@@ -175,9 +208,7 @@ class _homeState extends State<home> {
                         isNonProfit: _events[0].isNonProfit,
                         eventThumb: _events[0].eventThumb),
                     onPressed: () {
-                      _eventDatabase.once().then((DataSnapshot snapshot) {
-                        print('Data : ${snapshot.value}');
-                      });
+                      getData();
                       eventModalBottomSheet(context,
                           eventName: _events[0].eventName,
                           isNonProfit: _events[0].isNonProfit,
@@ -208,16 +239,16 @@ class _homeState extends State<home> {
                           eventThumb: _events[1].eventThumb,
                           eventDate: 'Rabu, 18 Maret 2020',
                           eventPlace:
-                          'Indonesia Convention Exhibition Center BSD',
+                              'Indonesia Convention Exhibition Center BSD',
                           eventDesc:
-                          "Calling for volunteers! Let's become part of our team to support this charity concert. Your participation "
+                              "Calling for volunteers! Let's become part of our team to support this charity concert. Your participation "
                               "means a lot for those people in need. Don't miss the chance to have fun with us at #BiggestCharityVibes2020 ",
                           criteria:
-                          'Gender: Male / Female \nAge: 18 - 35 years old',
+                              'Gender: Male / Female \nAge: 18 - 35 years old',
                           division:
-                          'Documentation \nLogistic \nLiaison Officer \nTicketing \nPublic Relation',
+                              'Documentation \nLogistic \nLiaison Officer \nTicketing \nPublic Relation',
                           benefits:
-                          'E-certificate \nT-shirt \nGoodie Bag \nFree Ticket');
+                              'E-certificate \nT-shirt \nGoodie Bag \nFree Ticket');
                     },
                   ),
                   FlatButton(
@@ -232,16 +263,16 @@ class _homeState extends State<home> {
                           eventThumb: _events[2].eventThumb,
                           eventDate: 'Rabu, 18 Maret 2020',
                           eventPlace:
-                          'Indonesia Convention Exhibition Center BSD',
+                              'Indonesia Convention Exhibition Center BSD',
                           eventDesc:
-                          "Calling for volunteers! Let's become part of our team to support this charity concert. Your participation "
+                              "Calling for volunteers! Let's become part of our team to support this charity concert. Your participation "
                               "means a lot for those people in need. Don't miss the chance to have fun with us at #BiggestCharityVibes2020 ",
                           criteria:
-                          'Gender: Male / Female \nAge: 18 - 35 years old',
+                              'Gender: Male / Female \nAge: 18 - 35 years old',
                           division:
-                          'Documentation \nLogistic \nLiaison Officer \nTicketing \nPublic Relation',
+                              'Documentation \nLogistic \nLiaison Officer \nTicketing \nPublic Relation',
                           benefits:
-                          'E-certificate \nT-shirt \nGoodie Bag \nFree Ticket');
+                              'E-certificate \nT-shirt \nGoodie Bag \nFree Ticket');
                     },
                   ),
                   FlatButton(
@@ -256,16 +287,16 @@ class _homeState extends State<home> {
                           eventThumb: _events[3].eventThumb,
                           eventDate: 'Rabu, 18 Maret 2020',
                           eventPlace:
-                          'Indonesia Convention Exhibition Center BSD',
+                              'Indonesia Convention Exhibition Center BSD',
                           eventDesc:
-                          "Calling for volunteers! Let's become part of our team to support this charity concert. Your participation "
+                              "Calling for volunteers! Let's become part of our team to support this charity concert. Your participation "
                               "means a lot for those people in need. Don't miss the chance to have fun with us at #BiggestCharityVibes2020 ",
                           criteria:
-                          'Gender: Male / Female \nAge: 18 - 35 years old',
+                              'Gender: Male / Female \nAge: 18 - 35 years old',
                           division:
-                          'Documentation \nLogistic \nLiaison Officer \nTicketing \nPublic Relation',
+                              'Documentation \nLogistic \nLiaison Officer \nTicketing \nPublic Relation',
                           benefits:
-                          'E-certificate \nT-shirt \nGoodie Bag \nFree Ticket');
+                              'E-certificate \nT-shirt \nGoodie Bag \nFree Ticket');
                     },
                   )
                 ],
