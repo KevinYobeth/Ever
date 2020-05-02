@@ -7,6 +7,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:Ever/template/colors.dart';
 import 'package:Ever/template/eventCard.dart';
 import 'package:Ever/template/eventDetailBottomSheet.dart';
+import 'package:Ever/template/profileBottomSheet.dart';
 import 'dart:async';
 import 'package:http/http.dart' as http;
 
@@ -82,6 +83,19 @@ class _HomePageState extends State<HomePage> {
                               ),
                               onTap: () {
                                 signOut();
+                              },
+                            ),
+                            InkWell(
+                              child: Container(
+                                height: 40,
+                                width: 40,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: gray,
+                                ),
+                              ),
+                              onTap: () {
+                                profileBottomSheet(context);
                               },
                             ),
                           ],
@@ -316,6 +330,13 @@ class _homeState extends State<home> {
                   )
                 ],
               ),
+            ),
+            FloatingActionButton(
+              child: Icon(Icons.person),
+              backgroundColor: darkBackgroundColor,
+              onPressed: () {
+                profileBottomSheet(context);
+              },
             ),
           ],
         ),
