@@ -116,6 +116,39 @@ class home extends StatefulWidget {
 class _homeState extends State<home> {
   final _eventDatabase = FirebaseDatabase.instance.reference().child("event");
 
+  void getData() {
+    // _eventDatabase.once().then((DataSnapshot snapshot) {
+    //   Map<dynamic, dynamic> values = snapshot.value;
+    //   values.forEach((key, values) {
+    //     print(values["eventID"]);
+    //   });
+    //   print('Data : ${snapshot.value}');
+    // });
+    print('HELLO WORLD');
+
+    StreamBuilder(
+      stream: _eventDatabase.onValue,
+      builder: (context, snap) {
+        if (snap.hasData) {
+          DataSnapshot snapshot = snap.data.snapshot;
+
+          List item = [];
+          List _list = [];
+
+          _list = snapshot.value;
+
+          _list.forEach((f) {
+            if (f != null) {
+              item.add(f);
+            }
+          });
+
+          print(item);
+        }
+      },
+    );
+  }
+
   List<Events> _events = List<Events>();
 
   Future<List<Events>> fetchEvents() async {
@@ -175,9 +208,6 @@ class _homeState extends State<home> {
                         isNonProfit: _events[0].isNonProfit,
                         eventThumb: _events[0].eventThumb),
                     onPressed: () {
-                      _eventDatabase.once().then((DataSnapshot snapshot) {
-                        print('Data : ${snapshot.value}');
-                      });
                       eventDetailBottomSheet(
                         context,
                         eventName: _events[0].eventName,

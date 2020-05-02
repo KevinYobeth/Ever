@@ -89,6 +89,7 @@ void eventDetailBottomSheet(context,
                 builder:
                     (BuildContext context, ScrollController scrollController) {
                   return SingleChildScrollView(
+                    physics: BouncingScrollPhysics(),
                     child: Container(
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(30, 0, 30, 20),
@@ -192,7 +193,47 @@ void eventDetailBottomSheet(context,
                                     color: white,
                                     fontSize: 12)),
                             SizedBox(
-                              height: 80,
+                              height: 20,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                              child: Container(
+                                height: 70,
+                                child: Stack(
+                                  children: <Widget>[
+                                    Positioned(
+                                        left: 10,
+                                        top: 10,
+                                        bottom: 10,
+                                        right: 180,
+                                        child: eventButton(isNonProfit)),
+                                    Positioned(
+                                      right: 10,
+                                      top: 10,
+                                      bottom: 10,
+                                      left: 180,
+                                      child: FlatButton(
+                                        color: orange,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(10),
+                                          child: Text(
+                                            'Volunteer',
+                                            style: TextStyle(
+                                                fontFamily: 'Montserrat',
+                                                fontSize: 15,
+                                                color: white,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                        onPressed: () {},
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                decoration: BoxDecoration(
+                                    color: Colors.blueGrey[800],
+                                    borderRadius: BorderRadius.circular(10)),
+                              ),
                             ),
                           ],
                         ),
