@@ -3,7 +3,6 @@ import 'package:Ever/template/colors.dart';
 import 'package:Ever/template/eventCard.dart';
 import 'package:Ever/template/donationBottomSheet.dart';
 
-
 Widget eventButton(isNonProfit, context, bankAccount, bankAccountName) {
   if (isNonProfit == true) {
     return FlatButton(
@@ -20,7 +19,8 @@ Widget eventButton(isNonProfit, context, bankAccount, bankAccountName) {
         ),
       ),
       onPressed: () {
-        donationBottomSheet(context, bankAccount: bankAccount, bankAccountName: bankAccountName);
+        donationBottomSheet(context,
+            bankAccount: bankAccount, bankAccountName: bankAccountName);
       },
     );
   } else {
@@ -193,47 +193,7 @@ void eventDetailBottomSheet(context,
                                     color: white,
                                     fontSize: 12)),
                             SizedBox(
-                              height: 20,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                              child: Container(
-                                height: 70,
-                                child: Stack(
-                                  children: <Widget>[
-                                    Positioned(
-                                        left: 10,
-                                        top: 10,
-                                        bottom: 10,
-                                        right: 180,
-                                        child: eventButton(isNonProfit)),
-                                    Positioned(
-                                      right: 10,
-                                      top: 10,
-                                      bottom: 10,
-                                      left: 180,
-                                      child: FlatButton(
-                                        color: orange,
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(10),
-                                          child: Text(
-                                            'Volunteer',
-                                            style: TextStyle(
-                                                fontFamily: 'Montserrat',
-                                                fontSize: 15,
-                                                color: white,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ),
-                                        onPressed: () {},
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                decoration: BoxDecoration(
-                                    color: Colors.blueGrey[800],
-                                    borderRadius: BorderRadius.circular(10)),
-                              ),
+                              height: 80,
                             ),
                           ],
                         ),
@@ -253,8 +213,9 @@ void eventDetailBottomSheet(context,
                             left: 10,
                             top: 10,
                             bottom: 10,
-                            right: 210 ,
-                            child: eventButton(isNonProfit, context, bankAccount, bankAccountName)),
+                            right: 210,
+                            child: eventButton(isNonProfit, context,
+                                bankAccount, bankAccountName)),
                         Positioned(
                           right: 10,
                           top: 10,
