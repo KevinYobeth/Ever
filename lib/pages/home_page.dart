@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:Ever/models/Events.dart';
+import 'package:Ever/models/acara.dart';
 import 'package:flutter/material.dart';
 import 'package:Ever/services/authentication.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -27,12 +28,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
-  final _textEditingController = TextEditingController();
-
-  Query _todoQuery;
-
   signOut() async {
     try {
       await widget.auth.signOut();
@@ -86,20 +81,12 @@ class _HomePageState extends State<HomePage> {
                                 signOut();
                               },
                             ),
-                            InkWell(
-                              child: Container(
-                                height: 40,
-                                width: 40,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: gray,
-                                ),
-                              ),
-                              onTap: () {
-                                print('hello');
-                                profileBottomSheet(context);
-                              },
-                            ),
+                            // IconButton(
+                            //   icon: Icon(Icons.power_settings_new),
+                            //   onPressed: () {
+                            //     signOut();
+                            //   },
+                            // ),
                           ],
                         ),
                       )
@@ -115,9 +102,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
           ),
-          Expanded(
-            child: home(),
-          ),
+          Expanded(child: home()),
         ],
       ),
     );
@@ -130,42 +115,35 @@ class home extends StatefulWidget {
 }
 
 class _homeState extends State<home> {
-  final _eventDatabase = FirebaseDatabase.instance.reference().child("event");
+  List<Acara> _acaraList;
+  Query _acaraQuery;
 
-  void getData() {
-    // _eventDatabase.once().then((DataSnapshot snapshot) {
-    //   Map<dynamic, dynamic> values = snapshot.value;
-    //   values.forEach((key, values) {
-    //     print(values["eventID"]);
-    //   });
-    //   print('Data : ${snapshot.value}');
-    // });
-    print('HELLO WORLD');
+  final FirebaseDatabase _db = FirebaseDatabase.instance;
 
-    StreamBuilder(
-      stream: _eventDatabase.onValue,
-      builder: (context, snap) {
-        if (snap.hasData) {
-          DataSnapshot snapshot = snap.data.snapshot;
-
-          List item = [];
-          List _list = [];
-
-          _list = snapshot.value;
-
-          _list.forEach((f) {
-            if (f != null) {
-              item.add(f);
-            }
-          });
-
-          print(item);
-        }
-      },
-    );
-  }
+  StreamSubscription<Event> _onAcaraAddedSubscription;
 
   List<Events> _events = List<Events>();
+
+  @override
+  void initState() {
+    _acaraList = new List();
+    _acaraQuery = _db.reference().child("event").orderByChild("eventID");
+    _onAcaraAddedSubscription = _acaraQuery.onChildAdded.listen(onEntryAdded);
+
+    fetchEvents().then((value) {
+      print('Fetching Data');
+      setState(() {
+        _events.addAll(value);
+      });
+    });
+    super.initState();
+  }
+
+  onEntryAdded(Event acara) {
+    setState(() {
+      _acaraList.add(Acara.fromSnapshot(acara.snapshot));
+    });
+  }
 
   Future<List<Events>> fetchEvents() async {
     var url =
@@ -198,15 +176,50 @@ class _homeState extends State<home> {
 
   @override
   Widget build(BuildContext context) {
-    @override
-    void initState() {
-      fetchEvents().then((value) {
-        print('Fetching Data');
-        setState(() {
-          _events.addAll(value);
-        });
-      });
-      super.initState();
+    Widget _showAcaraList() {
+      if (_acaraList.length > 0) {
+        print('Length > 0 ${_acaraList.length}');
+        print(_acaraList[0].eventName);
+        return ListView.builder(
+          physics: BouncingScrollPhysics(),
+          shrinkWrap: false,
+          itemCount: _acaraList.length,
+          itemBuilder: (BuildContext context, int index) {
+            String eventName = _acaraList[index].eventName;
+            String eventThumb = _acaraList[index].eventThumb;
+            bool isNonProfit = _acaraList[index].isNonProfit;
+            return FlatButton(
+              child: eventCard(
+                eventName: eventName,
+                isNonProfit: isNonProfit,
+                eventThumb: eventThumb,
+              ),
+              onPressed: () {
+                eventDetailBottomSheet(
+                  context,
+                  eventName: eventName,
+                  isNonProfit: isNonProfit,
+                  eventThumb: eventThumb,
+                  eventDate: 'Rabu, 18 Maret 2020',
+                  eventPlace: 'Indonesia Convention Exhibition Center BSD',
+                  eventDesc:
+                      "Calling for volunteers! Let's become part of our team to support this charity concert. Your participation "
+                      "means a lot for those people in need. Don't miss the chance to have fun with us at #BiggestCharityVibes2020 ",
+                  criteria: 'Gender: Male / Female \nAge: 18 - 35 years old',
+                  division:
+                      'Documentation \nLogistic \nLiaison Officer \nTicketing \nPublic Relation',
+                  benefits:
+                      'E-certificate \nT-shirt \nGoodie Bag \nFree Ticket',
+                  bankAccount: '123456789',
+                  bankAccountName: 'Mesyella',
+                );
+              },
+            );
+          },
+        );
+      } else {
+        print('Length < 0');
+      }
     }
 
     return Scaffold(
@@ -215,133 +228,17 @@ class _homeState extends State<home> {
         child: Column(
           children: <Widget>[
             Expanded(
-              child: ListView(
-                physics: BouncingScrollPhysics(),
-                children: <Widget>[
-                  FlatButton(
-                    child: eventCard(
-                        eventName: _events[0].eventName,
-                        isNonProfit: _events[0].isNonProfit,
-                        eventThumb: _events[0].eventThumb),
-                    onPressed: () {
-                      eventDetailBottomSheet(
-                        context,
-                        eventName: _events[0].eventName,
-                        isNonProfit: _events[0].isNonProfit,
-                        eventThumb: _events[0].eventThumb,
-                        eventDate: 'Rabu, 18 Maret 2020',
-                        eventPlace:
-                            'Indonesia Convention Exhibition Center BSD',
-                        eventDesc:
-                            "Calling for volunteers! Let's become part of our team to support this charity concert. Your participation "
-                            "means a lot for those people in need. Don't miss the chance to have fun with us at #BiggestCharityVibes2020 ",
-                        criteria:
-                            'Gender: Male / Female \nAge: 18 - 35 years old',
-                        division:
-                            'Documentation \nLogistic \nLiaison Officer \nTicketing \nPublic Relation',
-                        benefits:
-                            'E-certificate \nT-shirt \nGoodie Bag \nFree Ticket',
-                        bankAccount: '123456789',
-                        bankAccountName: 'Mesyella',
-                      );
-                    },
-                  ),
-                  FlatButton(
-                    child: eventCard(
-                        eventName: _events[1].eventName,
-                        isNonProfit: _events[1].isNonProfit,
-                        eventThumb: _events[1].eventThumb),
-                    onPressed: () {
-                      eventDetailBottomSheet(
-                        context,
-                        eventName: _events[1].eventName,
-                        isNonProfit: _events[1].isNonProfit,
-                        eventThumb: _events[1].eventThumb,
-                        eventDate: 'Rabu, 18 Maret 2020',
-                        eventPlace:
-                            'Indonesia Convention Exhibition Center BSD',
-                        eventDesc:
-                            "Calling for volunteers! Let's become part of our team to support this charity concert. Your participation "
-                            "means a lot for those people in need. Don't miss the chance to have fun with us at #BiggestCharityVibes2020 ",
-                        criteria:
-                            'Gender: Male / Female \nAge: 18 - 35 years old',
-                        division:
-                            'Documentation \nLogistic \nLiaison Officer \nTicketing \nPublic Relation',
-                        benefits:
-                            'E-certificate \nT-shirt \nGoodie Bag \nFree Ticket',
-                        bankAccount: '123456789',
-                        bankAccountName: 'Mesyella',
-                      );
-                    },
-                  ),
-                  FlatButton(
-                    child: eventCard(
-                        eventName: _events[2].eventName,
-                        isNonProfit: _events[2].isNonProfit,
-                        eventThumb: _events[2].eventThumb),
-                    onPressed: () {
-                      eventDetailBottomSheet(
-                        context,
-                        eventName: _events[2].eventName,
-                        isNonProfit: _events[2].isNonProfit,
-                        eventThumb: _events[2].eventThumb,
-                        eventDate: 'Rabu, 18 Maret 2020',
-                        eventPlace:
-                            'Indonesia Convention Exhibition Center BSD',
-                        eventDesc:
-                            "Calling for volunteers! Let's become part of our team to support this charity concert. Your participation "
-                            "means a lot for those people in need. Don't miss the chance to have fun with us at #BiggestCharityVibes2020 ",
-                        criteria:
-                            'Gender: Male / Female \nAge: 18 - 35 years old',
-                        division:
-                            'Documentation \nLogistic \nLiaison Officer \nTicketing \nPublic Relation',
-                        benefits:
-                            'E-certificate \nT-shirt \nGoodie Bag \nFree Ticket',
-                        bankAccount: '123456789',
-                        bankAccountName: 'Mesyella',
-                      );
-                    },
-                  ),
-                  FlatButton(
-                    child: eventCard(
-                        eventName: _events[3].eventName,
-                        isNonProfit: _events[3].isNonProfit,
-                        eventThumb: _events[3].eventThumb),
-                    onPressed: () {
-                      eventDetailBottomSheet(
-                        context,
-                        eventName: _events[3].eventName,
-                        isNonProfit: _events[3].isNonProfit,
-                        eventThumb: _events[3].eventThumb,
-                        eventDate: 'Rabu, 18 Maret 2020',
-                        eventPlace:
-                            'Indonesia Convention Exhibition Center BSD',
-                        eventDesc:
-                            "Calling for volunteers! Let's become part of our team to support this charity concert. Your participation "
-                            "means a lot for those people in need. Don't miss the chance to have fun with us at #BiggestCharityVibes2020 ",
-                        criteria:
-                            'Gender: Male / Female \nAge: 18 - 35 years old',
-                        division:
-                            'Documentation \nLogistic \nLiaison Officer \nTicketing \nPublic Relation',
-                        benefits:
-                            'E-certificate \nT-shirt \nGoodie Bag \nFree Ticket',
-                        bankAccount: '123456789',
-                        bankAccountName: 'Mesyella',
-                      );
-                    },
-                  )
-                ],
-              ),
-            ),
-            FloatingActionButton(
-              child: Icon(Icons.person),
-              backgroundColor: darkBackgroundColor,
-              onPressed: () {
-                profileBottomSheet(context);
-              },
+              child: _showAcaraList(),
             ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.person),
+        backgroundColor: darkBackgroundColor,
+        onPressed: () {
+          profileBottomSheet(context);
+        },
       ),
     );
   }
