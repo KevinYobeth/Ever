@@ -8,6 +8,7 @@ import 'package:Ever/template/colors.dart';
 import 'package:Ever/template/eventCard.dart';
 import 'package:Ever/template/eventDetailBottomSheet.dart';
 import 'package:Ever/template/profileBottomSheet.dart';
+import 'package:Ever/template/donationBottomSheet.dart';
 import 'dart:async';
 import 'package:http/http.dart' as http;
 
@@ -95,6 +96,7 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ),
                               onTap: () {
+                                print('hello');
                                 profileBottomSheet(context);
                               },
                             ),
