@@ -63,15 +63,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                             InkWell(
-                              child: Text(
-                                'Log Out',
-                                style: TextStyle(
-                                    fontFamily: 'Montserrat',
-                                    fontSize: 18.0,
-                                    color: _eventCardIsUp
-                                        ? darkBackgroundColor
-                                        : Colors.white),
-                              ),
+                              child: Icon(Icons.power_settings_new, color: white, size: 40,),
                               onTap: () {
                                 signOut();
                               },
@@ -136,6 +128,7 @@ class _homeState extends State<home> {
           shrinkWrap: false,
           itemCount: _acaraList.length,
           itemBuilder: (BuildContext context, int index) {
+            int eventID = _acaraList[index].eventID;
             String eventName = _acaraList[index].eventName;
             String eventThumb = _acaraList[index].eventThumb;
             String eventTime = _acaraList[index].eventTime;
@@ -164,8 +157,6 @@ class _homeState extends State<home> {
                   division:
                       'Documentation \nLogistic \nLiaison Officer \nTicketing \nPublic Relation',
                   benefits: eventBenefits,
-                  bankAccount: '123456789',
-                  bankAccountName: 'Mesyella',
                 );
               },
             );

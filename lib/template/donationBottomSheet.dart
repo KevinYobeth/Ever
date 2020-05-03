@@ -99,8 +99,7 @@ void donationThankyouBottomSheet(context) {
   );
 }
 
-void donationBottomSheet(context,
-    {String bankAccount, String bankAccountName}) {
+void donationBottomSheet(context) {
   showModalBottomSheet(
     context: context,
     elevation: 0,
@@ -152,7 +151,7 @@ void donationBottomSheet(context,
                               SizedBox(
                                 height: 30,
                               ),
-                              Text('$bankAccount',
+                              Text('123456789',
                                   style: TextStyle(
                                       fontFamily: 'Montserrat',
                                       color: white,
@@ -167,7 +166,7 @@ void donationBottomSheet(context,
                                     color: white,
                                     fontSize: 20,
                                   )),
-                              Text('$bankAccountName',
+                              Text('Mesyella',
                                   style: TextStyle(
                                     fontFamily: 'Montserrat',
                                     color: white,
