@@ -164,7 +164,10 @@ class _homeState extends State<home> {
         );
       } else {
         print('Length < 0');
-        return CircularProgressIndicator();
+        return Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Center(child: Text('Loading Data')),
+        );
       }
     }
 
