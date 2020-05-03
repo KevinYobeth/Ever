@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:Ever/template/colors.dart';
 import 'package:Ever/template/eventCard.dart';
 import 'package:Ever/template/donationBottomSheet.dart';
+import 'package:Ever/template/sponsorBottomSheet.dart';
 
-Widget eventButton(isNonProfit, context, bankAccount, bankAccountName) {
+Widget eventButton(isNonProfit, context) {
   if (isNonProfit == true) {
     return FlatButton(
       color: Colors.green,
@@ -19,8 +20,7 @@ Widget eventButton(isNonProfit, context, bankAccount, bankAccountName) {
         ),
       ),
       onPressed: () {
-        donationBottomSheet(context,
-            bankAccount: bankAccount, bankAccountName: bankAccountName);
+        donationBottomSheet(context);
       },
     );
   } else {
@@ -37,7 +37,9 @@ Widget eventButton(isNonProfit, context, bankAccount, bankAccountName) {
               fontWeight: FontWeight.bold),
         ),
       ),
-      onPressed: () {},
+      onPressed: () {
+        sponsorBottomSheet(context);
+      },
     );
   }
 }
@@ -53,13 +55,16 @@ void eventDetailBottomSheet(context,
     String division,
     String benefits,
     String bankAccount,
-    String bankAccountName}) {
+    String bankAccountName,
+    String packageName,
+    String packageContent,
+    String packagePrice}) {
   showBottomSheet(
     context: context,
     elevation: 0,
     builder: (BuildContext bc) {
       return FractionallySizedBox(
-        heightFactor: (MediaQuery.of(context).size.height - 120) /
+        heightFactor: (MediaQuery.of(context).size.height) /
             MediaQuery.of(context).size.height,
         child: Container(
           height: 1000,
@@ -209,12 +214,12 @@ void eventDetailBottomSheet(context,
                     child: Stack(
                       children: <Widget>[
                         Positioned(
-                            left: 10,
-                            top: 10,
-                            bottom: 10,
-                            right: 210,
-                            child: eventButton(isNonProfit, context,
-                                bankAccount, bankAccountName)),
+                          left: 10,
+                          top: 10,
+                          bottom: 10,
+                          right: 210,
+                          child: eventButton(isNonProfit, context),
+                        ),
                         Positioned(
                           right: 10,
                           top: 10,
@@ -239,7 +244,7 @@ void eventDetailBottomSheet(context,
                       ],
                     ),
                     decoration: BoxDecoration(
-                        color: Colors.blueGrey[800],
+                        color: darkBackgroundColor,
                         borderRadius: BorderRadius.circular(10)),
                   ),
                 ],
