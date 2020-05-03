@@ -1,6 +1,3 @@
-import 'dart:convert';
-
-import 'package:Ever/models/Events.dart';
 import 'package:Ever/models/acara.dart';
 import 'package:flutter/material.dart';
 import 'package:Ever/services/authentication.dart';
@@ -9,9 +6,7 @@ import 'package:Ever/template/colors.dart';
 import 'package:Ever/template/eventCard.dart';
 import 'package:Ever/template/eventDetailBottomSheet.dart';
 import 'package:Ever/template/profileBottomSheet.dart';
-import 'package:Ever/template/donationBottomSheet.dart';
 import 'dart:async';
-import 'package:http/http.dart' as http;
 
 bool _eventCardIsUp = false;
 
@@ -81,12 +76,6 @@ class _HomePageState extends State<HomePage> {
                                 signOut();
                               },
                             ),
-                            // IconButton(
-                            //   icon: Icon(Icons.power_settings_new),
-                            //   onPressed: () {
-                            //     signOut();
-                            //   },
-                            // ),
                           ],
                         ),
                       )
@@ -122,20 +111,11 @@ class _homeState extends State<home> {
 
   StreamSubscription<Event> _onAcaraAddedSubscription;
 
-  List<Events> _events = List<Events>();
-
   @override
   void initState() {
     _acaraList = new List();
     _acaraQuery = _db.reference().child("event").orderByChild("eventID");
     _onAcaraAddedSubscription = _acaraQuery.onChildAdded.listen(onEntryAdded);
-
-    fetchEvents().then((value) {
-      print('Fetching Data');
-      setState(() {
-        _events.addAll(value);
-      });
-    });
     super.initState();
   }
 
@@ -143,35 +123,6 @@ class _homeState extends State<home> {
     setState(() {
       _acaraList.add(Acara.fromSnapshot(acara.snapshot));
     });
-  }
-
-  Future<List<Events>> fetchEvents() async {
-    var url =
-        'https://raw.githubusercontent.com/KevinYobeth/kevinyobeth.github.io/master/Ever/event.json';
-    var response = await http.get(url);
-
-    var events = List<Events>();
-
-    if (response.statusCode == 200) {
-      var eventsJson = json.decode(response.body);
-      for (var eventJson in eventsJson['event']) {
-        events.add(Events.fromJson(eventJson));
-      }
-    }
-    return events;
-  }
-
-  @override
-  void didUpdateWidget(home oldWidget) {
-    if (_events.isEmpty || _events.isNotEmpty) {
-      fetchEvents().then((value) {
-        print('Fetching Data');
-        setState(() {
-          _events.addAll(value);
-        });
-      });
-    }
-    super.didUpdateWidget(oldWidget);
   }
 
   @override
@@ -187,6 +138,12 @@ class _homeState extends State<home> {
           itemBuilder: (BuildContext context, int index) {
             String eventName = _acaraList[index].eventName;
             String eventThumb = _acaraList[index].eventThumb;
+            String eventTime = _acaraList[index].eventTime;
+            String eventDate = _acaraList[index].eventDate;
+            String eventPlace = _acaraList[index].eventPlace;
+            String eventDesc = _acaraList[index].eventDesc;
+            String eventCriteria = _acaraList[index].eventCriteria;
+            String eventBenefits = _acaraList[index].eventBenefits;
             bool isNonProfit = _acaraList[index].isNonProfit;
             return FlatButton(
               child: eventCard(
@@ -200,16 +157,13 @@ class _homeState extends State<home> {
                   eventName: eventName,
                   isNonProfit: isNonProfit,
                   eventThumb: eventThumb,
-                  eventDate: 'Rabu, 18 Maret 2020',
-                  eventPlace: 'Indonesia Convention Exhibition Center BSD',
-                  eventDesc:
-                      "Calling for volunteers! Let's become part of our team to support this charity concert. Your participation "
-                      "means a lot for those people in need. Don't miss the chance to have fun with us at #BiggestCharityVibes2020 ",
-                  criteria: 'Gender: Male / Female \nAge: 18 - 35 years old',
+                  eventDate: eventDate,
+                  eventPlace: eventPlace,
+                  eventDesc: eventDesc,
+                  criteria: eventCriteria,
                   division:
                       'Documentation \nLogistic \nLiaison Officer \nTicketing \nPublic Relation',
-                  benefits:
-                      'E-certificate \nT-shirt \nGoodie Bag \nFree Ticket',
+                  benefits: eventBenefits,
                   bankAccount: '123456789',
                   bankAccountName: 'Mesyella',
                 );
@@ -219,6 +173,7 @@ class _homeState extends State<home> {
         );
       } else {
         print('Length < 0');
+        return CircularProgressIndicator();
       }
     }
 
