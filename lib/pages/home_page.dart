@@ -63,7 +63,11 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                             InkWell(
-                              child: Icon(Icons.power_settings_new, color: white, size: 40,),
+                              child: Icon(
+                                Icons.power_settings_new,
+                                color: white,
+                                size: 40,
+                              ),
                               onTap: () {
                                 signOut();
                               },
@@ -172,6 +176,7 @@ class _homeState extends State<home> {
     }
 
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       backgroundColor: white,
       body: Container(
         child: Column(
