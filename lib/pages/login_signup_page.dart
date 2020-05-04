@@ -125,8 +125,8 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // resizeToAvoidBottomInset: false,
-      // resizeToAvoidBottomPadding: false,
+      //resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomPadding: false,
       body: Stack(
         alignment: Alignment.bottomCenter,
         children: <Widget>[
@@ -266,6 +266,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
     }
   }
 
+  //To Do Check email validation, pake regex ae kalo pusing
   Widget showEmailInput() {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
@@ -285,6 +286,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
     );
   }
 
+  //To Do password harus 8+, ada CAPITAL LETTER dan lowercase, Symbols / Number
   Widget showPasswordInput() {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
@@ -323,6 +325,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
     );
   }
 
+  //To Do biasa phone number validasi apaan sih??? Must be int.
   Widget showPhoneNumberInput() {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
@@ -343,6 +346,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
     );
   }
 
+  //TO DO Ganti jadi Date Inputnya
   Widget showDateOfBirthInput() {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
