@@ -136,7 +136,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
               Stack(
                 children: <Widget>[
                   Container(
-                    height: _isLoginForm ? 350.0 : 200.0,
+                    height: _isLoginForm ? 320.0 : 200.0,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.only(
                           bottomLeft: Radius.circular(20.0),
@@ -145,7 +145,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(top: _isLoginForm ? 240.0 : 90.0),
+                    padding: EdgeInsets.only(top: _isLoginForm ? 210.0 : 90.0),
                     child: Center(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -177,7 +177,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
             ],
           ),
           Padding(
-            padding: EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(15.0),
             child: showSecondaryButton(),
           )
         ],
@@ -314,7 +314,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
         decoration: new InputDecoration(
             hintText: 'Full Name',
             icon: new Icon(
-              Icons.lock,
+              Icons.account_circle,
               color: Colors.grey,
             )),
         validator: (value) => value.isEmpty ? 'Fullname can\'t be empty' : null,
@@ -333,7 +333,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
         decoration: new InputDecoration(
             hintText: 'Phone Number',
             icon: new Icon(
-              Icons.lock,
+              Icons.phone,
               color: Colors.grey,
             )),
         validator: (value) =>
@@ -353,7 +353,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
         decoration: new InputDecoration(
             hintText: 'Date of Birth',
             icon: new Icon(
-              Icons.lock,
+              Icons.calendar_today,
               color: Colors.grey,
             )),
         validator: (value) =>
@@ -363,21 +363,56 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
     );
   }
 
+  int _radioValue = 0;
+
+  void _handleGenderRadioChange(int value) {
+    setState(() {
+      _radioValue = value;
+      switch (_radioValue) {
+        case 0:
+          _gender = 'Male';
+          break;
+        case 1:
+          _gender = 'Female';
+          break;
+      }
+    });
+  }
+
   Widget showGenderInput() {
+    // return Padding(
+    //   padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
+    //   child: new TextFormField(
+    //     maxLines: 1,
+    //     obscureText: false,
+    //     autofocus: false,
+    //     decoration: new InputDecoration(
+    //         hintText: 'Gender',
+    //         icon: new Icon(
+    //           Icons.supervised_user_circle,
+    //           color: Colors.grey,
+    //         )),
+    //     validator: (value) => value.isEmpty ? 'Gender can\'t be empty' : null,
+    //     onSaved: (value) => _gender = value.trim(),
+    //   ),
+    // );
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
-      child: new TextFormField(
-        maxLines: 1,
-        obscureText: false,
-        autofocus: false,
-        decoration: new InputDecoration(
-            hintText: 'Gender',
-            icon: new Icon(
-              Icons.lock,
-              color: Colors.grey,
-            )),
-        validator: (value) => value.isEmpty ? 'Gender can\'t be empty' : null,
-        onSaved: (value) => _gender = value.trim(),
+      child: Row(
+        children: <Widget>[
+          Radio(
+            value: 0,
+            groupValue: _radioValue,
+            onChanged: _handleGenderRadioChange,
+          ),
+          Text('Male'),
+          Radio(
+            value: 1,
+            groupValue: _radioValue,
+            onChanged: _handleGenderRadioChange,
+          ),
+          Text('Female'),
+        ],
       ),
     );
   }
