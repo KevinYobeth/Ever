@@ -4,6 +4,26 @@ import 'package:Ever/template/eventCard.dart';
 import 'package:Ever/template/donationBottomSheet.dart';
 import 'package:Ever/template/sponsorBottomSheet.dart';
 
+int totalDiv;
+
+Widget divisionContent(List division) {
+  totalDiv = division.length;
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      for (var div in division)
+        Text(
+          div['divisionName'].toString(),
+          style: TextStyle(
+              fontFamily: 'Montserrat',
+              fontSize: 12,
+              color: white,
+          ),
+        )
+    ],
+  );
+}
+
 Widget eventButton(isNonProfit, context) {
   if (isNonProfit == true) {
     return FlatButton(
@@ -52,13 +72,14 @@ void eventDetailBottomSheet(context,
     String eventPlace,
     String eventDesc,
     String criteria,
-    String division,
+    List division,
     String benefits,
     String bankAccount,
     String bankAccountName,
     String packageName,
     String packageContent,
     String packagePrice}) {
+  divisionContent(division);
   showBottomSheet(
     context: context,
     elevation: 0,
@@ -177,11 +198,7 @@ void eventDetailBottomSheet(context,
                                     color: white,
                                     fontSize: 22,
                                     fontWeight: FontWeight.bold)),
-                            Text("$division",
-                                style: TextStyle(
-                                    fontFamily: 'Montserrat',
-                                    color: white,
-                                    fontSize: 12)),
+                            divisionContent(division),
                             SizedBox(
                               height: 20,
                             ),

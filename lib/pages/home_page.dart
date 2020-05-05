@@ -161,8 +161,7 @@ class _homeState extends State<home> {
                   eventPlace: eventPlace,
                   eventDesc: eventDesc,
                   criteria: eventCriteria,
-                  division:
-                      'Documentation \nLogistic \nLiaison Officer \nTicketing \nPublic Relation',
+                  division: eventDivision,
                   benefits: eventBenefits,
                 );
               },
