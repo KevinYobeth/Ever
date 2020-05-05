@@ -140,8 +140,11 @@ class _homeState extends State<home> {
             String eventPlace = _acaraList[index].eventPlace;
             String eventDesc = _acaraList[index].eventDesc;
             String eventCriteria = _acaraList[index].eventCriteria;
+            List eventDivision = _acaraList[index].eventDivision;
             String eventBenefits = _acaraList[index].eventBenefits;
             bool isNonProfit = _acaraList[index].isNonProfit;
+
+            print(eventDivision);
             return FlatButton(
               child: eventCard(
                 eventName: eventName,
