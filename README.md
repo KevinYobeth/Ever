@@ -15,9 +15,14 @@ Latest Version of *Flutter*: https://flutter.dev/docs/get-started/install/window
 Latest Version of *Visual Studio Code*: https://code.visualstudio.com/  
 Latest Version of *Android Studio*: https://developer.android.com/studio  
 
+## Progress
+Frontend: 70%  
+Backend: 20%
+
 ## Built With
 
-* [Flutter](https://flutter.dev/) - Flutter framework
+* [Flutter](https://flutter.dev/) - Flutter as Frontend
+& [Firebase](https://firebase.google.com/) - Firebase as Backend
 
 ## Authors
 
