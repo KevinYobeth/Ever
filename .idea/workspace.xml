@@ -7,7 +7,6 @@
     <list default="true" id="9c304e8f-8b51-4d03-af7a-d0fd71e71afd" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/pages/home_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/home_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/template/donationBottomSheet.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/template/donationBottomSheet.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/template/eventDetailBottomSheet.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/template/eventDetailBottomSheet.dart" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.dart_tool/" />
@@ -28,8 +27,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/pages/home_page.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret line="150" column="43" selection-start-line="150" selection-start-column="43" selection-end-line="150" selection-end-column="43" />
+            <state relative-caret-position="216">
+              <caret line="154" column="38" selection-start-line="154" selection-start-column="38" selection-end-line="154" selection-end-column="38" />
             </state>
           </provider>
         </entry>
@@ -37,7 +36,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/template/profileBottomSheet.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1170">
+            <state relative-caret-position="18">
               <caret line="7" column="32" selection-start-line="7" selection-start-column="32" selection-end-line="7" selection-end-column="32" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
@@ -46,11 +45,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/template/eventDetailBottomSheet.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="250" column="16" selection-start-line="208" selection-start-column="14" selection-end-line="250" selection-end-column="16" />
+            <state relative-caret-position="-329">
+              <caret line="16" column="27" selection-start-line="16" selection-start-column="27" selection-end-line="16" selection-end-column="27" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -61,8 +60,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/template/donationBottomSheet.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1782">
-              <caret line="99" column="1" lean-forward="true" selection-start-line="2" selection-end-line="99" selection-end-column="1" />
+            <state relative-caret-position="1764">
+              <caret line="99" column="1" selection-start-line="2" selection-end-line="99" selection-end-column="1" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -70,7 +69,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/template/sponsorBottomSheet.dart">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="18">
@@ -133,16 +132,16 @@
         <option value="$PROJECT_DIR$/lib/template/eventCard.dart" />
         <option value="$PROJECT_DIR$/lib/template/eventModalBottomSheet.dart" />
         <option value="$PROJECT_DIR$/lib/template/profileBottomSheet.dart" />
-        <option value="$PROJECT_DIR$/lib/pages/home_page.dart" />
-        <option value="$PROJECT_DIR$/lib/template/eventDetailBottomSheet.dart" />
         <option value="$PROJECT_DIR$/lib/template/donationBottomSheet.dart" />
         <option value="$PROJECT_DIR$/lib/template/sponsorBottomSheet.dart" />
         <option value="$PROJECT_DIR$/lib/template/bottomSheet.dart" />
+        <option value="$PROJECT_DIR$/lib/pages/home_page.dart" />
+        <option value="$PROJECT_DIR$/lib/template/eventDetailBottomSheet.dart" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="758" />
+    <option name="x" value="757" />
     <option name="width" value="980" />
     <option name="height" value="1040" />
   </component>
@@ -151,7 +150,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="AndroidView" />
       <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
@@ -176,6 +174,7 @@
         </subPane>
       </pane>
       <pane id="Scope" />
+      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -256,7 +255,7 @@
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4990177" visible="true" weight="0.22483222" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4990177" visible="true" weight="0.22483222" />
       <window_info id="Structure" order="1" weight="0.24977043" />
       <window_info id="Designer" order="2" />
       <window_info id="Build Variants" order="3" side_tool="true" />
@@ -278,7 +277,7 @@
       <window_info anchor="bottom" id="Terminal" order="11" weight="0.25637394" />
       <window_info anchor="bottom" id="Messages" order="12" weight="0.32577905" />
       <window_info anchor="bottom" id="Flutter Performance" order="13" side_tool="true" />
-      <window_info anchor="bottom" id="Run" order="14" weight="0.30169973" />
+      <window_info active="true" anchor="bottom" id="Run" order="14" visible="true" weight="0.3427762" />
       <window_info anchor="bottom" id="Captures" order="15" sideWeight="0.50098234" side_tool="true" weight="0.096317284" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -401,13 +400,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/models/todo.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="15" selection-start-line="15" selection-end-line="15" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/models/todo.dart" />
     <entry file="file://$PROJECT_DIR$/lib/pages/root_page.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="360">
@@ -449,20 +442,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/template/colors.dart">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/pages/home_page.dart">
+    <entry file="file://$PROJECT_DIR$/.packages">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="150" column="43" selection-start-line="150" selection-start-column="43" selection-end-line="150" selection-end-column="43" />
+        <state relative-caret-position="-270" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/template/bottomSheet.dart" />
+    <entry file="file://$PROJECT_DIR$/lib/template/donationBottomSheet.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1764">
+          <caret line="99" column="1" selection-start-line="2" selection-end-line="99" selection-end-column="1" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/template/eventDetailBottomSheet.dart">
+    <entry file="file://$PROJECT_DIR$/lib/template/colors.dart">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/template/sponsorBottomSheet.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="250" column="16" selection-start-line="208" selection-start-column="14" selection-end-line="250" selection-end-column="16" />
+        <state relative-caret-position="18">
+          <caret line="1" column="43" selection-start-line="1" selection-start-column="43" selection-end-line="1" selection-end-column="43" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
@@ -471,7 +473,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/template/profileBottomSheet.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1170">
+        <state relative-caret-position="18">
           <caret line="7" column="32" selection-start-line="7" selection-start-column="32" selection-end-line="7" selection-end-column="32" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
@@ -479,28 +481,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/template/donationBottomSheet.dart">
+    <entry file="file://$PROJECT_DIR$/lib/pages/home_page.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1782">
-          <caret line="99" column="1" lean-forward="true" selection-start-line="2" selection-end-line="99" selection-end-column="1" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="216">
+          <caret line="154" column="38" selection-start-line="154" selection-start-column="38" selection-end-line="154" selection-end-column="38" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.packages">
+    <entry file="file://$PROJECT_DIR$/lib/template/eventDetailBottomSheet.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-270" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/template/bottomSheet.dart">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/template/sponsorBottomSheet.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="1" column="43" selection-start-line="1" selection-start-column="43" selection-end-line="1" selection-end-column="43" />
+        <state relative-caret-position="-329">
+          <caret line="16" column="27" selection-start-line="16" selection-start-column="27" selection-end-line="16" selection-end-column="27" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
