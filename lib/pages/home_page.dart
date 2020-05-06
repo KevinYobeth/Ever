@@ -9,6 +9,7 @@ import 'package:Ever/template/profileBottomSheet.dart';
 import 'dart:async';
 
 bool _eventCardIsUp = false;
+final appKey = new GlobalKey<FormState>();
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.auth, this.userId, this.logoutCallback})
@@ -32,12 +33,21 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  Color color;
+
+  @override
+  void initState() {
+    color = _eventCardIsUp ? darkBackgroundColor : Colors.white;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         children: <Widget>[
           Stack(
+            key: appKey,
             children: <Widget>[
               Container(
                 height: 120.0,
@@ -55,9 +65,7 @@ class _HomePageState extends State<HomePage> {
                                 'EVER',
                                 style: TextStyle(
                                     fontFamily: 'Montserrat',
-                                    color: _eventCardIsUp
-                                        ? darkBackgroundColor
-                                        : Colors.white,
+                                    color: color,
                                     fontSize: 40,
                                     fontWeight: FontWeight.bold),
                               ),
@@ -65,7 +73,7 @@ class _HomePageState extends State<HomePage> {
                             InkWell(
                               child: Icon(
                                 Icons.power_settings_new,
-                                color: white,
+                                color: color,
                                 size: 40,
                               ),
                               onTap: () {
@@ -94,6 +102,8 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
+final FirebaseDatabase db = FirebaseDatabase.instance;
+
 class home extends StatefulWidget {
   @override
   _homeState createState() => _homeState();
@@ -103,14 +113,13 @@ class _homeState extends State<home> {
   List<Acara> _acaraList;
   Query _acaraQuery;
 
-  final FirebaseDatabase _db = FirebaseDatabase.instance;
-
   StreamSubscription<Event> _onAcaraAddedSubscription;
 
   @override
   void initState() {
+    _eventCardIsUp = false;
     _acaraList = new List();
-    _acaraQuery = _db.reference().child("event").orderByChild("eventID");
+    _acaraQuery = db.reference().child("event").orderByChild("eventID");
     _onAcaraAddedSubscription = _acaraQuery.onChildAdded.listen(onEntryAdded);
     super.initState();
   }
@@ -125,8 +134,6 @@ class _homeState extends State<home> {
   Widget build(BuildContext context) {
     Widget _showAcaraList() {
       if (_acaraList.length > 0) {
-        print('Length > 0 ${_acaraList.length}');
-        print(_acaraList[0].eventName);
         return ListView.builder(
           physics: BouncingScrollPhysics(),
           shrinkWrap: false,
@@ -134,6 +141,7 @@ class _homeState extends State<home> {
           itemBuilder: (BuildContext context, int index) {
             int eventID = _acaraList[index].eventID;
             String eventName = _acaraList[index].eventName;
+            String eventOrganizer = _acaraList[index].eventOrganizer;
             String eventThumb = _acaraList[index].eventThumb;
             String eventTime = _acaraList[index].eventTime;
             String eventDate = _acaraList[index].eventDate;
@@ -143,8 +151,6 @@ class _homeState extends State<home> {
             List eventDivision = _acaraList[index].eventDivision;
             String eventBenefits = _acaraList[index].eventBenefits;
             bool isNonProfit = _acaraList[index].isNonProfit;
-
-            print(eventDivision);
             return FlatButton(
               child: eventCard(
                 eventName: eventName,
@@ -152,12 +158,18 @@ class _homeState extends State<home> {
                 eventThumb: eventThumb,
               ),
               onPressed: () {
+                setState(() {
+                  _eventCardIsUp = !_eventCardIsUp;
+                  print(_eventCardIsUp);
+                });
                 eventDetailBottomSheet(
                   context,
                   eventName: eventName,
+                  eventOrganizer: eventOrganizer,
                   isNonProfit: isNonProfit,
                   eventThumb: eventThumb,
                   eventDate: eventDate,
+                  eventTime: eventTime,
                   eventPlace: eventPlace,
                   eventDesc: eventDesc,
                   criteria: eventCriteria,
@@ -169,7 +181,6 @@ class _homeState extends State<home> {
           },
         );
       } else {
-        print('Length < 0');
         return Padding(
           padding: const EdgeInsets.all(10.0),
           child: Center(child: Text('Loading Data')),

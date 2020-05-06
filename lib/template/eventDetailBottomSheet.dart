@@ -4,10 +4,7 @@ import 'package:Ever/template/eventCard.dart';
 import 'package:Ever/template/donationBottomSheet.dart';
 import 'package:Ever/template/sponsorBottomSheet.dart';
 
-int totalDiv;
-
 Widget divisionContent(List division) {
-  totalDiv = division.length;
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -15,9 +12,9 @@ Widget divisionContent(List division) {
         Text(
           div['divisionName'].toString(),
           style: TextStyle(
-              fontFamily: 'Montserrat',
-              fontSize: 12,
-              color: white,
+            fontFamily: 'Montserrat',
+            fontSize: 12,
+            color: white,
           ),
         )
     ],
@@ -69,11 +66,13 @@ void eventDetailBottomSheet(context,
     bool isNonProfit,
     String eventThumb,
     String eventDate,
+    String eventTime,
     String eventPlace,
     String eventDesc,
     String criteria,
     List division,
     String benefits,
+    String eventOrganizer,
     String bankAccount,
     String bankAccountName,
     String packageName,
@@ -149,7 +148,7 @@ void eventDetailBottomSheet(context,
                                   fontSize: 30,
                                   fontWeight: FontWeight.bold,
                                 )),
-                            Text("$eventDate",
+                            Text("$eventDate, $eventTime",
                                 style: TextStyle(
                                     fontFamily: 'Montserrat',
                                     color: Colors.red,
@@ -213,6 +212,15 @@ void eventDetailBottomSheet(context,
                                     fontFamily: 'Montserrat',
                                     color: white,
                                     fontSize: 12)),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Text("Event Organized by: $eventOrganizer",
+                                style: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    color: white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold)),
                             SizedBox(
                               height: 80,
                             ),
