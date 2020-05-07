@@ -4,6 +4,7 @@ class Acara {
   String key;
   int eventID;
   String eventName;
+  String eventOrganizer;
   String eventThumb;
   String eventTime;
   String eventDate;
@@ -20,6 +21,7 @@ class Acara {
   Acara(
       this.eventID,
       this.eventName,
+      this.eventOrganizer,
       this.eventThumb,
       this.eventTime,
       this.eventDate,
@@ -34,6 +36,7 @@ class Acara {
       : key = snapshot.key,
         eventID = snapshot.value["eventID"],
         eventName = snapshot.value["eventName"],
+        eventOrganizer = snapshot.value["eventOrganizer"],
         eventThumb = snapshot.value["eventThumb"],
         eventTime = snapshot.value["eventTime"],
         eventDate = snapshot.value["eventDate"],
@@ -48,6 +51,7 @@ class Acara {
     return {
       "eventID": eventID,
       "eventName": eventName,
+      "eventOrganizer": eventOrganizer,
       "eventThumb": eventThumb,
       "eventTime": eventTime,
       "eventDate": eventDate,
@@ -56,7 +60,7 @@ class Acara {
       "eventCriteria": eventCriteria,
       "eventDivision": eventDivision,
       "eventBenefits": eventBenefits,
-      "isNonProfit": isNonProfit, 
+      "isNonProfit": isNonProfit,
     };
   }
 }
