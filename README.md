@@ -22,7 +22,7 @@ Backend: 20%
 ## Built With
 
 * [Flutter](https://flutter.dev/) - Flutter as Frontend
-& [Firebase](https://firebase.google.com/) - Firebase as Backend
+* [Firebase](https://firebase.google.com/) - Firebase as Backend
 
 ## Authors
 
