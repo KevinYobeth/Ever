@@ -19,7 +19,7 @@ class Acara {
   bool isNonProfit;
 
   Acara(
-      this.eventID,
+      {this.eventID,
       this.eventName,
       this.eventOrganizer,
       this.eventThumb,
@@ -30,7 +30,7 @@ class Acara {
       this.eventCriteria,
       this.eventDivision,
       this.eventBenefits,
-      this.isNonProfit);
+      this.isNonProfit});
 
   Acara.fromSnapshot(DataSnapshot snapshot)
       : key = snapshot.key,

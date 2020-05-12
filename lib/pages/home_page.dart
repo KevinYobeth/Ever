@@ -130,6 +130,38 @@ class _homeState extends State<home> {
     });
   }
 
+  _addEvent(String userID) {
+    List divisi = ['Division'];
+    Acara newAcara = new Acara(
+        eventBenefits: 'Benefits',
+        eventCriteria: 'Criteria',
+        eventDate: 'Tomorrow',
+        eventDesc: 'Description',
+        eventDivision: divisi,
+        eventID: 4,
+        eventName: 'Event Name',
+        eventOrganizer: userID,
+        eventPlace: 'Dirumah',
+        eventThumb:
+            'https://firebasestorage.googleapis.com/v0/b/ever-a01f1.appspot.com/o/Banner_ComputerRun.jpg?alt=media&token=0be947f4-37da-4ce8-953d-a9cf752e6a15',
+        eventTime: 'Ntaran lagi',
+        isNonProfit: false);
+    db.reference().child("event").push().set(newAcara.toJson());
+  }
+
+  _removeEvent() {
+    db
+        .reference()
+        .child("event")
+        .child("-M7835sMtlK9dza42ypT")
+        .remove()
+        .then((_) {
+      setState(() {
+        _acaraList.removeAt(4);
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget _showAcaraList() {
@@ -204,6 +236,8 @@ class _homeState extends State<home> {
         child: Icon(Icons.person),
         backgroundColor: darkBackgroundColor,
         onPressed: () {
+          //_addEvent('2201729713');
+          //_removeEvent();
           profileBottomSheet(context);
         },
       ),
