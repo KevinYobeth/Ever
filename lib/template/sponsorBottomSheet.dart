@@ -8,7 +8,7 @@ void sponsorThankyouBottomSheet(context) {
     backgroundColor: Colors.transparent,
     builder: (BuildContext bc) {
       return FractionallySizedBox(
-        heightFactor: (MediaQuery.of(context).size.height * 0.8) /
+        heightFactor: (MediaQuery.of(context).size.height * 0.6) /
             MediaQuery.of(context).size.height,
         child: Container(
           decoration: BoxDecoration(
@@ -39,7 +39,7 @@ void sponsorThankyouBottomSheet(context) {
                   return Wrap(
                     children: <Widget>[
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(50, 75, 50, 0),
+                        padding: const EdgeInsets.fromLTRB(50, 50, 50, 0),
                         child: Center(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -133,7 +133,7 @@ void sponsorDetail(context) {
     backgroundColor: Colors.transparent,
     builder: (BuildContext bc) {
       return FractionallySizedBox(
-        heightFactor: (MediaQuery.of(context).size.height * 0.8) /
+        heightFactor: (MediaQuery.of(context).size.height * 0.6) /
             MediaQuery.of(context).size.height,
         child: Container(
           decoration: BoxDecoration(
@@ -347,7 +347,7 @@ void sponsorBottomSheet(
     backgroundColor: Colors.transparent,
     builder: (BuildContext bc) {
       return FractionallySizedBox(
-        heightFactor: (MediaQuery.of(context).size.height * 0.8) /
+        heightFactor: (MediaQuery.of(context).size.height * 0.6) /
             MediaQuery.of(context).size.height,
         child: Container(
           decoration: BoxDecoration(

@@ -3,6 +3,7 @@ import 'package:Ever/template/colors.dart';
 import 'package:Ever/template/eventCard.dart';
 import 'package:Ever/template/donationBottomSheet.dart';
 import 'package:Ever/template/sponsorBottomSheet.dart';
+import 'package:Ever/template/volunteerBottomSheet.dart';
 
 Widget divisionContent(List division) {
   return Column(
@@ -219,7 +220,7 @@ void eventDetailBottomSheet(context,
                                 style: TextStyle(
                                     fontFamily: 'Montserrat',
                                     color: white,
-                                    fontSize: 18,
+                                    fontSize: 15,
                                     fontWeight: FontWeight.bold)),
                             SizedBox(
                               height: 80,
@@ -263,7 +264,9 @@ void eventDetailBottomSheet(context,
                                     fontWeight: FontWeight.bold),
                               ),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              volunteerBottomSheet(context);
+                            },
                           ),
                         ),
                       ],
