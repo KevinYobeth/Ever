@@ -2,7 +2,6 @@ import 'package:firebase_database/firebase_database.dart';
 
 class Acara {
   String key;
-  int eventID;
   String eventName;
   String eventOrganizer;
   String eventThumb;
@@ -19,7 +18,7 @@ class Acara {
   bool isNonProfit;
 
   Acara(
-      {this.eventID,
+      {
       this.eventName,
       this.eventOrganizer,
       this.eventThumb,
@@ -34,7 +33,6 @@ class Acara {
 
   Acara.fromSnapshot(DataSnapshot snapshot)
       : key = snapshot.key,
-        eventID = snapshot.value["eventID"],
         eventName = snapshot.value["eventName"],
         eventOrganizer = snapshot.value["eventOrganizer"],
         eventThumb = snapshot.value["eventThumb"],
@@ -49,7 +47,6 @@ class Acara {
 
   toJson() {
     return {
-      "eventID": eventID,
       "eventName": eventName,
       "eventOrganizer": eventOrganizer,
       "eventThumb": eventThumb,
