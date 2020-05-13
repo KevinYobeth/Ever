@@ -1,7 +1,8 @@
+import 'package:Ever/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:Ever/template/colors.dart';
 
-void profileBottomSheet(context) {
+void profileBottomSheet(context, User userData) {
   showBottomSheet(
     context: context,
     elevation: 0,
@@ -47,6 +48,10 @@ void profileBottomSheet(context) {
                       SizedBox(
                         height: 10,
                       ),
+                      Text(
+                        'Welcome, ${userData.userName}',
+                        style: TextStyle(color: Colors.white),
+                      ),
                       FlatButton(
                         child: Container(
                           height: 30,
@@ -76,8 +81,8 @@ void profileBottomSheet(context) {
                 child: DraggableScrollableSheet(
                   initialChildSize: 0.95,
                   minChildSize: 0.5,
-                  builder:
-                      (BuildContext context, ScrollController scrollController) {
+                  builder: (BuildContext context,
+                      ScrollController scrollController) {
                     return SingleChildScrollView(
                       physics: BouncingScrollPhysics(),
                       child: Padding(
@@ -94,7 +99,9 @@ void profileBottomSheet(context) {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            SizedBox(height: 20,),
+                            SizedBox(
+                              height: 20,
+                            ),
                             Text(
                               'Past Events',
                               style: TextStyle(
@@ -104,7 +111,9 @@ void profileBottomSheet(context) {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            SizedBox(height: 20,),
+                            SizedBox(
+                              height: 20,
+                            ),
                             Text(
                               'Notifications',
                               style: TextStyle(
