@@ -33,17 +33,16 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  Color color;
-
-  @override
-  void initState() {
-    color = _eventCardIsUp ? darkBackgroundColor : Colors.white;
-    super.initState();
+  refresh() {
+    setState(() {
+      _eventCardIsUp = !_eventCardIsUp;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: lightBackgroundColor,
       body: Column(
         children: <Widget>[
           Stack(
@@ -65,7 +64,9 @@ class _HomePageState extends State<HomePage> {
                                 'EVER',
                                 style: TextStyle(
                                     fontFamily: 'Montserrat',
-                                    color: color,
+                                    color: _eventCardIsUp
+                                        ? Colors.black
+                                        : Colors.white,
                                     fontSize: 40,
                                     fontWeight: FontWeight.bold),
                               ),
@@ -73,7 +74,9 @@ class _HomePageState extends State<HomePage> {
                             InkWell(
                               child: Icon(
                                 Icons.power_settings_new,
-                                color: color,
+                                color: _eventCardIsUp
+                                    ? Colors.black
+                                    : Colors.white,
                                 size: 40,
                               ),
                               onTap: () {
@@ -90,12 +93,17 @@ class _HomePageState extends State<HomePage> {
                   borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(20.0),
                       bottomRight: Radius.circular(20.0)),
-                  color: _eventCardIsUp ? Colors.white : darkBackgroundColor,
+                  color: _eventCardIsUp
+                      ? lightBackgroundColor
+                      : darkBackgroundColor,
                 ),
               ),
             ],
           ),
-          Expanded(child: home()),
+          Expanded(
+              child: home(
+            notifyParent: refresh,
+          )),
         ],
       ),
     );
@@ -105,6 +113,8 @@ class _HomePageState extends State<HomePage> {
 final FirebaseDatabase db = FirebaseDatabase.instance;
 
 class home extends StatefulWidget {
+  final Function() notifyParent;
+  home({Key key, @required this.notifyParent}) : super(key: key);
   @override
   _homeState createState() => _homeState();
 }
@@ -131,31 +141,75 @@ class _homeState extends State<home> {
   }
 
   _addEvent(String userID) {
-    List divisi = ['Division'];
-    Acara newAcara = new Acara(
-        eventBenefits: 'Benefits',
-        eventCriteria: 'Criteria',
-        eventDate: 'Tomorrow',
-        eventDesc: 'Description',
-        eventDivision: divisi,
-        eventID: 4,
-        eventName: 'Event Name',
-        eventOrganizer: userID,
-        eventPlace: 'Dirumah',
-        eventThumb:
-            'https://firebasestorage.googleapis.com/v0/b/ever-a01f1.appspot.com/o/Banner_ComputerRun.jpg?alt=media&token=0be947f4-37da-4ce8-953d-a9cf752e6a15',
-        eventTime: 'Ntaran lagi',
-        isNonProfit: false);
-    db.reference().child("event").push().set(newAcara.toJson());
+    // Acara synchronity = new Acara(
+    //     eventBenefits: 'E-certificate \nT-shirt \nGoodie Bag \nFree Ticket',
+    //     eventCriteria: 'Gender: Male / Female \nAge: 18 - 35 years old',
+    //     eventDate: 'Rabu, 18 Maret 2020',
+    //     eventDesc:
+    //         'Calling for volunteers! Let\'s become part of our team to support this charity concert. Your participation means a lot for those people in need. Don\'t miss the chance to have fun with us at #BiggestCharityVibes2020',
+    //     eventDivision: divisi,
+    //     eventName: 'Synchronity',
+    //     eventOrganizer: 'Q5RVoN5fnfhZdYfDMyNl9QVo4rr2',
+    //     eventPlace: 'Indonesia Convention Exhibition Center BSD',
+    //     eventThumb:
+    //         'https://firebasestorage.googleapis.com/v0/b/ever-a01f1.appspot.com/o/Banner%2FBanner_Synchronity.jpg?alt=media&token=1e7ca5c0-787b-479c-a2a1-e8e9709f3fb8',
+    //     eventTime: '10:00-17:00',
+    //     isNonProfit: false);
+
+    // Acara rearthlity = new Acara(
+    //     eventBenefits: 'E-Certificate\nLunch\nT-Shirt\nGoodie Bag',
+    //     eventCriteria: 'Gender: Male / Female \nAge: 18 - 27 years old',
+    //     eventDate: 'Sabtu, 7 Desember 2019',
+    //     eventDesc:
+    //         'Calling you yes, Photographers of #REARTHLITY! Let us participate to make a better place. Seek the truth of our earth. Let the windows open with your photography in #NARASI2019',
+    //     eventDivision: divisi,
+    //     eventName: 'Rearthlity',
+    //     eventOrganizer: 'Q5RVoN5fnfhZdYfDMyNl9QVo4rr2',
+    //     eventPlace: 'Soup n Film, Blok M, Jakarta Selatan',
+    //     eventThumb:
+    //         'https://firebasestorage.googleapis.com/v0/b/ever-a01f1.appspot.com/o/Banner%2FBanner_Rearthlity.jpg?alt=media&token=3954760b-e213-462e-b19b-6006580472ab',
+    //     eventTime: '10:00 - 19:00',
+    //     isNonProfit: false);
+
+    // Acara computerRun = new Acara(
+    //     eventBenefits: 'E-Certificate\nLunch\nT-Shirt\nMedal',
+    //     eventCriteria: 'Gender: Male / Female \nAge: 17 - 24 years old',
+    //     eventDate: 'Minggu, 6 Desember 2020',
+    //     eventDesc: 'Ayo kita lari bareng sama komputer.',
+    //     eventDivision: divisi,
+    //     eventName: 'Computer Run',
+    //     eventOrganizer: 'Q5RVoN5fnfhZdYfDMyNl9QVo4rr2',
+    //     eventPlace: 'BINUS Alam Sutera',
+    //     eventThumb:
+    //         'https://firebasestorage.googleapis.com/v0/b/ever-a01f1.appspot.com/o/Banner%2FBanner_ComputerRun.jpg?alt=media&token=8391a7ec-7ccc-45f0-9795-7b117792fb8b',
+    //     eventTime: '16:00 - 21:00',
+    //     isNonProfit: false);
+
+    List divisi = [
+      {"divisionName": "Event", "divisionCapacity": 25},
+      {"divisionName": "Funding", "divisionCapacity": 25},
+      {"divisionName": "Documentation", "divisionCapacity": 20},
+    ];
+
+    // Acara hishot = new Acara(
+    //     eventBenefits: 'E-Certificate\nLunch\nSAT\nKnowledge',
+    //     eventCriteria: 'Gender: Male / Female \nAge: 18 - 21 years old',
+    //     eventDate: 'Senin, 11 May 2020',
+    //     eventDesc: 'HIMTI Seminar. Get SAT',
+    //     eventDivision: divisi,
+    //     eventName: 'HISHOT',
+    //     eventOrganizer: 'Q5RVoN5fnfhZdYfDMyNl9QVo4rr2',
+    //     eventPlace: 'Online',
+    //     eventThumb:
+    //         'https://firebasestorage.googleapis.com/v0/b/ever-a01f1.appspot.com/o/Banner%2FBanner_Hishot.jpg?alt=media&token=23923f8b-8a08-4660-9aca-0a2906c445ea',
+    //     eventTime: '13:20 - 15:00',
+    //     isNonProfit: true);
+
+    //db.reference().child("event").push().set(hishot.toJson());
   }
 
   _removeEvent() {
-    db
-        .reference()
-        .child("event")
-        .child("-M7835sMtlK9dza42ypT")
-        .remove()
-        .then((_) {
+    db.reference().child("event").child("3").remove().then((_) {
       setState(() {
         _acaraList.removeAt(4);
       });
@@ -171,7 +225,7 @@ class _homeState extends State<home> {
           shrinkWrap: false,
           itemCount: _acaraList.length,
           itemBuilder: (BuildContext context, int index) {
-            int eventID = _acaraList[index].eventID;
+            print(_acaraList[index].key);
             String eventName = _acaraList[index].eventName;
             String eventOrganizer = _acaraList[index].eventOrganizer;
             String eventThumb = _acaraList[index].eventThumb;
@@ -191,7 +245,7 @@ class _homeState extends State<home> {
               ),
               onPressed: () {
                 setState(() {
-                  _eventCardIsUp = !_eventCardIsUp;
+                  widget.notifyParent();
                   print(_eventCardIsUp);
                 });
                 eventDetailBottomSheet(
@@ -222,7 +276,7 @@ class _homeState extends State<home> {
 
     return Scaffold(
       resizeToAvoidBottomPadding: false,
-      backgroundColor: white,
+      backgroundColor: lightBackgroundColor,
       body: Container(
         child: Column(
           children: <Widget>[
