@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:Ever/services/authentication.dart';
 import 'package:Ever/template/colors.dart';
 import 'package:Ever/template/style.dart';
+import 'package:email_validator/email_validator.dart';
+
 
 class noGlowBehavior extends ScrollBehavior {
   @override
@@ -280,7 +282,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
               Icons.mail,
               color: Colors.grey,
             )),
-        validator: (value) => value.isEmpty ? 'Email can\'t be empty' : null,
+        validator: (value) => EmailValidator.validate(value)? null:"Invalid email address",
         onSaved: (value) => _email = value.trim(),
       ),
     );
@@ -300,7 +302,15 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
               Icons.lock,
               color: Colors.grey,
             )),
-        validator: (value) => value.isEmpty ? 'Password can\'t be empty' : null,
+        validator: (value) {
+          Pattern pattern =
+              r'^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{8,}$';
+          RegExp regex = new RegExp(pattern);
+          if (!regex.hasMatch(value))
+            return 'Invalid password';
+          else
+            return null;
+        },
         onSaved: (value) => _password = value.trim(),
       ),
     );
@@ -319,7 +329,12 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
               Icons.account_circle,
               color: Colors.grey,
             )),
-        validator: (value) => value.isEmpty ? 'Fullname can\'t be empty' : null,
+        validator: (value) {
+          if (value.length < 4)
+            return 'Invalid full name';
+          else
+            return null;
+        },
         onSaved: (value) => _name = value.trim(),
       ),
     );
@@ -339,8 +354,15 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
               Icons.phone,
               color: Colors.grey,
             )),
-        validator: (value) =>
-            value.isEmpty ? 'Phone number can\'t be empty' : null,
+        validator: (value) {
+          Pattern pattern =
+              r'^[+62][0-9]{10,15}$';
+          RegExp regex = new RegExp(pattern);
+          if (!regex.hasMatch(value))
+            return 'Invalid phone number';
+          else
+            return null;
+        },
         onSaved: (value) => _phoneNumber = value.trim(),
       ),
     );

@@ -200,63 +200,66 @@ void volunteerBottomSheet(context) {
                 minChildSize: 0.5,
                 builder:
                     (BuildContext context, ScrollController scrollController) {
-                  return SingleChildScrollView(
-                    physics: BouncingScrollPhysics(),
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(30, 30, 0, 0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            'Select Available Division',
-                            style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              color: white,
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: SingleChildScrollView(
+                      physics: BouncingScrollPhysics(),
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(30, 30, 0, 0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              'Select Available Division',
+                              style: TextStyle(
+                                fontFamily: 'Montserrat',
+                                color: white,
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Wrap(
-                            alignment: WrapAlignment.start,
-                            children: <Widget>[
-                              divisionName('Documentation'),
-                              divisionName('Public Relation'),
-                              divisionName('Ticketing'),
-                              divisionName('Logistic')
-                            ],
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Text(
-                            'Select Shirt Size',
-                            style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              color: white,
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
+                            SizedBox(
+                              height: 10,
                             ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Wrap(
-                            alignment: WrapAlignment.start,
-                            children: <Widget>[
-                              shirtSize('XS'),
-                              shirtSize('S'),
-                              shirtSize('M'),
-                              shirtSize('L'),
-                              shirtSize('XL'),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 70,
-                          ),
-                        ],
+                            Wrap(
+                              alignment: WrapAlignment.start,
+                              children: <Widget>[
+                                divisionName('Documentation'),
+                                divisionName('Public Relation'),
+                                divisionName('Ticketing'),
+                                divisionName('Logistic')
+                              ],
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Text(
+                              'Select Shirt Size',
+                              style: TextStyle(
+                                fontFamily: 'Montserrat',
+                                color: white,
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Wrap(
+                              alignment: WrapAlignment.start,
+                              children: <Widget>[
+                                shirtSize('XS'),
+                                shirtSize('S'),
+                                shirtSize('M'),
+                                shirtSize('L'),
+                                shirtSize('XL'),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 70,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   );
