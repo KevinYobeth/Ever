@@ -90,11 +90,12 @@ void eventDetailBottomSheet(context,
         child: Container(
           height: 1000,
           decoration: BoxDecoration(
-              color: darkBackgroundColor,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20),
-                topRight: Radius.circular(20),
-              )),
+            color: darkBackgroundColor,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20),
+              topRight: Radius.circular(20),
+            ),
+          ),
           child: Stack(
             children: <Widget>[
               Padding(

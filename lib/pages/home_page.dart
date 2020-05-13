@@ -1,4 +1,6 @@
 import 'package:Ever/models/acara.dart';
+import 'package:Ever/models/organizer.dart';
+import 'package:Ever/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:Ever/services/authentication.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -9,7 +11,7 @@ import 'package:Ever/template/profileBottomSheet.dart';
 import 'dart:async';
 
 bool _eventCardIsUp = false;
-final appKey = new GlobalKey<FormState>();
+String userID;
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.auth, this.userId, this.logoutCallback})
@@ -40,13 +42,18 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
+  void initState() {
+    userID = widget.userId;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: lightBackgroundColor,
       body: Column(
         children: <Widget>[
           Stack(
-            key: appKey,
             children: <Widget>[
               Container(
                 height: 120.0,
@@ -121,22 +128,42 @@ class home extends StatefulWidget {
 
 class _homeState extends State<home> {
   List<Acara> _acaraList;
+  List<User> _userList;
+  List<Organizer> _organizerList;
+
   Query _acaraQuery;
+  Query _userQuery;
+  Query _organizerQuery;
 
   StreamSubscription<Event> _onAcaraAddedSubscription;
+  StreamSubscription<Event> _onUserAddedSubscription;
+  StreamSubscription<Event> _onOrganizerAddedSubscription;
 
   @override
   void initState() {
     _eventCardIsUp = false;
+
     _acaraList = new List();
+    _userList = new List();
+    _organizerList = new List();
+
     _acaraQuery = db.reference().child("event").orderByChild("eventID");
+    _userQuery = db.reference().child("user").orderByKey().equalTo(userID);
+
     _onAcaraAddedSubscription = _acaraQuery.onChildAdded.listen(onEntryAdded);
+    _onUserAddedSubscription = _userQuery.onChildAdded.listen(onUserGet);
     super.initState();
   }
 
   onEntryAdded(Event acara) {
     setState(() {
       _acaraList.add(Acara.fromSnapshot(acara.snapshot));
+    });
+  }
+
+  onUserGet(Event user) {
+    setState(() {
+      _userList.add(User.fromSnapshot(user.snapshot));
     });
   }
 
@@ -225,7 +252,6 @@ class _homeState extends State<home> {
           shrinkWrap: false,
           itemCount: _acaraList.length,
           itemBuilder: (BuildContext context, int index) {
-            print(_acaraList[index].key);
             String eventName = _acaraList[index].eventName;
             String eventOrganizer = _acaraList[index].eventOrganizer;
             String eventThumb = _acaraList[index].eventThumb;
@@ -292,7 +318,10 @@ class _homeState extends State<home> {
         onPressed: () {
           //_addEvent('2201729713');
           //_removeEvent();
-          profileBottomSheet(context);
+          // print(
+          //     'User Email: ${_userList[0].userEmail}\nUser Name: ${_userList[0].userName}');
+          widget.notifyParent();
+          profileBottomSheet(context, _userList[0]);
         },
       ),
     );
