@@ -5,7 +5,6 @@ import 'package:Ever/template/colors.dart';
 import 'package:Ever/template/style.dart';
 import 'package:email_validator/email_validator.dart';
 
-
 class noGlowBehavior extends ScrollBehavior {
   @override
   Widget buildViewportChrome(
@@ -282,7 +281,8 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
               Icons.mail,
               color: Colors.grey,
             )),
-        validator: (value) => EmailValidator.validate(value)? null:"Invalid email address",
+        validator: (value) =>
+            EmailValidator.validate(value) ? null : "Invalid email address",
         onSaved: (value) => _email = value.trim(),
       ),
     );
@@ -303,11 +303,10 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
               color: Colors.grey,
             )),
         validator: (value) {
-          Pattern pattern =
-              r'^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{8,}$';
+          Pattern pattern = r'^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{8,}$';
           RegExp regex = new RegExp(pattern);
           if (!regex.hasMatch(value))
-            return 'Invalid password';
+            return 'Password must contain at least 1 letter and 1 number.';
           else
             return null;
         },
@@ -318,7 +317,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
 
   Widget showUsernameInput() {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
+      padding: EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 8.0),
       child: new TextFormField(
         maxLines: 1,
         obscureText: false,
@@ -331,7 +330,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
             )),
         validator: (value) {
           if (value.length < 4)
-            return 'Invalid full name';
+            return 'Username must contain more than 8 letters.';
           else
             return null;
         },
@@ -355,11 +354,10 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
               color: Colors.grey,
             )),
         validator: (value) {
-          Pattern pattern =
-              r'^[+62][0-9]{10,15}$';
+          Pattern pattern = r'^[+62][0-9]{10,15}$';
           RegExp regex = new RegExp(pattern);
           if (!regex.hasMatch(value))
-            return 'Invalid phone number';
+            return 'Phone number must start with +62';
           else
             return null;
         },
@@ -368,23 +366,36 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
     );
   }
 
-  //TO DO Ganti jadi Date Inputnya
   Widget showDateOfBirthInput() {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
       child: new TextFormField(
+        onTap: () {
+          showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime(1900),
+                  lastDate: DateTime(2200))
+              .then((date) {
+            setState(() {
+              _dateOfBirth = date.toString();
+            });
+          });
+        },
         maxLines: 1,
         obscureText: false,
         autofocus: false,
+        initialValue: _dateOfBirth == null ? '' : _dateOfBirth.toString(),
         decoration: new InputDecoration(
-            hintText: 'Date of Birth',
+            hintText: _dateOfBirth == null
+                ? 'Date of Birth'
+                : _dateOfBirth.toString(),
             icon: new Icon(
               Icons.calendar_today,
               color: Colors.grey,
             )),
-        validator: (value) =>
-            value.isEmpty ? 'Date of Birth can\'t be empty' : null,
-        onSaved: (value) => _dateOfBirth = value.trim(),
+        // validator: (value) =>
+        //     value.isEmpty ? 'Date of Birth can\'t be empty' : null,
       ),
     );
   }
