@@ -321,7 +321,8 @@ class _homeState extends State<home> {
           // print(
           //     'User Email: ${_userList[0].userEmail}\nUser Name: ${_userList[0].userName}');
           widget.notifyParent();
-          profileBottomSheet(context, _userList[0]);
+          print(_userList);
+          //profileBottomSheet(context, _userList[0]);
         },
       ),
     );
