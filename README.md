@@ -17,7 +17,7 @@ Latest Version of *Android Studio*: https://developer.android.com/studio
 
 ## Progress
 Frontend: 70%  
-Backend: 30%
+Backend: 35%
 
 ## Built With
 
