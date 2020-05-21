@@ -76,10 +76,11 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
             'userDOB': _dateOfBirth,
             'userGender': _gender,
             'userIdenURL': 'UserIdenURL',
-            'userActiveEvent': null,
-            'userPastEvent': null,
-            'isVerified': 0,
-            'organizationID': null
+            'userActiveEvent': 'null',
+            'userPastEvent': 'null',
+            'isVerified': false,
+            'organizationID': 'null',
+            'userProfileImg': 'null',
           });
 
           _isLoginForm = !_isLoginForm;
