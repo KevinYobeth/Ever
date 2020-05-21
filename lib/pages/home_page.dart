@@ -1,13 +1,13 @@
 import 'package:Ever/models/acara.dart';
 import 'package:Ever/models/organizer.dart';
 import 'package:Ever/models/user.dart';
+import 'package:Ever/template/eventDetailBottomSheet.dart';
 import 'package:Ever/template/profileBottomSheet.dart';
 import 'package:flutter/material.dart';
 import 'package:Ever/services/authentication.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:Ever/template/colors.dart';
 import 'package:Ever/template/eventCard.dart';
-import 'package:Ever/template/eventDetailBottomSheet.dart';
 import 'dart:async';
 
 bool _eventCardIsUp = false;
@@ -26,6 +26,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    userID = widget.userId;
+
+    super.initState();
+  }
+
   signOut() async {
     try {
       await widget.auth.signOut();
@@ -39,12 +46,6 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       _eventCardIsUp = !_eventCardIsUp;
     });
-  }
-
-  @override
-  void initState() {
-    userID = widget.userId;
-    super.initState();
   }
 
   @override
@@ -263,6 +264,11 @@ class _homeState extends State<home> {
             List eventDivision = _acaraList[index].eventDivision;
             String eventBenefits = _acaraList[index].eventBenefits;
             bool isNonProfit = _acaraList[index].isNonProfit;
+            String bankAccount = 'null';
+            String bankAccountName = 'null';
+            String packageName = 'null';
+            String packageContent = 'null';
+            String packagePrice = 'null';
             return FlatButton(
               child: eventCard(
                 eventName: eventName,
@@ -273,19 +279,27 @@ class _homeState extends State<home> {
                 setState(() {
                   widget.notifyParent();
                 });
-                eventDetailBottomSheet(
-                  context,
-                  eventName: eventName,
-                  eventOrganizer: eventOrganizer,
-                  isNonProfit: isNonProfit,
-                  eventThumb: eventThumb,
-                  eventDate: eventDate,
-                  eventTime: eventTime,
-                  eventPlace: eventPlace,
-                  eventDesc: eventDesc,
-                  criteria: eventCriteria,
-                  division: eventDivision,
-                  benefits: eventBenefits,
+                showBottomSheet(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return eventDetail(
+                        eventName: eventName,
+                        eventOrganizer: eventOrganizer,
+                        isNonProfit: isNonProfit,
+                        eventThumb: eventThumb,
+                        eventDate: eventDate,
+                        eventTime: eventTime,
+                        eventPlace: eventPlace,
+                        eventDesc: eventDesc,
+                        eventCriteria: eventCriteria,
+                        eventDivision: eventDivision,
+                        eventBenefits: eventBenefits,
+                        bankAccount: bankAccount,
+                        bankAccountName: bankAccountName,
+                        packageName: packageName,
+                        packageContent: packageContent,
+                        packagePrice: packagePrice);
+                  },
                 );
               },
             );
@@ -317,7 +331,6 @@ class _homeState extends State<home> {
         onPressed: () {
           //_addEvent('2201729713');
           //_removeEvent();
-          // print(
           widget.notifyParent();
           showBottomSheet(
             context: context,

@@ -62,104 +62,29 @@ Widget eventButton(isNonProfit, context) {
   }
 }
 
-class eventDetail extends StatefulWidget {
-  final String eventName;
-  final bool isNonProfit;
-  final String eventThumb;
-  final String eventDate;
-  final String eventTime;
-  final String eventPlace;
-  final String eventDesc;
-  final String eventCriteria;
-  final List eventDivision;
-  final String eventBenefits;
-  final String eventOrganizer;
-  final String bankAccount;
-  final String bankAccountName;
-  final String packageName;
-  final String packageContent;
-  final String packagePrice;
-
-  const eventDetail(
-      {Key key,
-      this.eventName,
-      this.isNonProfit,
-      this.eventThumb,
-      this.eventDate,
-      this.eventTime,
-      this.eventPlace,
-      this.eventDesc,
-      this.eventCriteria,
-      this.eventDivision,
-      this.eventBenefits,
-      this.eventOrganizer,
-      this.bankAccount,
-      this.bankAccountName,
-      this.packageName,
-      this.packageContent,
-      this.packagePrice})
-      : super(key: key);
-
-  @override
-  _eventDetailState createState() => _eventDetailState(
-      eventName,
-      isNonProfit,
-      eventThumb,
-      eventDate,
-      eventTime,
-      eventPlace,
-      eventDesc,
-      eventCriteria,
-      eventDivision,
-      eventBenefits,
-      eventOrganizer,
-      bankAccount,
-      bankAccountName,
-      packageName,
-      packageContent,
-      packagePrice);
-}
-
-class _eventDetailState extends State<eventDetail> {
-  final String eventName;
-  final bool isNonProfit;
-  final String eventThumb;
-  final String eventDate;
-  final String eventTime;
-  final String eventPlace;
-  final String eventDesc;
-  final String eventCriteria;
-  final List eventDivision;
-  final String eventBenefits;
-  final String eventOrganizer;
-  final String bankAccount;
-  final String bankAccountName;
-  final String packageName;
-  final String packageContent;
-  final String packagePrice;
-
-  _eventDetailState(
-      this.eventName,
-      this.isNonProfit,
-      this.eventThumb,
-      this.eventDate,
-      this.eventTime,
-      this.eventPlace,
-      this.eventDesc,
-      this.eventCriteria,
-      this.eventDivision,
-      this.eventBenefits,
-      this.eventOrganizer,
-      this.bankAccount,
-      this.bankAccountName,
-      this.packageName,
-      this.packageContent,
-      this.packagePrice);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: FractionallySizedBox(
+void eventDetailBottomSheet(context,
+    {String eventName,
+    bool isNonProfit,
+    String eventThumb,
+    String eventDate,
+    String eventTime,
+    String eventPlace,
+    String eventDesc,
+    String eventCriteria,
+    List eventDivision,
+    String eventBenefits,
+    String eventOrganizer,
+    String bankAccount,
+    String bankAccountName,
+    String packageName,
+    String packageContent,
+    String packagePrice}) {
+  divisionContent(eventDivision);
+  showBottomSheet(
+    context: context,
+    elevation: 0,
+    builder: (BuildContext bc) {
+      return FractionallySizedBox(
         heightFactor: (MediaQuery.of(context).size.height) /
             MediaQuery.of(context).size.height,
         child: Container(
@@ -356,7 +281,7 @@ class _eventDetailState extends State<eventDetail> {
             ],
           ),
         ),
-      ),
-    );
-  }
+      );
+    },
+  );
 }
