@@ -10,6 +10,7 @@ class User {
   String userIdenURL;
   String userName;
   String userPhone;
+  String userProfileImg;
 
   User(
       {this.isVerified,
@@ -19,7 +20,8 @@ class User {
       this.userGender,
       this.userIdenURL,
       this.userName,
-      this.userPhone});
+      this.userPhone,
+      this.userProfileImg});
 
   User.fromSnapshot(DataSnapshot snapshot)
       : key = snapshot.key,
@@ -30,7 +32,8 @@ class User {
         userGender = snapshot.value["userGender"],
         userIdenURL = snapshot.value["userIdenURL"],
         userName = snapshot.value["userName"],
-        userPhone = snapshot.value["userPhone"];
+        userPhone = snapshot.value["userPhone"],
+        userProfileImg = snapshot.value["userProfileImg"];
 
   toJson() {
     return {
@@ -42,6 +45,7 @@ class User {
       "userName": userName,
       "userPhone": userPhone,
       "isVerified": isVerified,
+      "userProfileImg": userProfileImg,
     };
   }
 }

@@ -154,7 +154,7 @@ class _homeState extends State<home> {
     _onUserAddedSubscription = _userQuery.onChildAdded.listen(onUserGet);
     super.initState();
   }
-
+  
   onEntryAdded(Event acara) {
     setState(() {
       _acaraList.add(Acara.fromSnapshot(acara.snapshot));
@@ -321,8 +321,8 @@ class _homeState extends State<home> {
           // print(
           //     'User Email: ${_userList[0].userEmail}\nUser Name: ${_userList[0].userName}');
           widget.notifyParent();
-          print(_userList);
-          //profileBottomSheet(context, _userList[0]);
+          //print(_userList);
+          profileBottomSheet(context, _userList[0]);
         },
       ),
     );
