@@ -37,26 +37,15 @@ Future uploadImage(User userData) async {
   print(_downloadURL);
 }
 
-class userProfile extends StatefulWidget {
-  final User userData;
-
-  userProfile({this.userData});
-  @override
-  _userProfileState createState() => _userProfileState(userData);
-}
-
-class _userProfileState extends State<userProfile> {
-  final User userData;
-
-  _userProfileState(this.userData);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: FractionallySizedBox(
+void profileBottomSheet(context, User userData) {
+  print(user);  
+  showBottomSheet(
+    context: context,
+    elevation: 0,
+    builder: (BuildContext bc) {
+      return FractionallySizedBox(
         heightFactor: (MediaQuery.of(context).size.height - 120) /
             MediaQuery.of(context).size.height,
-        alignment: Alignment.bottomCenter,
         child: Container(
           decoration: BoxDecoration(
             color: darkBackgroundColor,
@@ -189,7 +178,7 @@ class _userProfileState extends State<userProfile> {
             ],
           ),
         ),
-      ),
-    );
-  }
+      );
+    },
+  );
 }

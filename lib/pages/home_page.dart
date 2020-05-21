@@ -1,13 +1,13 @@
 import 'package:Ever/models/acara.dart';
 import 'package:Ever/models/organizer.dart';
 import 'package:Ever/models/user.dart';
+import 'package:Ever/template/profileBottomSheet.dart';
 import 'package:flutter/material.dart';
 import 'package:Ever/services/authentication.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:Ever/template/colors.dart';
 import 'package:Ever/template/eventCard.dart';
 import 'package:Ever/template/eventDetailBottomSheet.dart';
-import 'package:Ever/template/profileBottomSheet.dart';
 import 'dart:async';
 
 bool _eventCardIsUp = false;
@@ -154,7 +154,7 @@ class _homeState extends State<home> {
     _onUserAddedSubscription = _userQuery.onChildAdded.listen(onUserGet);
     super.initState();
   }
-  
+
   onEntryAdded(Event acara) {
     setState(() {
       _acaraList.add(Acara.fromSnapshot(acara.snapshot));
@@ -272,7 +272,6 @@ class _homeState extends State<home> {
               onPressed: () {
                 setState(() {
                   widget.notifyParent();
-                  print(_eventCardIsUp);
                 });
                 eventDetailBottomSheet(
                   context,
@@ -319,10 +318,13 @@ class _homeState extends State<home> {
           //_addEvent('2201729713');
           //_removeEvent();
           // print(
-          //     'User Email: ${_userList[0].userEmail}\nUser Name: ${_userList[0].userName}');
           widget.notifyParent();
-          //print(_userList);
-          profileBottomSheet(context, _userList[0]);
+          showBottomSheet(
+            context: context,
+            builder: (BuildContext context) {
+              return userProfile(userData: _userList[0]);
+            },
+          );
         },
       ),
     );
