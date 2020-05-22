@@ -53,6 +53,12 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  refresh() {
+    setState(() {
+      _userList[0].userProfileImg = downloadURL;
+    });
+  }
+
   @override
   void initState() {
     userID = widget.userId;
@@ -155,12 +161,6 @@ class _HomePageState extends State<HomePage> {
     } catch (e) {
       print(e);
     }
-  }
-
-  refresh() {
-    setState(() {
-      _eventCardIsUp = !_eventCardIsUp;
-    });
   }
 
   Widget _showAcaraList() {
@@ -282,6 +282,7 @@ class _HomePageState extends State<HomePage> {
                             });
                             scaffoldState.currentState
                                 .showBottomSheet((context) => userProfile(
+                                      notifyParent: refresh,
                                       userData: _userList[0],
                                       signOut: signOut,
                                     ));

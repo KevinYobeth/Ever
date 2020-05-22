@@ -10,38 +10,15 @@ import 'package:firebase_storage/firebase_storage.dart';
 
 File _image;
 bool _uploaded = false;
-String _downloadURL;
+String downloadURL;
 String user = userID;
-
-Future getImage(bool isCamera) async {
-  File image;
-  if (isCamera) {
-    image = await ImagePicker.pickImage(source: ImageSource.camera);
-  } else {
-    image = await ImagePicker.pickImage(source: ImageSource.gallery);
-  }
-  _image = image;
-}
-
-Future uploadImage(User userData) async {
-  FirebaseDatabase _dbRef = FirebaseDatabase.instance;
-  StorageReference _reference =
-      FirebaseStorage.instance.ref().child('/ProfileImg/$user');
-  StorageUploadTask uploadTask = _reference.putFile(_image);
-  StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
-  _uploaded = true;
-  String downloadAddress = await _reference.getDownloadURL();
-  _downloadURL = downloadAddress;
-  db.reference().child('user/$user').child('userProfileImg').set(_downloadURL);
-  userData.userProfileImg = _downloadURL;
-  print(_downloadURL);
-}
 
 class userProfile extends StatefulWidget {
   final User userData;
-  final Function signOut;
+  final Function() signOut;
+  final Function() notifyParent;
 
-  userProfile({this.userData, this.signOut});
+  userProfile({this.userData, this.signOut, this.notifyParent});
   @override
   _userProfileState createState() => _userProfileState(userData, signOut);
 }
@@ -51,6 +28,35 @@ class _userProfileState extends State<userProfile> {
   final Function signOut;
 
   _userProfileState(this.userData, this.signOut);
+
+  Future getImage(bool isCamera) async {
+    File image;
+    if (isCamera) {
+      image = await ImagePicker.pickImage(source: ImageSource.camera);
+    } else {
+      image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    }
+    setState(() {
+      _image = image;
+    });
+  }
+
+  Future uploadImage(User userData) async {
+    FirebaseDatabase _dbRef = FirebaseDatabase.instance;
+    StorageReference _reference =
+        FirebaseStorage.instance.ref().child('/ProfileImg/$user');
+    StorageUploadTask uploadTask = _reference.putFile(_image);
+    StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
+    _uploaded = true;
+    String downloadAddress = await _reference.getDownloadURL();
+    downloadURL = downloadAddress;
+    db.reference().child('user/$user').child('userProfileImg').set(downloadURL);
+    setState(() {
+      userData.userProfileImg = downloadURL;
+      widget.notifyParent();
+    });
+    print(downloadURL);
+  }
 
   @override
   Widget build(BuildContext context) {
