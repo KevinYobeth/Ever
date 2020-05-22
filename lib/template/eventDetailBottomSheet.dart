@@ -160,7 +160,7 @@ class _eventDetailState extends State<eventDetail> {
   Widget build(BuildContext context) {
     return Container(
       child: FractionallySizedBox(
-        heightFactor: (MediaQuery.of(context).size.height) /
+        heightFactor: (MediaQuery.of(context).size.height - 120.0) /
             MediaQuery.of(context).size.height,
         child: Container(
           height: 1000,
