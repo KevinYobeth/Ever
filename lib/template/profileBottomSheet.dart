@@ -39,16 +39,18 @@ Future uploadImage(User userData) async {
 
 class userProfile extends StatefulWidget {
   final User userData;
+  final Function signOut;
 
-  userProfile({this.userData});
+  userProfile({this.userData, this.signOut});
   @override
-  _userProfileState createState() => _userProfileState(userData);
+  _userProfileState createState() => _userProfileState(userData, signOut);
 }
 
 class _userProfileState extends State<userProfile> {
   final User userData;
+  final Function signOut;
 
-  _userProfileState(this.userData);
+  _userProfileState(this.userData, this.signOut);
 
   @override
   Widget build(BuildContext context) {
@@ -179,6 +181,23 @@ class _userProfileState extends State<userProfile> {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
+                            SizedBox(height: 100.0),
+                            Center(
+                              child: InkWell(
+                                child: Text(
+                                  'Log Out',
+                                  style: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    fontSize: 15,
+                                    color: orange,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                onTap: () {
+                                  signOut();
+                                },
+                              ),
+                            )
                           ],
                         ),
                       ),

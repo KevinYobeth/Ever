@@ -268,11 +268,11 @@ class _HomePageState extends State<HomePage> {
                               shape: BoxShape.circle,
                               color: gray,
                               image: DecorationImage(
-                                  image: NetworkImage(_userList[0]
-                                              .userProfileImg ==
-                                          'null'
-                                      ? 'https://firebasestorage.googleapis.com/v0/b/ever-a01f1.appspot.com/o/ProfileImg%2FDefaultProfile.jpg?alt=media&token=77cc3836-1483-46bf-9230-cf290f9395fb'
-                                      : _userList[0].userProfileImg),
+                                  image: NetworkImage(_userList.length > 0
+                                      ? _userList[0].userProfileImg == 'null'
+                                          ? 'https://firebasestorage.googleapis.com/v0/b/ever-a01f1.appspot.com/o/ProfileImg%2FDefaultProfile.jpg?alt=media&token=77cc3836-1483-46bf-9230-cf290f9395fb'
+                                          : _userList[0].userProfileImg
+                                      : 'https://firebasestorage.googleapis.com/v0/b/ever-a01f1.appspot.com/o/ProfileImg%2FDefaultProfile.jpg?alt=media&token=77cc3836-1483-46bf-9230-cf290f9395fb'),
                                   fit: BoxFit.cover),
                             ),
                           ),
@@ -280,9 +280,11 @@ class _HomePageState extends State<HomePage> {
                             setState(() {
                               _eventCardIsUp = !_eventCardIsUp;
                             });
-                            scaffoldState.currentState.showBottomSheet(
-                                (context) =>
-                                    userProfile(userData: _userList[0]));
+                            scaffoldState.currentState
+                                .showBottomSheet((context) => userProfile(
+                                      userData: _userList[0],
+                                      signOut: signOut,
+                                    ));
                             //signOut();
                           },
                         ),
