@@ -12,9 +12,6 @@ import 'dart:async';
 
 bool _eventCardIsUp = false;
 String userID;
-final FirebaseDatabase db = FirebaseDatabase.instance;
-
-final scaffoldState = GlobalKey<ScaffoldState>();
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.auth, this.userId, this.logoutCallback})
@@ -29,6 +26,108 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    userID = widget.userId;
+
+    super.initState();
+  }
+
+  signOut() async {
+    try {
+      await widget.auth.signOut();
+      widget.logoutCallback();
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  refresh() {
+    setState(() {
+      _eventCardIsUp = !_eventCardIsUp;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: lightBackgroundColor,
+      body: Column(
+        children: <Widget>[
+          Stack(
+            children: <Widget>[
+              Container(
+                height: 120.0,
+                child: SafeArea(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            InkWell(
+                              child: Text(
+                                'EVER',
+                                style: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    color: _eventCardIsUp
+                                        ? Colors.black
+                                        : Colors.white,
+                                    fontSize: 40,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            InkWell(
+                              child: Icon(
+                                Icons.power_settings_new,
+                                color: _eventCardIsUp
+                                    ? Colors.black
+                                    : Colors.white,
+                                size: 40,
+                              ),
+                              onTap: () {
+                                signOut();
+                              },
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(20.0),
+                      bottomRight: Radius.circular(20.0)),
+                  color: _eventCardIsUp
+                      ? lightBackgroundColor
+                      : darkBackgroundColor,
+                ),
+              ),
+            ],
+          ),
+          Expanded(
+              child: home(
+            notifyParent: refresh,
+          )),
+        ],
+      ),
+    );
+  }
+}
+
+final FirebaseDatabase db = FirebaseDatabase.instance;
+
+class home extends StatefulWidget {
+  final Function() notifyParent;
+  home({Key key, @required this.notifyParent}) : super(key: key);
+  @override
+  _homeState createState() => _homeState();
+}
+
+class _homeState extends State<home> {
   List<Acara> _acaraList;
   List<User> _userList;
   List<Organizer> _organizerList;
@@ -41,28 +140,8 @@ class _HomePageState extends State<HomePage> {
   StreamSubscription<Event> _onUserAddedSubscription;
   StreamSubscription<Event> _onOrganizerAddedSubscription;
 
-  onEntryAdded(Event acara) {
-    setState(() {
-      _acaraList.add(Acara.fromSnapshot(acara.snapshot));
-    });
-  }
-
-  onUserGet(Event user) {
-    setState(() {
-      _userList.add(User.fromSnapshot(user.snapshot));
-    });
-  }
-
-  refresh() {
-    setState(() {
-      _userList[0].userProfileImg = downloadURL;
-    });
-  }
-
   @override
   void initState() {
-    userID = widget.userId;
-
     _eventCardIsUp = false;
 
     _acaraList = new List();
@@ -74,8 +153,19 @@ class _HomePageState extends State<HomePage> {
 
     _onAcaraAddedSubscription = _acaraQuery.onChildAdded.listen(onEntryAdded);
     _onUserAddedSubscription = _userQuery.onChildAdded.listen(onUserGet);
-
     super.initState();
+  }
+
+  onEntryAdded(Event acara) {
+    setState(() {
+      _acaraList.add(Acara.fromSnapshot(acara.snapshot));
+    });
+  }
+
+  onUserGet(Event user) {
+    setState(() {
+      _userList.add(User.fromSnapshot(user.snapshot));
+    });
   }
 
   _addEvent(String userID) {
@@ -154,15 +244,6 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  signOut() async {
-    try {
-      await widget.auth.signOut();
-      widget.logoutCallback();
-    } catch (e) {
-      print(e);
-    }
-  }
-
   Widget _showAcaraList() {
     if (_acaraList.length > 0) {
       return ListView.builder(
@@ -194,7 +275,7 @@ class _HomePageState extends State<HomePage> {
             ),
             onPressed: () {
               setState(() {
-                _eventCardIsUp = !_eventCardIsUp;
+                widget.notifyParent();
               });
               showBottomSheet(
                 context: context,
@@ -233,82 +314,31 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: scaffoldState,
+      resizeToAvoidBottomPadding: false,
       backgroundColor: lightBackgroundColor,
-      body: Column(
-        children: <Widget>[
-          Container(
-            height: 120.0,
-            child: SafeArea(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        InkWell(
-                          child: Text(
-                            'EVER',
-                            style: TextStyle(
-                                fontFamily: 'Montserrat',
-                                color: _eventCardIsUp
-                                    ? Colors.black
-                                    : Colors.white,
-                                fontSize: 40,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        InkWell(
-                          child: Container(
-                            height: 50,
-                            width: 50,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: gray,
-                              image: DecorationImage(
-                                  image: NetworkImage(_userList.length > 0
-                                      ? _userList[0].userProfileImg == 'null'
-                                          ? 'https://firebasestorage.googleapis.com/v0/b/ever-a01f1.appspot.com/o/ProfileImg%2FDefaultProfile.jpg?alt=media&token=77cc3836-1483-46bf-9230-cf290f9395fb'
-                                          : _userList[0].userProfileImg
-                                      : 'https://firebasestorage.googleapis.com/v0/b/ever-a01f1.appspot.com/o/ProfileImg%2FDefaultProfile.jpg?alt=media&token=77cc3836-1483-46bf-9230-cf290f9395fb'),
-                                  fit: BoxFit.cover),
-                            ),
-                          ),
-                          onTap: () {
-                            setState(() {
-                              _eventCardIsUp = !_eventCardIsUp;
-                            });
-                            scaffoldState.currentState
-                                .showBottomSheet((context) => userProfile(
-                                      notifyParent: refresh,
-                                      userData: _userList[0],
-                                      signOut: signOut,
-                                    ));
-                            //signOut();
-                          },
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(20.0),
-                  bottomRight: Radius.circular(20.0)),
-              color:
-                  _eventCardIsUp ? lightBackgroundColor : darkBackgroundColor,
-            ),
-          ),
-          Expanded(
-            child: Container(
+      body: Container(
+        child: Column(
+          children: <Widget>[
+            Expanded(
               child: _showAcaraList(),
             ),
-          ),
-        ],
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.person),
+        backgroundColor: darkBackgroundColor,
+        onPressed: () {
+          //_addEvent('2201729713');
+          //_removeEvent();
+          widget.notifyParent();
+          showBottomSheet(
+            context: context,
+            builder: (BuildContext context) {
+              return userProfile(userData: _userList[0]);
+            },
+          );
+        },
       ),
     );
   }
