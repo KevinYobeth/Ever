@@ -196,7 +196,7 @@ class _HomePageState extends State<HomePage> {
               setState(() {
                 _eventCardIsUp = !_eventCardIsUp;
               });
-              showBottomSheet(
+              var sheetController = showBottomSheet(
                 context: context,
                 builder: (BuildContext context) {
                   return eventDetail(
@@ -218,6 +218,12 @@ class _HomePageState extends State<HomePage> {
                       packagePrice: packagePrice);
                 },
               );
+
+              sheetController.closed.then((value) {
+                setState(() {
+                  _eventCardIsUp = !_eventCardIsUp;
+                });
+              });
             },
           );
         },
@@ -280,13 +286,20 @@ class _HomePageState extends State<HomePage> {
                             setState(() {
                               _eventCardIsUp = !_eventCardIsUp;
                             });
-                            scaffoldState.currentState
-                                .showBottomSheet((context) => userProfile(
-                                      notifyParent: refresh,
-                                      userData: _userList[0],
-                                      signOut: signOut,
-                                    ));
-                            //signOut();
+                            var sheetController =
+                                scaffoldState.currentState.showBottomSheet(
+                              (context) => userProfile(
+                                notifyParent: refresh,
+                                userData: _userList[0],
+                                signOut: signOut,
+                              ),
+                            );
+
+                            sheetController.closed.then((value) {
+                              setState(() {
+                                _eventCardIsUp = !_eventCardIsUp;
+                              });
+                            });
                           },
                         ),
                       ],
