@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:Ever/services/authentication.dart';
 import 'package:Ever/template/colors.dart';
 import 'package:Ever/template/style.dart';
-import 'package:email_validator/email_validator.dart';
+import 'package:intl/intl.dart';
 
 class noGlowBehavior extends ScrollBehavior {
   @override
@@ -282,8 +282,15 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
               Icons.mail,
               color: Colors.grey,
             )),
-        validator: (value) =>
-            EmailValidator.validate(value) ? null : "Invalid email address",
+        validator: (value) {
+          Pattern pattern =
+              r'^((?!\.)[\w-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$';
+          RegExp regex = RegExp(pattern);
+          if (!regex.hasMatch(value))
+            return 'Invalid email address';
+          else
+            return null;
+        },
         onSaved: (value) => _email = value.trim(),
       ),
     );
@@ -370,6 +377,60 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
   Widget showDateOfBirthInput() {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
+      child: Row(
+        children: <Widget>[
+          Icon(
+            Icons.calendar_today,
+            color: Colors.grey,
+          ),
+          _dateOfBirth == null
+              ? Padding(
+                  padding: const EdgeInsets.only(left: 15.0),
+                  child: FlatButton(
+                    color: Colors.grey[300],
+                    child: Text('Date of Birth'),
+                    onPressed: () {
+                      showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(1900),
+                              lastDate: DateTime(2200))
+                          .then((date) {
+                        setState(() {
+                          _dateOfBirth = date.toString();
+                        });
+                      });
+                    },
+                  ),
+                )
+              : Padding(
+                  padding: const EdgeInsets.only(left: 15.0),
+                  child: FlatButton(
+                    color: Colors.grey[300],
+                    child: Text(DateFormat('dd MMM yyyy')
+                        .format(DateTime.parse(_dateOfBirth))),
+                    onPressed: () {
+                      showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(1900),
+                              lastDate: DateTime.now())
+                          .then((date) {
+                        setState(() {
+                          _dateOfBirth = date.toString();
+                        });
+                      });
+                    },
+                  ),
+                )
+        ],
+      ),
+    );
+  }
+
+  Widget showDateeOfBirthInput() {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
       child: new TextFormField(
         onTap: () {
           showDatePicker(
@@ -435,7 +496,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
     //   ),
     // );
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
+      padding: EdgeInsets.symmetric(horizontal: 30.0),
       child: Row(
         children: <Widget>[
           Radio(
