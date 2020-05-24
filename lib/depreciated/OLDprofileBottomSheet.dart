@@ -38,7 +38,7 @@ Future uploadImage(User userData) async {
 }
 
 void profileBottomSheet(context, User userData) {
-  print(user);  
+  print(user);
   showBottomSheet(
     context: context,
     elevation: 0,
@@ -79,7 +79,7 @@ void profileBottomSheet(context, User userData) {
                           width: 150,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: gray,
+                            color: lighterGray,
                             image: DecorationImage(
                                 image: NetworkImage(userData.userProfileImg ==
                                         'null'

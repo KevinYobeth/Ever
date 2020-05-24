@@ -98,7 +98,7 @@ class _userProfileState extends State<userProfile> {
                           width: 150,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: gray,
+                            color: lighterGray,
                             image: DecorationImage(
                                 image: NetworkImage(userData.userProfileImg ==
                                         'null'
@@ -118,7 +118,7 @@ class _userProfileState extends State<userProfile> {
                       ),
                       FlatButton(
                         child: Container(
-                          height: 30,
+                          height: 35,
                           width: 100,
                           child: Center(
                             child: Text(
@@ -132,7 +132,10 @@ class _userProfileState extends State<userProfile> {
                             ),
                           ),
                           decoration: BoxDecoration(
-                              color: orange,
+                              gradient: LinearGradient(colors: [
+                                gradientLighterOrange,
+                                gradientDarkerOrange
+                              ]),
                               borderRadius: BorderRadius.circular(20)),
                         ),
                       ),
