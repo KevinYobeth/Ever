@@ -1,3 +1,4 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:Ever/template/colors.dart';
 import 'package:Ever/template/eventCard.dart';
@@ -121,6 +122,11 @@ class eventDetail extends StatefulWidget {
 }
 
 class _eventDetailState extends State<eventDetail> {
+  @override
+  void initState() {
+    fetchOrganizationName();
+  }
+
   final String eventName;
   final bool isNonProfit;
   final String eventThumb;
@@ -155,6 +161,22 @@ class _eventDetailState extends State<eventDetail> {
       this.packageName,
       this.packageContent,
       this.packagePrice);
+
+  String _eventOrganizerName = '{Organizer Name}';
+
+  fetchOrganizationName() {
+    final DatabaseReference db = FirebaseDatabase.instance.reference();
+    db
+        .child("user/$eventOrganizer")
+        .child("organizationID")
+        .once()
+        .then((DataSnapshot data) {
+      setState(() {
+        print(data.value);
+        _eventOrganizerName = data.value;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -292,7 +314,7 @@ class _eventDetailState extends State<eventDetail> {
                             SizedBox(
                               height: 20,
                             ),
-                            Text("Event Organized by: $eventOrganizer",
+                            Text("Event Organized by: $_eventOrganizerName",
                                 style: TextStyle(
                                     fontFamily: 'Montserrat',
                                     color: white,
