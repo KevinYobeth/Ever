@@ -93,19 +93,14 @@ class _userProfileState extends State<userProfile> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       GestureDetector(
-                        child: Container(
-                          height: 150,
-                          width: 150,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: lighterGray,
-                            image: DecorationImage(
-                                image: NetworkImage(userData.userProfileImg ==
-                                        'null'
-                                    ? 'https://firebasestorage.googleapis.com/v0/b/ever-a01f1.appspot.com/o/ProfileImg%2FDefaultProfile.jpg?alt=media&token=77cc3836-1483-46bf-9230-cf290f9395fb'
-                                    : userData.userProfileImg),
-                                fit: BoxFit.cover),
-                          ),
+                        child: CircleAvatar(
+                          radius: 75,
+                          backgroundColor: lighterGray,
+                          backgroundImage: NetworkImage(userData
+                                      .userProfileImg ==
+                                  'null'
+                              ? 'https://firebasestorage.googleapis.com/v0/b/ever-a01f1.appspot.com/o/ProfileImg%2FDefaultProfile.jpg?alt=media&token=77cc3836-1483-46bf-9230-cf290f9395fb'
+                              : userData.userProfileImg),
                         ),
                         onTap: () {
                           getImage(false).then((value) {
@@ -138,6 +133,7 @@ class _userProfileState extends State<userProfile> {
                               ]),
                               borderRadius: BorderRadius.circular(20)),
                         ),
+                        onPressed: () {},
                       ),
                     ],
                   ),
