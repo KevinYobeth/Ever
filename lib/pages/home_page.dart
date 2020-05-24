@@ -243,7 +243,9 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: lightBackgroundColor,
       body: Column(
         children: <Widget>[
-          Container(
+          AnimatedContainer(
+            curve: Curves.fastOutSlowIn,
+            duration: Duration(milliseconds: 400),
             height: 120.0,
             child: SafeArea(
               child: Column(

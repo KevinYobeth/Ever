@@ -474,7 +474,11 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
           height: 40.0,
           child: Text(
             _isLoginForm ? 'Sign In' : 'Sign Up',
-            style: TextStyle(fontSize: 14.0, color: white),
+            style: TextStyle(
+                fontSize: 14.0,
+                color: white,
+                fontFamily: 'Montserrat',
+                fontWeight: FontWeight.bold),
           ),
           decoration: BoxDecoration(
             gradient: LinearGradient(
