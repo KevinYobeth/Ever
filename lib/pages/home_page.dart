@@ -259,9 +259,7 @@ class _HomePageState extends State<HomePage> {
                             'EVER',
                             style: TextStyle(
                                 fontFamily: 'Montserrat',
-                                color: _eventCardIsUp
-                                    ? Colors.black
-                                    : Colors.white,
+                                color: _eventCardIsUp ? black : white,
                                 fontSize: 40,
                                 fontWeight: FontWeight.bold),
                           ),
@@ -272,7 +270,7 @@ class _HomePageState extends State<HomePage> {
                             width: 50,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              color: gray,
+                              color: lighterGray,
                               image: DecorationImage(
                                   image: NetworkImage(_userList.length > 0
                                       ? _userList[0].userProfileImg == 'null'

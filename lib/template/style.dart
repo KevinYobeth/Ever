@@ -8,7 +8,7 @@ TextStyle header = TextStyle(
     fontWeight: FontWeight.bold);
 
 TextStyle tagline = TextStyle(
-    color: gray,
+    color: lighterGray,
     fontSize: 20.0,
     fontFamily: 'Montserrat',
     fontWeight: FontWeight.bold);

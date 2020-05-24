@@ -120,7 +120,7 @@ Widget packageDetail() {
     'Large logo on Banner (3pcs)',
     style: TextStyle(
       fontFamily: 'Montserrat',
-      color: gray,
+      color: lighterGray,
       fontSize: 15,
     ),
   );
@@ -296,7 +296,7 @@ Widget sponsorContent(context) {
                 'Large size Banner, Adlips, Logo in shirts and nametag, 3 x 4 stand',
                 style: TextStyle(
                   fontFamily: 'Montserrat',
-                  color: gray,
+                  color: lighterGray,
                   fontSize: 12,
                 ),
               ),

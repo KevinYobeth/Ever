@@ -428,40 +428,6 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
     );
   }
 
-  Widget showDateeOfBirthInput() {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
-      child: new TextFormField(
-        onTap: () {
-          showDatePicker(
-                  context: context,
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime(1900),
-                  lastDate: DateTime(2200))
-              .then((date) {
-            setState(() {
-              _dateOfBirth = date.toString();
-            });
-          });
-        },
-        maxLines: 1,
-        obscureText: false,
-        autofocus: false,
-        initialValue: _dateOfBirth == null ? '' : _dateOfBirth.toString(),
-        decoration: new InputDecoration(
-            hintText: _dateOfBirth == null
-                ? 'Date of Birth'
-                : _dateOfBirth.toString(),
-            icon: new Icon(
-              Icons.calendar_today,
-              color: Colors.grey,
-            )),
-        // validator: (value) =>
-        //     value.isEmpty ? 'Date of Birth can\'t be empty' : null,
-      ),
-    );
-  }
-
   int _radioValue = 0;
 
   void _handleGenderRadioChange(int value) {
@@ -479,22 +445,6 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
   }
 
   Widget showGenderInput() {
-    // return Padding(
-    //   padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
-    //   child: new TextFormField(
-    //     maxLines: 1,
-    //     obscureText: false,
-    //     autofocus: false,
-    //     decoration: new InputDecoration(
-    //         hintText: 'Gender',
-    //         icon: new Icon(
-    //           Icons.supervised_user_circle,
-    //           color: Colors.grey,
-    //         )),
-    //     validator: (value) => value.isEmpty ? 'Gender can\'t be empty' : null,
-    //     onSaved: (value) => _gender = value.trim(),
-    //   ),
-    // );
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 30.0),
       child: Row(
@@ -517,19 +467,23 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
   }
 
   Widget showPrimaryButton() {
-    return new Padding(
+    return Padding(
       padding: EdgeInsets.fromLTRB(250.0, 10.0, 30.0, 0.0),
-      child: SizedBox(
-        height: 40.0,
-        child: new RaisedButton(
-          elevation: 5.0,
-          shape: new RoundedRectangleBorder(
-              borderRadius: new BorderRadius.circular(20.0)),
-          color: orange,
-          child: new Text(_isLoginForm ? 'Sign In' : 'Sign Up',
-              style: new TextStyle(fontSize: 14.0, color: Colors.white)),
-          onPressed: validateAndSubmit,
+      child: InkWell(
+        child: Container(
+          height: 40.0,
+          child: Text(
+            _isLoginForm ? 'Sign In' : 'Sign Up',
+            style: TextStyle(fontSize: 14.0, color: white),
+          ),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+                colors: [gradientLighterOrange, gradientDarkerOrange]),
+            borderRadius: BorderRadius.circular(20),
+          ),
+          alignment: Alignment.center,
         ),
+        onTap: validateAndSubmit,
       ),
     );
   }
