@@ -267,20 +267,14 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                         InkWell(
-                          child: Container(
-                            height: 50,
-                            width: 50,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: lighterGray,
-                              image: DecorationImage(
-                                  image: NetworkImage(_userList.length > 0
-                                      ? _userList[0].userProfileImg == 'null'
-                                          ? 'https://firebasestorage.googleapis.com/v0/b/ever-a01f1.appspot.com/o/ProfileImg%2FDefaultProfile.jpg?alt=media&token=77cc3836-1483-46bf-9230-cf290f9395fb'
-                                          : _userList[0].userProfileImg
-                                      : 'https://firebasestorage.googleapis.com/v0/b/ever-a01f1.appspot.com/o/ProfileImg%2FDefaultProfile.jpg?alt=media&token=77cc3836-1483-46bf-9230-cf290f9395fb'),
-                                  fit: BoxFit.cover),
-                            ),
+                          child: CircleAvatar(
+                            radius: 20,
+                            backgroundColor: lighterGray,
+                            backgroundImage: NetworkImage(_userList.length > 0
+                                ? _userList[0].userProfileImg == 'null'
+                                    ? 'https://firebasestorage.googleapis.com/v0/b/ever-a01f1.appspot.com/o/ProfileImg%2FDefaultProfile.jpg?alt=media&token=77cc3836-1483-46bf-9230-cf290f9395fb'
+                                    : _userList[0].userProfileImg
+                                : 'https://firebasestorage.googleapis.com/v0/b/ever-a01f1.appspot.com/o/ProfileImg%2FDefaultProfile.jpg?alt=media&token=77cc3836-1483-46bf-9230-cf290f9395fb'),
                           ),
                           onTap: () {
                             setState(() {
