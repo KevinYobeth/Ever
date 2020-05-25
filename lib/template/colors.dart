@@ -11,6 +11,7 @@ const red = Color(0xffd24f33);
 const orange = Color(0xfff78b61);
 const lightOrange = Color(0xfff88558);
 const darkBlue = Color(0xff202f47);
+const cardBlue = Color(0xff101d31);
 
 const gradientLighterOrange = Color(0xffeba62f);
 const gradientDarkerOrange = Color(0xffed6e55);

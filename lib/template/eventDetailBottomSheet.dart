@@ -322,7 +322,15 @@ class _eventDetailState extends State<eventDetail> {
                                 ),
                                 onTap: () {
                                   isNonProfit
-                                      ? donationBottomSheet(context)
+                                      ? showModalBottomSheet(
+                                          context: context,
+                                          barrierColor:
+                                              Color.fromRGBO(255, 255, 255, 0),
+                                          backgroundColor: Colors.transparent,
+                                          builder: (BuildContext context) {
+                                            return donationSheet();
+                                          },
+                                        )
                                       : sponsorBottomSheet(context);
                                 },
                               ),
@@ -332,24 +340,36 @@ class _eventDetailState extends State<eventDetail> {
                           Expanded(
                             child: Padding(
                               padding: EdgeInsets.only(right: 10.0),
-                              child: Container(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  'Volunteer',
-                                  style: TextStyle(
-                                    fontFamily: 'Montserrat',
-                                    fontWeight: FontWeight.bold,
-                                    color: white,
+                              child: InkWell(
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    'Volunteer',
+                                    style: TextStyle(
+                                      fontFamily: 'Montserrat',
+                                      fontWeight: FontWeight.bold,
+                                      color: white,
+                                    ),
+                                  ),
+                                  height: 40.0,
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(colors: [
+                                      gradientLighterOrange,
+                                      gradientDarkerOrange
+                                    ]),
+                                    borderRadius: BorderRadius.circular(5.0),
                                   ),
                                 ),
-                                height: 40.0,
-                                decoration: BoxDecoration(
-                                  gradient: LinearGradient(colors: [
-                                    gradientLighterOrange,
-                                    gradientDarkerOrange
-                                  ]),
-                                  borderRadius: BorderRadius.circular(5.0),
-                                ),
+                                onTap: () {
+                                  showModalBottomSheet(
+                                      context: context,
+                                      backgroundColor: Colors.transparent,
+                                      barrierColor:
+                                          Color.fromRGBO(255, 255, 255, 0),
+                                      builder: (BuildContext context) {
+                                        return volunteerSheet();
+                                      });
+                                },
                               ),
                             ),
                             flex: 2,
