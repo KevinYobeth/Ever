@@ -13,6 +13,8 @@ bool _uploaded = false;
 String downloadURL;
 String user = userID;
 
+bool _editProfile = false;
+
 class userProfile extends StatefulWidget {
   final User userData;
   final Function() signOut;

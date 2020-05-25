@@ -33,6 +33,7 @@ class eventDetail extends StatefulWidget {
   final String eventDesc;
   final String eventCriteria;
   final List eventDivision;
+  final List eventSponsor;
   final String eventBenefits;
   final String eventOrganizer;
   final String bankAccount;
@@ -52,6 +53,7 @@ class eventDetail extends StatefulWidget {
       this.eventDesc,
       this.eventCriteria,
       this.eventDivision,
+      this.eventSponsor,
       this.eventBenefits,
       this.eventOrganizer,
       this.bankAccount,
@@ -72,6 +74,7 @@ class eventDetail extends StatefulWidget {
       eventDesc,
       eventCriteria,
       eventDivision,
+      eventSponsor,
       eventBenefits,
       eventOrganizer,
       bankAccount,
@@ -96,6 +99,7 @@ class _eventDetailState extends State<eventDetail> {
   final String eventDesc;
   final String eventCriteria;
   final List eventDivision;
+  final List eventSponsor;
   final String eventBenefits;
   final String eventOrganizer;
   final String bankAccount;
@@ -114,6 +118,7 @@ class _eventDetailState extends State<eventDetail> {
       this.eventDesc,
       this.eventCriteria,
       this.eventDivision,
+      this.eventSponsor,
       this.eventBenefits,
       this.eventOrganizer,
       this.bankAccount,
@@ -132,7 +137,6 @@ class _eventDetailState extends State<eventDetail> {
         .once()
         .then((DataSnapshot data) {
       setState(() {
-        print(data.value);
         _eventOrganizerName = data.value;
       });
     });
@@ -331,7 +335,15 @@ class _eventDetailState extends State<eventDetail> {
                                             return donationSheet();
                                           },
                                         )
-                                      : sponsorBottomSheet(context);
+                                      : showModalBottomSheet(
+                                          context: context,
+                                          barrierColor:
+                                              Color.fromRGBO(255, 255, 255, 0),
+                                          backgroundColor: Colors.transparent,
+                                          builder: (BuildContext context) {
+                                            return sponsorSheet(
+                                                sponsorList: eventSponsor);
+                                          });
                                 },
                               ),
                             ),
@@ -367,7 +379,9 @@ class _eventDetailState extends State<eventDetail> {
                                       barrierColor:
                                           Color.fromRGBO(255, 255, 255, 0),
                                       builder: (BuildContext context) {
-                                        return volunteerSheet();
+                                        return volunteerSheet(
+                                          divisionList: eventDivision,
+                                        );
                                       });
                                 },
                               ),

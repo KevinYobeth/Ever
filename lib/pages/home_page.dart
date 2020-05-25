@@ -179,13 +179,11 @@ class _HomePageState extends State<HomePage> {
           String eventDesc = _acaraList[index].eventDesc;
           String eventCriteria = _acaraList[index].eventCriteria;
           List eventDivision = _acaraList[index].eventDivision;
+          List eventSponsor = _acaraList[index].eventSponsor;
           String eventBenefits = _acaraList[index].eventBenefits;
           bool isNonProfit = _acaraList[index].isNonProfit;
           String bankAccount = 'null';
           String bankAccountName = 'null';
-          String packageName = 'null';
-          String packageContent = 'null';
-          String packagePrice = 'null';
           return FlatButton(
             child: eventCard(
               eventName: eventName,
@@ -200,22 +198,21 @@ class _HomePageState extends State<HomePage> {
                 context: context,
                 builder: (BuildContext context) {
                   return eventDetail(
-                      eventName: eventName,
-                      eventOrganizer: eventOrganizer,
-                      isNonProfit: isNonProfit,
-                      eventThumb: eventThumb,
-                      eventDate: eventDate,
-                      eventTime: eventTime,
-                      eventPlace: eventPlace,
-                      eventDesc: eventDesc,
-                      eventCriteria: eventCriteria,
-                      eventDivision: eventDivision,
-                      eventBenefits: eventBenefits,
-                      bankAccount: bankAccount,
-                      bankAccountName: bankAccountName,
-                      packageName: packageName,
-                      packageContent: packageContent,
-                      packagePrice: packagePrice);
+                    eventName: eventName,
+                    eventOrganizer: eventOrganizer,
+                    isNonProfit: isNonProfit,
+                    eventThumb: eventThumb,
+                    eventDate: eventDate,
+                    eventTime: eventTime,
+                    eventPlace: eventPlace,
+                    eventDesc: eventDesc,
+                    eventCriteria: eventCriteria,
+                    eventDivision: eventDivision,
+                    eventSponsor: eventSponsor,
+                    eventBenefits: eventBenefits,
+                    bankAccount: bankAccount,
+                    bankAccountName: bankAccountName,
+                  );
                 },
               );
 
