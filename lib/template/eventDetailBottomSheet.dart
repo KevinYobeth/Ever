@@ -23,46 +23,6 @@ Widget divisionContent(List division) {
   );
 }
 
-Widget eventButton(isNonProfit, context) {
-  if (isNonProfit == true) {
-    return FlatButton(
-      color: Colors.green,
-      child: Padding(
-        padding: const EdgeInsets.all(5),
-        child: Text(
-          'Be a Donator',
-          style: TextStyle(
-              fontFamily: 'Montserrat',
-              fontSize: 15,
-              color: white,
-              fontWeight: FontWeight.bold),
-        ),
-      ),
-      onPressed: () {
-        donationBottomSheet(context);
-      },
-    );
-  } else {
-    return FlatButton(
-      color: Colors.green,
-      child: Padding(
-        padding: const EdgeInsets.all(5),
-        child: Text(
-          'Be a Sponsor',
-          style: TextStyle(
-              fontFamily: 'Montserrat',
-              fontSize: 15,
-              color: white,
-              fontWeight: FontWeight.bold),
-        ),
-      ),
-      onPressed: () {
-        sponsorBottomSheet(context);
-      },
-    );
-  }
-}
-
 class eventDetail extends StatefulWidget {
   final String eventName;
   final bool isNonProfit;
@@ -330,50 +290,79 @@ class _eventDetailState extends State<eventDetail> {
                   );
                 },
               ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  Container(
-                    height: 70,
-                    child: Stack(
-                      children: <Widget>[
-                        Positioned(
-                          left: 10,
-                          top: 10,
-                          bottom: 10,
-                          right: 210,
-                          child: eventButton(isNonProfit, context),
-                        ),
-                        Positioned(
-                          right: 10,
-                          top: 10,
-                          bottom: 10,
-                          left: 210,
-                          child: FlatButton(
-                            color: orange,
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 30.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    Container(
+                      height: 60.0,
+                      child: Row(
+                        children: <Widget>[
+                          Expanded(
                             child: Padding(
-                              padding: const EdgeInsets.all(10),
-                              child: Text(
-                                'Volunteer',
-                                style: TextStyle(
-                                    fontFamily: 'Montserrat',
-                                    fontSize: 15,
-                                    color: white,
-                                    fontWeight: FontWeight.bold),
+                              padding: EdgeInsets.symmetric(horizontal: 10.0),
+                              child: InkWell(
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    isNonProfit
+                                        ? 'Be a Donator'
+                                        : 'Be a Sponsor',
+                                    style: TextStyle(
+                                      fontFamily: 'Montserrat',
+                                      fontWeight: FontWeight.bold,
+                                      color: white,
+                                    ),
+                                  ),
+                                  height: 40.0,
+                                  decoration: BoxDecoration(
+                                      color: green,
+                                      borderRadius: BorderRadius.circular(5.0)),
+                                ),
+                                onTap: () {
+                                  isNonProfit
+                                      ? donationBottomSheet(context)
+                                      : sponsorBottomSheet(context);
+                                },
                               ),
                             ),
-                            onPressed: () {
-                              volunteerBottomSheet(context);
-                            },
+                            flex: 3,
                           ),
-                        ),
-                      ],
+                          Expanded(
+                            child: Padding(
+                              padding: EdgeInsets.only(right: 10.0),
+                              child: Container(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  'Volunteer',
+                                  style: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    fontWeight: FontWeight.bold,
+                                    color: white,
+                                  ),
+                                ),
+                                height: 40.0,
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(colors: [
+                                    gradientLighterOrange,
+                                    gradientDarkerOrange
+                                  ]),
+                                  borderRadius: BorderRadius.circular(5.0),
+                                ),
+                              ),
+                            ),
+                            flex: 2,
+                          )
+                        ],
+                      ),
+                      decoration: BoxDecoration(
+                        color: darkBlue,
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
                     ),
-                    decoration: BoxDecoration(
-                        color: darkBackgroundColor,
-                        borderRadius: BorderRadius.circular(10)),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ],
           ),

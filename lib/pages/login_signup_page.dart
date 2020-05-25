@@ -127,7 +127,6 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //resizeToAvoidBottomInset: false,
       resizeToAvoidBottomPadding: false,
       body: Stack(
         alignment: Alignment.bottomCenter,
