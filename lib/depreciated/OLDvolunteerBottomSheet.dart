@@ -117,7 +117,7 @@ void volunteerThankyouBottomSheet(context) {
 }
 
 Widget divisionName(String name) {
-  return InkWell(
+  return FlatButton(
     child: Container(
       child: Center(
         child: Text(
@@ -125,7 +125,7 @@ Widget divisionName(String name) {
           style: TextStyle(
               fontFamily: 'Montserrat',
               color: Colors.grey[700],
-              fontSize: 10,
+              fontSize: 11,
               fontWeight: FontWeight.bold),
         ),
       ),
@@ -134,14 +134,14 @@ Widget divisionName(String name) {
           borderRadius: BorderRadius.circular(10),
           border: Border.all(color: divisionChosen ? orange : white, width: 5)),
       height: 35,
-      width: 100,
+      width: 120,
     ),
-    onTap: () {},
+    onPressed: () {},
   );
 }
 
 Widget shirtSize(String size) {
-  return InkWell(
+  return FlatButton(
     child: Container(
       child: Center(
         child: Text(
@@ -161,147 +161,144 @@ Widget shirtSize(String size) {
       height: 35,
       width: 35,
     ),
-    onTap: () {},
+    onPressed: () {},
   );
 }
 
-class volunteerSheet extends StatefulWidget {
-  @override
-  _volunteerSheetState createState() => _volunteerSheetState();
-}
-
-class _volunteerSheetState extends State<volunteerSheet> {
-  @override
-  Widget build(BuildContext context) {
-    return FractionallySizedBox(
-      heightFactor: (MediaQuery.of(context).size.height * 0.8) /
-          MediaQuery.of(context).size.height,
-      child: Container(
-        decoration: BoxDecoration(
-          color: cardBlue,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20),
-            topRight: Radius.circular(20),
+void volunteerBottomSheet(context) {
+  showModalBottomSheet(
+    context: context,
+    elevation: 0,
+    backgroundColor: Colors.transparent,
+    builder: (BuildContext bc) {
+      return FractionallySizedBox(
+        heightFactor: (MediaQuery.of(context).size.height * 0.6) /
+            MediaQuery.of(context).size.height,
+        child: Container(
+          decoration: BoxDecoration(
+            color: darkBackgroundColor,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20),
+              topRight: Radius.circular(20),
+            ),
           ),
-        ),
-        child: Stack(
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.fromLTRB(170, 10, 170, 0),
-              child: Container(
-                height: 7,
-                width: 60,
-                decoration: BoxDecoration(
-                  color: Color.fromRGBO(255, 255, 255, 0.4),
-                  borderRadius: BorderRadius.circular(20),
+          child: Stack(
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.fromLTRB(170, 10, 170, 0),
+                child: Container(
+                  height: 7,
+                  width: 60,
+                  decoration: BoxDecoration(
+                    color: Color.fromRGBO(255, 255, 255, 0.4),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
                 ),
               ),
-            ),
-            DraggableScrollableSheet(
-              initialChildSize: 0.95,
-              minChildSize: 0.5,
-              builder:
-                  (BuildContext context, ScrollController scrollController) {
-                return Padding(
-                  padding: const EdgeInsets.only(top: 10),
-                  child: SingleChildScrollView(
-                    physics: BouncingScrollPhysics(),
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(30, 10, 0, 0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            'Select Available Division',
-                            style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              color: white,
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
+              DraggableScrollableSheet(
+                initialChildSize: 0.95,
+                minChildSize: 0.5,
+                builder:
+                    (BuildContext context, ScrollController scrollController) {
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: SingleChildScrollView(
+                      physics: BouncingScrollPhysics(),
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(30, 30, 0, 0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              'Select Available Division',
+                              style: TextStyle(
+                                fontFamily: 'Montserrat',
+                                color: white,
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Wrap(
-                            spacing: 10.0,
-                            runSpacing: 10.0,
-                            children: <Widget>[
-                              divisionName('Documentation'),
-                              divisionName('Liaison Officer'),
-                              divisionName('Public Relation'),
-                              divisionName('Ticketing'),
-                              divisionName('Logistic')
-                            ],
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Text(
-                            'Select Shirt Size',
-                            style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              color: white,
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
+                            SizedBox(
+                              height: 10,
                             ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Wrap(
-                            spacing: 15.0,
-                            children: <Widget>[
-                              shirtSize('XS'),
-                              shirtSize('S'),
-                              shirtSize('M'),
-                              shirtSize('L'),
-                              shirtSize('XL'),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 70,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                );
-              },
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                Container(
-                  height: 70,
-                  color: cardBlue,
-                  child: Center(
-                    child: Container(
-                      width: 350,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10)),
-                      child: FlatButton(
-                        color: orange,
-                        child: Text(
-                          'Volunteer',
-                          style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              color: white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold),
+                            Wrap(
+                              alignment: WrapAlignment.start,
+                              children: <Widget>[
+                                divisionName('Documentation'),
+                                divisionName('Public Relation'),
+                                divisionName('Ticketing'),
+                                divisionName('Logistic')
+                              ],
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Text(
+                              'Select Shirt Size',
+                              style: TextStyle(
+                                fontFamily: 'Montserrat',
+                                color: white,
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Wrap(
+                              alignment: WrapAlignment.start,
+                              children: <Widget>[
+                                shirtSize('XS'),
+                                shirtSize('S'),
+                                shirtSize('M'),
+                                shirtSize('L'),
+                                shirtSize('XL'),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 70,
+                            ),
+                          ],
                         ),
-                        onPressed: () {
-                          //volunteerThankyouBottomSheet(context);
-                        },
+                      ),
+                    ),
+                  );
+                },
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  Container(
+                    height: 70,
+                    color: darkBackgroundColor,
+                    child: Center(
+                      child: Container(
+                        width: 350,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10)),
+                        child: FlatButton(
+                          color: orange,
+                          child: Text(
+                            'Volunteer',
+                            style: TextStyle(
+                                fontFamily: 'Montserrat',
+                                color: white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          onPressed: () {
+                            volunteerThankyouBottomSheet(context);
+                          },
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
-      ),
-    );
-  }
+      );
+    },
+  );
 }

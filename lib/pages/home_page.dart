@@ -194,7 +194,7 @@ class _HomePageState extends State<HomePage> {
             ),
             onPressed: () {
               setState(() {
-                _eventCardIsUp = !_eventCardIsUp;
+                _eventCardIsUp = true;
               });
               var sheetController = showBottomSheet(
                 context: context,
@@ -221,7 +221,7 @@ class _HomePageState extends State<HomePage> {
 
               sheetController.closed.then((value) {
                 setState(() {
-                  _eventCardIsUp = !_eventCardIsUp;
+                  _eventCardIsUp = false;
                 });
               });
             },
@@ -278,7 +278,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                           onTap: () {
                             setState(() {
-                              _eventCardIsUp = !_eventCardIsUp;
+                              _eventCardIsUp = true;
                             });
                             var sheetController =
                                 scaffoldState.currentState.showBottomSheet(
@@ -291,7 +291,7 @@ class _HomePageState extends State<HomePage> {
 
                             sheetController.closed.then((value) {
                               setState(() {
-                                _eventCardIsUp = !_eventCardIsUp;
+                                _eventCardIsUp = false;
                               });
                             });
                           },
