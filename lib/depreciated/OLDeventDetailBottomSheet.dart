@@ -38,7 +38,7 @@ Widget eventButton(isNonProfit, context) {
         ),
       ),
       onPressed: () {
-        donationBottomSheet(context);
+        //donationBottomSheet(context);
       },
     );
   } else {
@@ -56,7 +56,7 @@ Widget eventButton(isNonProfit, context) {
         ),
       ),
       onPressed: () {
-        sponsorBottomSheet(context);
+        sponsorSheet();
       },
     );
   }
@@ -266,7 +266,7 @@ void eventDetailBottomSheet(context,
                               ),
                             ),
                             onPressed: () {
-                              volunteerBottomSheet(context);
+                              //volunteerBottomSheet(context);
                             },
                           ),
                         ),

@@ -11,15 +11,14 @@ class Acara {
   String eventDesc;
   String eventCriteria;
   List eventDivision;
+  List eventSponsor;
   String eventBenefits;
-  //String eventOrganizer;
   //String eventStart
   //String eventClose
   bool isNonProfit;
 
   Acara(
-      {
-      this.eventName,
+      {this.eventName,
       this.eventOrganizer,
       this.eventThumb,
       this.eventTime,
@@ -28,6 +27,7 @@ class Acara {
       this.eventDesc,
       this.eventCriteria,
       this.eventDivision,
+      this.eventSponsor,
       this.eventBenefits,
       this.isNonProfit});
 
@@ -42,6 +42,7 @@ class Acara {
         eventDesc = snapshot.value["eventDesc"],
         eventCriteria = snapshot.value["eventCriteria"],
         eventDivision = snapshot.value["eventDivision"],
+        eventSponsor = snapshot.value["eventSponsor"],
         eventBenefits = snapshot.value["eventBenefits"],
         isNonProfit = snapshot.value["isNonProfit"];
 
@@ -56,6 +57,7 @@ class Acara {
       "eventDesc": eventDesc,
       "eventCriteria": eventCriteria,
       "eventDivision": eventDivision,
+      "eventSponsor": eventSponsor,
       "eventBenefits": eventBenefits,
       "isNonProfit": isNonProfit,
     };
