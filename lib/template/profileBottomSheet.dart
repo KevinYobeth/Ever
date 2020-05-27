@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:Ever/models/user.dart';
 import 'package:Ever/pages/home_page.dart';
+import 'package:Ever/template/style.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -20,10 +21,11 @@ String _userCurPass;
 String _userPass;
 String _userPhone;
 
-bool _editProfile = false;
+int _editProfile = 0;
 
 FirebaseDatabase _dbRef = FirebaseDatabase.instance;
 final _formKey = new GlobalKey<FormState>();
+final _upgradeFormKey = new GlobalKey<FormState>();
 
 class userProfile extends StatefulWidget {
   final User userData;
@@ -44,7 +46,7 @@ class _userProfileState extends State<userProfile> {
 
   @override
   void initState() {
-    _editProfile = false;
+    _editProfile = 0;
   }
 
   Future getImage(bool isCamera) async {
@@ -232,6 +234,60 @@ class _userProfileState extends State<userProfile> {
     );
   }
 
+  Widget showOrgNameInput() {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
+      child: new TextFormField(
+          maxLines: 1,
+          keyboardType: TextInputType.emailAddress,
+          autofocus: false,
+          decoration: new InputDecoration(
+            fillColor: white,
+            filled: true,
+            hintText: 'Organization Name',
+            prefixIcon: Icon(Icons.email),
+          ),
+          validator: (value) {
+            if (value.length > 20)
+              return 'Max character (20) limit';
+            else
+              return null;
+          },
+          onSaved: (value) {
+            //userData.userEmail = value.trim();
+            db.reference().child('user/$user/organizationID').set(value);
+          }),
+    );
+  }
+
+  Widget showOrgNumberInput() {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
+      child: new TextFormField(
+          maxLines: 1,
+          keyboardType: TextInputType.emailAddress,
+          autofocus: false,
+          decoration: new InputDecoration(
+            fillColor: white,
+            filled: true,
+            hintText: 'Organization Bank Account Number',
+            prefixIcon: Icon(Icons.email),
+          ),
+          validator: (value) {
+            Pattern pattern = r'^\+?\d+$';
+            RegExp regex = RegExp(pattern);
+            if (!regex.hasMatch(value))
+              return 'Bank Account Number must be a number';
+            else
+              return null;
+          },
+          onSaved: (value) {
+            //userData.userEmail = value.trim();
+            db.reference().child('user/$user/organizationNumber').set(value);
+          }),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -285,46 +341,59 @@ class _userProfileState extends State<userProfile> {
                     SizedBox(
                       height: 10,
                     ),
-                    !_editProfile
-                        ? FlatButton(
-                            child: Container(
-                              height: 35,
-                              width: 100,
-                              child: Center(
-                                child: Text(
-                                  'Edit Profile',
-                                  style: TextStyle(
-                                    fontFamily: 'Montserrat',
-                                    fontSize: 12,
-                                    color: white,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                              decoration: BoxDecoration(
-                                  gradient: LinearGradient(colors: [
-                                    gradientLighterOrange,
-                                    gradientDarkerOrange
-                                  ]),
-                                  borderRadius: BorderRadius.circular(20)),
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                _editProfile = true;
-                              });
-                            },
-                          )
-                        : Container(
+                    if (_editProfile == 0)
+                      FlatButton(
+                        child: Container(
+                          height: 35,
+                          width: 100,
+                          child: Center(
                             child: Text(
                               'Edit Profile',
                               style: TextStyle(
                                 fontFamily: 'Montserrat',
-                                fontSize: 20,
+                                fontSize: 12,
                                 color: white,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(colors: [
+                                gradientLighterOrange,
+                                gradientDarkerOrange
+                              ]),
+                              borderRadius: BorderRadius.circular(20)),
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _editProfile = 1;
+                          });
+                        },
+                      )
+                    else if (_editProfile == 1)
+                      Container(
+                        child: Text(
+                          'Edit Profile',
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontSize: 20,
+                            color: white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      )
+                    else if (_editProfile == 2)
+                      Container(
+                        child: Text(
+                          'Upgrade Account',
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontSize: 20,
+                            color: white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      )
                   ],
                 ),
               ),
@@ -337,7 +406,7 @@ class _userProfileState extends State<userProfile> {
                       ScrollController scrollController) {
                     return SingleChildScrollView(
                       physics: BouncingScrollPhysics(),
-                      child: !_editProfile
+                      child: _editProfile == 0
                           ? Padding(
                               padding: const EdgeInsets.all(20.0),
                               child: Column(
@@ -396,98 +465,269 @@ class _userProfileState extends State<userProfile> {
                                 ],
                               ),
                             )
-                          : Container(
-                              child: Column(
-                                children: <Widget>[
-                                  Form(
-                                    key: _formKey,
-                                    child: Column(
-                                      children: <Widget>[
-                                        showUsernameInput(),
-                                        showEmailInput(),
-                                        showCurrentPasswordInput(),
-                                        showPasswordInput(),
-                                        showPhoneNumberInput(),
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding:
-                                        EdgeInsets.only(right: 28.0, top: 5.0),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: <Widget>[
-                                        Padding(
-                                          padding: EdgeInsets.only(right: 15),
-                                          child: InkWell(
-                                            child: Container(
-                                              height: 35,
-                                              width: 100,
-                                              child: Center(
-                                                child: Text(
-                                                  'Return',
-                                                  style: TextStyle(
-                                                    fontFamily: 'Montserrat',
-                                                    fontSize: 12,
-                                                    color: white,
-                                                    fontWeight: FontWeight.bold,
+                          : _editProfile == 1
+                              ? Container(
+                                  child: Column(
+                                    children: <Widget>[
+                                      Form(
+                                        key: _formKey,
+                                        child: Column(
+                                          children: <Widget>[
+                                            showUsernameInput(),
+                                            showEmailInput(),
+                                            showCurrentPasswordInput(),
+                                            showPasswordInput(),
+                                            showPhoneNumberInput(),
+                                          ],
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                            right: 28.0, top: 5.0),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: <Widget>[
+                                            Padding(
+                                              padding:
+                                                  EdgeInsets.only(right: 15),
+                                              child: InkWell(
+                                                child: Container(
+                                                  height: 35,
+                                                  width: 100,
+                                                  child: Center(
+                                                    child: Text(
+                                                      'Return',
+                                                      style: TextStyle(
+                                                        fontFamily:
+                                                            'Montserrat',
+                                                        fontSize: 12,
+                                                        color: white,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  decoration: BoxDecoration(
+                                                      color: Colors.grey[800],
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              20)),
+                                                ),
+                                                onTap: () {
+                                                  setState(() {
+                                                    _editProfile = 0;
+                                                  });
+                                                },
+                                              ),
+                                            ),
+                                            InkWell(
+                                              child: Container(
+                                                height: 35,
+                                                width: 100,
+                                                child: Center(
+                                                  child: Text(
+                                                    'Save',
+                                                    style: TextStyle(
+                                                      fontFamily: 'Montserrat',
+                                                      fontSize: 12,
+                                                      color: white,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
                                                   ),
                                                 ),
+                                                decoration: BoxDecoration(
+                                                    gradient: LinearGradient(
+                                                        colors: [
+                                                          gradientLighterOrange,
+                                                          gradientDarkerOrange
+                                                        ]),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20)),
                                               ),
-                                              decoration: BoxDecoration(
-                                                  color: Colors.grey[800],
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          20)),
+                                              onTap: () {
+                                                setState(() {
+                                                  if (_formKey.currentState
+                                                      .validate()) {
+                                                    _formKey.currentState
+                                                        .save();
+                                                    print('Saved');
+                                                  }
+                                                });
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      SizedBox(height: 20.0),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: <Widget>[
+                                          Text(
+                                            !userData.isVerified
+                                                ? 'Want to host an event? '
+                                                : 'Login into Org. account? ',
+                                            style: TextStyle(
+                                                color: white,
+                                                fontFamily: 'Montserrat',
+                                                fontSize: 12),
+                                          ),
+                                          InkWell(
+                                            child: Text(
+                                              !userData.isVerified
+                                                  ? 'Upgrade Here'
+                                                  : 'Click Here',
+                                              style: TextStyle(
+                                                  color: orange,
+                                                  fontFamily: 'Montserrat',
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.bold),
                                             ),
                                             onTap: () {
                                               setState(() {
-                                                _editProfile = false;
+                                                _editProfile = 2;
                                               });
                                             },
                                           ),
+                                        ],
+                                      ),
+                                      SizedBox(height: 20.0),
+                                    ],
+                                  ),
+                                )
+                              : Container(
+                                  child: Column(
+                                    children: <Widget>[
+                                      Form(
+                                        key: _upgradeFormKey,
+                                        child: Column(
+                                          children: <Widget>[
+                                            showOrgNameInput(),
+                                            showOrgNumberInput(),
+                                          ],
                                         ),
-                                        InkWell(
-                                          child: Container(
-                                            height: 35,
-                                            width: 100,
-                                            child: Center(
-                                              child: Text(
-                                                'Save',
-                                                style: TextStyle(
-                                                  fontFamily: 'Montserrat',
-                                                  fontSize: 12,
-                                                  color: white,
-                                                  fontWeight: FontWeight.bold,
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                            right: 28.0, top: 5.0),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: <Widget>[
+                                            Padding(
+                                              padding:
+                                                  EdgeInsets.only(right: 15),
+                                              child: InkWell(
+                                                child: Container(
+                                                  height: 35,
+                                                  width: 100,
+                                                  child: Center(
+                                                    child: Text(
+                                                      'Return',
+                                                      style: TextStyle(
+                                                        fontFamily:
+                                                            'Montserrat',
+                                                        fontSize: 12,
+                                                        color: white,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  decoration: BoxDecoration(
+                                                      color: Colors.grey[800],
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              20)),
                                                 ),
+                                                onTap: () {
+                                                  setState(() {
+                                                    _editProfile = 0;
+                                                  });
+                                                },
                                               ),
                                             ),
-                                            decoration: BoxDecoration(
-                                                gradient: LinearGradient(
-                                                    colors: [
-                                                      gradientLighterOrange,
-                                                      gradientDarkerOrange
-                                                    ]),
-                                                borderRadius:
-                                                    BorderRadius.circular(20)),
-                                          ),
-                                          onTap: () {
-                                            setState(() {
-                                              if (_formKey.currentState
-                                                  .validate()) {
-                                                _formKey.currentState.save();
-                                                print('Saved');
-                                              }
-                                            });
-                                          },
+                                            InkWell(
+                                              child: Container(
+                                                height: 35,
+                                                width: 100,
+                                                child: Center(
+                                                  child: Text(
+                                                    'Save',
+                                                    style: TextStyle(
+                                                      fontFamily: 'Montserrat',
+                                                      fontSize: 12,
+                                                      color: white,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                ),
+                                                decoration: BoxDecoration(
+                                                    gradient: LinearGradient(
+                                                        colors: [
+                                                          gradientLighterOrange,
+                                                          gradientDarkerOrange
+                                                        ]),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20)),
+                                              ),
+                                              onTap: () {
+                                                setState(() {
+                                                  if (_upgradeFormKey
+                                                      .currentState
+                                                      .validate()) {
+                                                    _upgradeFormKey.currentState
+                                                        .save();
+                                                    print('Saved');
+                                                  }
+                                                });
+                                              },
+                                            ),
+                                          ],
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                      SizedBox(height: 20.0),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: <Widget>[
+                                          Text(
+                                            !userData.isVerified
+                                                ? 'Want to host an event? '
+                                                : 'Login into Org. account? ',
+                                            style: TextStyle(
+                                                color: white,
+                                                fontFamily: 'Montserrat',
+                                                fontSize: 12),
+                                          ),
+                                          InkWell(
+                                            child: Text(
+                                              !userData.isVerified
+                                                  ? 'Upgrade Here'
+                                                  : 'Click Here',
+                                              style: TextStyle(
+                                                  color: orange,
+                                                  fontFamily: 'Montserrat',
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            onTap: () {
+                                              setState(() {
+                                                _editProfile = 2;
+                                              });
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(height: 20.0),
+                                    ],
                                   ),
-                                  SizedBox(height: 20.0)
-                                ],
-                              ),
-                            ),
+                                ),
                     );
                   },
                 ),
