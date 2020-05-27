@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:Ever/models/user.dart';
 import 'package:Ever/pages/home_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:Ever/template/colors.dart';
@@ -13,7 +14,16 @@ bool _uploaded = false;
 String downloadURL;
 String user = userID;
 
+String _userName;
+String _userEmail;
+String _userCurPass;
+String _userPass;
+String _userPhone;
+
 bool _editProfile = false;
+
+FirebaseDatabase _dbRef = FirebaseDatabase.instance;
+final _formKey = new GlobalKey<FormState>();
 
 class userProfile extends StatefulWidget {
   final User userData;
@@ -21,6 +31,7 @@ class userProfile extends StatefulWidget {
   final Function() notifyParent;
 
   userProfile({this.userData, this.signOut, this.notifyParent});
+
   @override
   _userProfileState createState() => _userProfileState(userData, signOut);
 }
@@ -30,6 +41,11 @@ class _userProfileState extends State<userProfile> {
   final Function signOut;
 
   _userProfileState(this.userData, this.signOut);
+
+  @override
+  void initState() {
+    _editProfile = false;
+  }
 
   Future getImage(bool isCamera) async {
     File image;
@@ -44,7 +60,6 @@ class _userProfileState extends State<userProfile> {
   }
 
   Future uploadImage(User userData) async {
-    FirebaseDatabase _dbRef = FirebaseDatabase.instance;
     StorageReference _reference =
         FirebaseStorage.instance.ref().child('/ProfileImg/$user');
     StorageUploadTask uploadTask = _reference.putFile(_image);
@@ -58,6 +73,163 @@ class _userProfileState extends State<userProfile> {
       widget.notifyParent();
     });
     print(downloadURL);
+  }
+
+  Widget showUsernameInput() {
+    return Padding(
+      padding: EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 8.0),
+      child: new TextFormField(
+          maxLines: 1,
+          initialValue: userData.userName,
+          obscureText: false,
+          autofocus: false,
+          decoration: new InputDecoration(
+            filled: true,
+            fillColor: white,
+            hintText: 'Full Name',
+            prefixIcon: Icon(Icons.account_circle),
+          ),
+          validator: (value) {
+            if (value.length < 4)
+              return 'Username must contain more than 8 letters.';
+            else
+              return null;
+          },
+          onSaved: (value) {
+            _userName = value.trim();
+            db.reference().child('user/$user/userName').set(value);
+          }),
+    );
+  }
+
+  Widget showEmailInput() {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
+      child: new TextFormField(
+          maxLines: 1,
+          initialValue: userData.userEmail,
+          keyboardType: TextInputType.emailAddress,
+          autofocus: false,
+          decoration: new InputDecoration(
+            fillColor: white,
+            filled: true,
+            hintText: 'Email',
+            prefixIcon: Icon(Icons.email),
+          ),
+          validator: (value) {
+            Pattern pattern =
+                r'^((?!\.)[\w-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$';
+            RegExp regex = RegExp(pattern);
+            if (!regex.hasMatch(value))
+              return 'Invalid email address';
+            else
+              return null;
+          },
+          onSaved: (value) {
+            userData.userEmail = value.trim();
+            db.reference().child('user/$user/userEmail').set(value);
+          }),
+    );
+  }
+
+  void _changePassword(String password) async {
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+
+    await _auth
+        .signInWithEmailAndPassword(
+            email: userData.userEmail, password: _userCurPass)
+        .then((value) {
+      user.updatePassword(password).then((_) {
+        print("Succesfull changed password");
+      }).catchError((error) {
+        print("Password can't be changed" + error.toString());
+      });
+    });
+  }
+
+  Widget showCurrentPasswordInput() {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
+      child: new TextFormField(
+          maxLines: 1,
+          obscureText: true,
+          autofocus: false,
+          decoration: new InputDecoration(
+              fillColor: white,
+              filled: true,
+              hintText: 'Current Password',
+              prefixIcon: Icon(Icons.lock)),
+          validator: (value) {
+            Pattern pattern =
+                r'^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{8,}$';
+            RegExp regex = new RegExp(pattern);
+            if (!regex.hasMatch(value))
+              return 'Password must contain at least 1 letter and 1 number.';
+            else
+              return null;
+          },
+          onSaved: (value) {
+            _userCurPass = value.trim();
+          }),
+    );
+  }
+
+  Widget showPasswordInput() {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
+      child: new TextFormField(
+          maxLines: 1,
+          obscureText: true,
+          autofocus: false,
+          decoration: new InputDecoration(
+              fillColor: white,
+              filled: true,
+              hintText: 'Password',
+              prefixIcon: Icon(Icons.lock)),
+          validator: (value) {
+            Pattern pattern =
+                r'^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{8,}$';
+            RegExp regex = new RegExp(pattern);
+            if (!regex.hasMatch(value))
+              return 'Password must contain at least 1 letter and 1 number.';
+            else
+              return null;
+          },
+          onSaved: (value) {
+            _userPass = value.trim();
+            _changePassword(_userPass);
+          }),
+    );
+  }
+
+  Widget showPhoneNumberInput() {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
+      child: new TextFormField(
+          maxLines: 1,
+          initialValue: userData.userPhone,
+          obscureText: false,
+          autofocus: false,
+          decoration: new InputDecoration(
+            filled: true,
+            fillColor: white,
+            hintText: 'Phone Number',
+            prefixIcon: Icon(Icons.phone),
+          ),
+          validator: (value) {
+            Pattern pattern = r'^[+62][0-9]{10,15}$';
+            RegExp regex = new RegExp(pattern);
+            if (!regex.hasMatch(value))
+              return 'Phone number must start with +62';
+            else
+              return null;
+          },
+          onSaved: (value) {
+            _userPhone = value.trim();
+            db.reference().child('user/$user/userPhone').set(_userPhone);
+          }),
+    );
   }
 
   @override
@@ -90,11 +262,10 @@ class _userProfileState extends State<userProfile> {
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 50),
-                child: Center(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      GestureDetector(
+                child: Column(
+                  children: <Widget>[
+                    GestureDetector(
+                      child: Center(
                         child: CircleAvatar(
                           radius: 75,
                           backgroundColor: lighterGray,
@@ -104,45 +275,61 @@ class _userProfileState extends State<userProfile> {
                               ? 'https://firebasestorage.googleapis.com/v0/b/ever-a01f1.appspot.com/o/ProfileImg%2FDefaultProfile.jpg?alt=media&token=77cc3836-1483-46bf-9230-cf290f9395fb'
                               : userData.userProfileImg),
                         ),
-                        onTap: () {
-                          getImage(false).then((value) {
-                            uploadImage(userData);
-                          });
-                        },
                       ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      FlatButton(
-                        child: Container(
-                          height: 35,
-                          width: 100,
-                          child: Center(
+                      onTap: () {
+                        getImage(false).then((value) {
+                          uploadImage(userData);
+                        });
+                      },
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    !_editProfile
+                        ? FlatButton(
+                            child: Container(
+                              height: 35,
+                              width: 100,
+                              child: Center(
+                                child: Text(
+                                  'Edit Profile',
+                                  style: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    fontSize: 12,
+                                    color: white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              decoration: BoxDecoration(
+                                  gradient: LinearGradient(colors: [
+                                    gradientLighterOrange,
+                                    gradientDarkerOrange
+                                  ]),
+                                  borderRadius: BorderRadius.circular(20)),
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _editProfile = true;
+                              });
+                            },
+                          )
+                        : Container(
                             child: Text(
                               'Edit Profile',
                               style: TextStyle(
                                 fontFamily: 'Montserrat',
-                                fontSize: 12,
+                                fontSize: 20,
                                 color: white,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
-                          decoration: BoxDecoration(
-                              gradient: LinearGradient(colors: [
-                                gradientLighterOrange,
-                                gradientDarkerOrange
-                              ]),
-                              borderRadius: BorderRadius.circular(20)),
-                        ),
-                        onPressed: () {},
-                      ),
-                    ],
-                  ),
+                  ],
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 250),
+                padding: const EdgeInsets.only(top: 230),
                 child: DraggableScrollableSheet(
                   initialChildSize: 0.95,
                   minChildSize: 0.5,
@@ -150,64 +337,157 @@ class _userProfileState extends State<userProfile> {
                       ScrollController scrollController) {
                     return SingleChildScrollView(
                       physics: BouncingScrollPhysics(),
-                      child: Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              'Upcoming Events',
-                              style: TextStyle(
-                                fontFamily: 'Montserrat',
-                                fontSize: 20,
-                                color: white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Text(
-                              'Past Events',
-                              style: TextStyle(
-                                fontFamily: 'Montserrat',
-                                fontSize: 20,
-                                color: white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Text(
-                              'Notifications',
-                              style: TextStyle(
-                                fontFamily: 'Montserrat',
-                                fontSize: 20,
-                                color: white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            SizedBox(height: 100.0),
-                            Center(
-                              child: InkWell(
-                                child: Text(
-                                  'Log Out',
-                                  style: TextStyle(
-                                    fontFamily: 'Montserrat',
-                                    fontSize: 15,
-                                    color: orange,
-                                    fontWeight: FontWeight.bold,
+                      child: !_editProfile
+                          ? Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
+                                    'Upcoming Events',
+                                    style: TextStyle(
+                                      fontFamily: 'Montserrat',
+                                      fontSize: 20,
+                                      color: white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                ),
-                                onTap: () {
-                                  signOut();
-                                },
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  Text(
+                                    'Past Events',
+                                    style: TextStyle(
+                                      fontFamily: 'Montserrat',
+                                      fontSize: 20,
+                                      color: white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  Text(
+                                    'Notifications',
+                                    style: TextStyle(
+                                      fontFamily: 'Montserrat',
+                                      fontSize: 20,
+                                      color: white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  SizedBox(height: 100.0),
+                                  Center(
+                                    child: InkWell(
+                                      child: Text(
+                                        'Log Out',
+                                        style: TextStyle(
+                                          fontFamily: 'Montserrat',
+                                          fontSize: 15,
+                                          color: orange,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      onTap: () {
+                                        signOut();
+                                      },
+                                    ),
+                                  )
+                                ],
                               ),
                             )
-                          ],
-                        ),
-                      ),
+                          : Container(
+                              child: Column(
+                                children: <Widget>[
+                                  Form(
+                                    key: _formKey,
+                                    child: Column(
+                                      children: <Widget>[
+                                        showUsernameInput(),
+                                        showEmailInput(),
+                                        showCurrentPasswordInput(),
+                                        showPasswordInput(),
+                                        showPhoneNumberInput(),
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.only(right: 28.0, top: 5.0),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: <Widget>[
+                                        Padding(
+                                          padding: EdgeInsets.only(right: 15),
+                                          child: InkWell(
+                                            child: Container(
+                                              height: 35,
+                                              width: 100,
+                                              child: Center(
+                                                child: Text(
+                                                  'Return',
+                                                  style: TextStyle(
+                                                    fontFamily: 'Montserrat',
+                                                    fontSize: 12,
+                                                    color: white,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                              ),
+                                              decoration: BoxDecoration(
+                                                  color: Colors.grey[800],
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20)),
+                                            ),
+                                            onTap: () {
+                                              setState(() {
+                                                _editProfile = false;
+                                              });
+                                            },
+                                          ),
+                                        ),
+                                        InkWell(
+                                          child: Container(
+                                            height: 35,
+                                            width: 100,
+                                            child: Center(
+                                              child: Text(
+                                                'Save',
+                                                style: TextStyle(
+                                                  fontFamily: 'Montserrat',
+                                                  fontSize: 12,
+                                                  color: white,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
+                                            decoration: BoxDecoration(
+                                                gradient: LinearGradient(
+                                                    colors: [
+                                                      gradientLighterOrange,
+                                                      gradientDarkerOrange
+                                                    ]),
+                                                borderRadius:
+                                                    BorderRadius.circular(20)),
+                                          ),
+                                          onTap: () {
+                                            setState(() {
+                                              if (_formKey.currentState
+                                                  .validate()) {
+                                                _formKey.currentState.save();
+                                                print('Saved');
+                                              }
+                                            });
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(height: 20.0)
+                                ],
+                              ),
+                            ),
                     );
                   },
                 ),
