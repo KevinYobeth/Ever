@@ -245,7 +245,7 @@ class _userProfileState extends State<userProfile> {
             fillColor: white,
             filled: true,
             hintText: 'Organization Name',
-            prefixIcon: Icon(Icons.email),
+            prefixIcon: Icon(Icons.business),
           ),
           validator: (value) {
             if (value.length > 20)
@@ -271,7 +271,7 @@ class _userProfileState extends State<userProfile> {
             fillColor: white,
             filled: true,
             hintText: 'Organization Bank Account Number',
-            prefixIcon: Icon(Icons.email),
+            prefixIcon: Icon(Icons.account_balance),
           ),
           validator: (value) {
             Pattern pattern = r'^\+?\d+$';
@@ -690,39 +690,6 @@ class _userProfileState extends State<userProfile> {
                                             ),
                                           ],
                                         ),
-                                      ),
-                                      SizedBox(height: 20.0),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: <Widget>[
-                                          Text(
-                                            !userData.isVerified
-                                                ? 'Want to host an event? '
-                                                : 'Login into Org. account? ',
-                                            style: TextStyle(
-                                                color: white,
-                                                fontFamily: 'Montserrat',
-                                                fontSize: 12),
-                                          ),
-                                          InkWell(
-                                            child: Text(
-                                              !userData.isVerified
-                                                  ? 'Upgrade Here'
-                                                  : 'Click Here',
-                                              style: TextStyle(
-                                                  color: orange,
-                                                  fontFamily: 'Montserrat',
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            onTap: () {
-                                              setState(() {
-                                                _editProfile = 2;
-                                              });
-                                            },
-                                          ),
-                                        ],
                                       ),
                                       SizedBox(height: 20.0),
                                     ],
