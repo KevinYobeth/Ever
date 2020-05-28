@@ -6,6 +6,7 @@ import 'package:Ever/template/donationBottomSheet.dart';
 import 'package:Ever/template/sponsorBottomSheet.dart';
 import 'package:Ever/template/volunteerBottomSheet.dart';
 
+
 Widget divisionContent(List division) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
