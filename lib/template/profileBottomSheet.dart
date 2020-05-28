@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:Ever/models/user.dart';
 import 'package:Ever/pages/home_page.dart';
+import 'package:Ever/pages/orgHomePage.dart';
 import 'package:Ever/template/style.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -596,7 +597,14 @@ class _userProfileState extends State<userProfile> {
                                             ),
                                             onTap: () {
                                               setState(() {
-                                                _editProfile = 2;
+                                                if (!userData.isVerified)
+                                                  _editProfile = 2;
+                                                else
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              orgHomePage()));
                                               });
                                             },
                                           ),
