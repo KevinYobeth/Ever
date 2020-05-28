@@ -316,7 +316,7 @@ class _userProfileState extends State<userProfile> {
           child: Stack(
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.fromLTRB(170, 10, 170, 0),
+                padding: EdgeInsets.symmetric(horizontal: 180, vertical: 10),
                 child: Container(
                   height: 7,
                   width: 60,

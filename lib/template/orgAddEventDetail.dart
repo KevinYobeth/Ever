@@ -259,7 +259,7 @@ void orgAddEventDetail(context) {
               child: Stack(
                 children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.fromLTRB(170, 10, 170, 0),
+                    padding: EdgeInsets.symmetric(horizontal: 180, vertical: 10),
                     child: Container(
                       height: 7,
                       width: 60,
@@ -380,7 +380,7 @@ void orgCreateEvent(context, bool isNonProfit) {
             child: Stack(
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.fromLTRB(170, 10, 170, 0),
+                  padding: EdgeInsets.symmetric(horizontal: 180, vertical: 10),
                   child: Container(
                     height: 7,
                     width: 60,
@@ -485,7 +485,7 @@ void orgAddDescription(context, bool isNonProfit) {
             child: Stack(
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.fromLTRB(170, 10, 170, 0),
+                  padding: EdgeInsets.symmetric(horizontal: 180, vertical: 10),
                   child: Container(
                     height: 7,
                     width: 60,
@@ -563,7 +563,7 @@ void orgAddBenefits(context, bool isNonProfit) {
             child: Stack(
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.fromLTRB(170, 10, 170, 0),
+                  padding: EdgeInsets.symmetric(horizontal: 180, vertical: 10),
                   child: Container(
                     height: 7,
                     width: 60,
@@ -641,7 +641,7 @@ void orgAddCriteria(context, bool isNonProfit) {
             child: Stack(
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.fromLTRB(170, 10, 170, 0),
+                  padding: EdgeInsets.symmetric(horizontal: 180, vertical: 10),
                   child: Container(
                     height: 7,
                     width: 60,
@@ -733,7 +733,7 @@ void orgAddDivision(context, bool isNonProfit) {
             child: Stack(
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.fromLTRB(170, 10, 170, 0),
+                  padding: EdgeInsets.symmetric(horizontal: 180, vertical: 10),
                   child: Container(
                     height: 7,
                     width: 60,
@@ -837,7 +837,7 @@ void orgAddAccount(context) {
             child: Stack(
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.fromLTRB(170, 10, 170, 0),
+                  padding: EdgeInsets.symmetric(horizontal: 180, vertical: 10),
                   child: Container(
                     height: 7,
                     width: 60,
@@ -915,7 +915,7 @@ void orgAddSponsorPackage(context) {
             child: Stack(
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.fromLTRB(170, 10, 170, 0),
+                  padding: EdgeInsets.symmetric(horizontal: 180, vertical: 10),
                   child: Container(
                     height: 7,
                     width: 60,
@@ -1019,7 +1019,7 @@ void orgFinishCreate(context) {
             child: Stack(
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.fromLTRB(170, 10, 170, 0),
+                  padding: EdgeInsets.symmetric(horizontal: 180, vertical: 10),
                   child: Container(
                     height: 7,
                     width: 60,
