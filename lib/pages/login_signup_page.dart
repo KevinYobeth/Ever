@@ -79,7 +79,6 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
             'userActiveEvent': 'null',
             'userPastEvent': 'null',
             'isVerified': false,
-            'organizationID': 'null',
             'userProfileImg': 'null',
           });
 
@@ -136,7 +135,9 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
             children: <Widget>[
               Stack(
                 children: <Widget>[
-                  Container(
+                  AnimatedContainer(
+                    duration: Duration(milliseconds: 300),
+                    curve: Curves.fastOutSlowIn,
                     height: _isLoginForm ? 320.0 : 200.0,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.only(
@@ -393,7 +394,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
                               context: context,
                               initialDate: DateTime.now(),
                               firstDate: DateTime(1900),
-                              lastDate: DateTime(2200))
+                              lastDate: DateTime.now())
                           .then((date) {
                         setState(() {
                           _dateOfBirth = date.toString();

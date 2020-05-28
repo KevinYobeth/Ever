@@ -4,11 +4,26 @@ import 'package:Ever/template/colors.dart';
 bool _donateDone = false;
 
 class donationSheet extends StatefulWidget {
+  final String userOrgBankNumber;
+  final String userOrgName;
+  final String userOrgCP;
+
+  const donationSheet(
+      {Key key, this.userOrgBankNumber, this.userOrgName, this.userOrgCP})
+      : super(key: key);
+
   @override
-  _donationSheetState createState() => _donationSheetState();
+  _donationSheetState createState() =>
+      _donationSheetState(userOrgBankNumber, userOrgName, userOrgCP);
 }
 
 class _donationSheetState extends State<donationSheet> {
+  final String userOrgBankNumber;
+  final String userOrgName;
+  final String userOrgCP;
+
+  _donationSheetState(this.userOrgBankNumber, this.userOrgName, this.userOrgCP);
+
   @override
   void initState() {
     _donateDone = false;
@@ -60,7 +75,7 @@ class _donationSheetState extends State<donationSheet> {
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold)),
                               SizedBox(height: 30),
-                              Text('123456789',
+                              Text(userOrgBankNumber,
                                   style: TextStyle(
                                       fontFamily: 'Montserrat',
                                       color: white,
@@ -72,7 +87,7 @@ class _donationSheetState extends State<donationSheet> {
                                     color: white,
                                     fontSize: 20,
                                   )),
-                              Text('Mesyella',
+                              Text(userOrgName,
                                   style: TextStyle(
                                       fontFamily: 'Montserrat',
                                       color: white,
@@ -80,7 +95,7 @@ class _donationSheetState extends State<donationSheet> {
                                       fontWeight: FontWeight.bold)),
                               SizedBox(height: 30),
                               Text(
-                                'For more information contact 081315999830',
+                                'For more information contact ${userOrgCP}',
                                 style: TextStyle(
                                   fontFamily: 'Montserrat',
                                   color: white,

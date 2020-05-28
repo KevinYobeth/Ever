@@ -36,8 +36,6 @@ class eventDetail extends StatefulWidget {
   final List eventSponsor;
   final String eventBenefits;
   final String eventOrganizer;
-  final String bankAccount;
-  final String bankAccountName;
   final String packageName;
   final String packageContent;
   final String packagePrice;
@@ -56,8 +54,6 @@ class eventDetail extends StatefulWidget {
       this.eventSponsor,
       this.eventBenefits,
       this.eventOrganizer,
-      this.bankAccount,
-      this.bankAccountName,
       this.packageName,
       this.packageContent,
       this.packagePrice})
@@ -77,8 +73,6 @@ class eventDetail extends StatefulWidget {
       eventSponsor,
       eventBenefits,
       eventOrganizer,
-      bankAccount,
-      bankAccountName,
       packageName,
       packageContent,
       packagePrice);
@@ -87,7 +81,7 @@ class eventDetail extends StatefulWidget {
 class _eventDetailState extends State<eventDetail> {
   @override
   void initState() {
-    fetchOrganizationName();
+    fetchOrganization();
   }
 
   final String eventName;
@@ -102,8 +96,6 @@ class _eventDetailState extends State<eventDetail> {
   final List eventSponsor;
   final String eventBenefits;
   final String eventOrganizer;
-  final String bankAccount;
-  final String bankAccountName;
   final String packageName;
   final String packageContent;
   final String packagePrice;
@@ -121,23 +113,39 @@ class _eventDetailState extends State<eventDetail> {
       this.eventSponsor,
       this.eventBenefits,
       this.eventOrganizer,
-      this.bankAccount,
-      this.bankAccountName,
       this.packageName,
       this.packageContent,
       this.packagePrice);
 
   String _eventOrganizerName = '{Organizer Name}';
+  String _organizationNumber = '{Organization Number}';
+  String _organizationName = '{Organization Name}';
+  String _organizationCP = '{Organization CP}';
 
-  fetchOrganizationName() {
+  fetchOrganization() {
     final DatabaseReference db = FirebaseDatabase.instance.reference();
     db
-        .child("user/$eventOrganizer")
-        .child("organizationID")
+        .child("user/$eventOrganizer/organizationID")
         .once()
         .then((DataSnapshot data) {
       setState(() {
         _eventOrganizerName = data.value;
+        _organizationName = data.value;
+      });
+    });
+
+    db
+        .child("user/$eventOrganizer/organizationNumber")
+        .once()
+        .then((DataSnapshot data) {
+      setState(() {
+        _organizationNumber = data.value;
+      });
+    });
+
+    db.child("user/$eventOrganizer/userPhone").once().then((DataSnapshot data) {
+      setState(() {
+        _organizationCP = data.value;
       });
     });
   }
@@ -332,7 +340,12 @@ class _eventDetailState extends State<eventDetail> {
                                               Color.fromRGBO(255, 255, 255, 0),
                                           backgroundColor: Colors.transparent,
                                           builder: (BuildContext context) {
-                                            return donationSheet();
+                                            return donationSheet(
+                                              userOrgBankNumber:
+                                                  _organizationNumber,
+                                              userOrgCP: _organizationCP,
+                                              userOrgName: _organizationName,
+                                            );
                                           },
                                         )
                                       : showModalBottomSheet(

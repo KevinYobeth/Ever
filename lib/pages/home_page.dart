@@ -75,6 +75,11 @@ class _HomePageState extends State<HomePage> {
     _onAcaraAddedSubscription = _acaraQuery.onChildAdded.listen(onEntryAdded);
     _onUserAddedSubscription = _userQuery.onChildAdded.listen(onUserGet);
 
+    db
+        .reference()
+        .child("user/$userID/lastOnline")
+        .set(DateTime.now().toString());
+
     super.initState();
   }
 
@@ -182,8 +187,6 @@ class _HomePageState extends State<HomePage> {
           List eventSponsor = _acaraList[index].eventSponsor;
           String eventBenefits = _acaraList[index].eventBenefits;
           bool isNonProfit = _acaraList[index].isNonProfit;
-          String bankAccount = 'null';
-          String bankAccountName = 'null';
           return FlatButton(
             child: eventCard(
               eventName: eventName,
@@ -210,8 +213,6 @@ class _HomePageState extends State<HomePage> {
                     eventDivision: eventDivision,
                     eventSponsor: eventSponsor,
                     eventBenefits: eventBenefits,
-                    bankAccount: bankAccount,
-                    bankAccountName: bankAccountName,
                   );
                 },
               );

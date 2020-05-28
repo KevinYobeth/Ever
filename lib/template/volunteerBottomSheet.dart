@@ -1,57 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:Ever/template/colors.dart';
 
-bool divisionChosen = false;
 bool _volunteerDone = false;
-
-Widget divisionName(String name) {
-  return InkWell(
-    child: Container(
-      child: Center(
-        child: Text(
-          '$name',
-          style: TextStyle(
-              fontFamily: 'Montserrat',
-              color: Colors.grey[700],
-              fontSize: 10,
-              fontWeight: FontWeight.bold),
-        ),
-      ),
-      decoration: BoxDecoration(
-          color: white,
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: divisionChosen ? orange : white, width: 5)),
-      height: 35,
-      width: 100,
-    ),
-    onTap: () {},
-  );
-}
-
-Widget shirtSize(String size) {
-  return InkWell(
-    child: Container(
-      child: Center(
-        child: Text(
-          '$size',
-          style: TextStyle(
-              fontFamily: 'Montserrat',
-              color: Colors.grey[700],
-              fontSize: 11,
-              fontWeight: FontWeight.bold),
-        ),
-      ),
-      decoration: BoxDecoration(
-          color: white,
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(
-              color: divisionChosen ? Colors.orange : white, width: 5)),
-      height: 35,
-      width: 35,
-    ),
-    onTap: () {},
-  );
-}
 
 class volunteerSheet extends StatefulWidget {
   final List divisionList;
@@ -69,6 +19,58 @@ class _volunteerSheetState extends State<volunteerSheet> {
 
   @override
   Widget build(BuildContext context) {
+    Widget divisionName(String name) {
+      return InkWell(
+        child: Container(
+          child: Center(
+            child: Text(
+              '$name',
+              style: TextStyle(
+                  fontFamily: 'Montserrat',
+                  color: Colors.grey[700],
+                  fontSize: 10,
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
+          decoration: BoxDecoration(
+            color: white,
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(
+              color: green,
+              width: 2,
+            ),
+          ),
+          height: 35,
+          width: 100,
+        ),
+        onTap: () {},
+      );
+    }
+
+    Widget shirtSize(String size) {
+      return InkWell(
+        child: Container(
+          child: Center(
+            child: Text(
+              '$size',
+              style: TextStyle(
+                  fontFamily: 'Montserrat',
+                  color: Colors.grey[700],
+                  fontSize: 11,
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
+          decoration: BoxDecoration(
+              color: white,
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: green, width: 2)),
+          height: 35,
+          width: 35,
+        ),
+        onTap: () {},
+      );
+    }
+
     return !_volunteerDone
         ? FractionallySizedBox(
             heightFactor: (MediaQuery.of(context).size.height * 0.8) /

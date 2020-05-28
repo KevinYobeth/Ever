@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:Ever/models/user.dart';
 import 'package:Ever/pages/home_page.dart';
+import 'package:Ever/pages/orgHomePage.dart';
 import 'package:Ever/template/style.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -13,7 +14,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 File _image;
 bool _uploaded = false;
 String downloadURL;
-String user = userID;
+String user;
 
 String _userName;
 String _userEmail;
@@ -44,8 +45,16 @@ class _userProfileState extends State<userProfile> {
 
   _userProfileState(this.userData, this.signOut);
 
+  void getUID() async {
+    FirebaseUser userD =
+        await FirebaseAuth.instance.currentUser().then((value) {
+      user = value.uid;
+    });
+  }
+
   @override
   void initState() {
+    getUID();
     _editProfile = 0;
   }
 
@@ -588,7 +597,14 @@ class _userProfileState extends State<userProfile> {
                                             ),
                                             onTap: () {
                                               setState(() {
-                                                _editProfile = 2;
+                                                if (!userData.isVerified)
+                                                  _editProfile = 2;
+                                                else
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              orgHomePage()));
                                               });
                                             },
                                           ),
@@ -683,6 +699,11 @@ class _userProfileState extends State<userProfile> {
                                                       .validate()) {
                                                     _upgradeFormKey.currentState
                                                         .save();
+                                                    db
+                                                        .reference()
+                                                        .child(
+                                                            'user/$user/isVerified')
+                                                        .set(true);
                                                     print('Saved');
                                                   }
                                                 });
