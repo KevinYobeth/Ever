@@ -151,13 +151,13 @@ class _HomePageState extends State<HomePage> {
     //db.reference().child("event").push().set(hishot.toJson());
   }
 
-  _removeEvent() {
-    db.reference().child("event").child("3").remove().then((_) {
-      setState(() {
-        _acaraList.removeAt(4);
-      });
-    });
-  }
+  // _removeEvent() {
+  //   db.reference().child("event").child("3").remove().then((_) {
+  //     setState(() {
+  //       _acaraList.removeAt(4);
+  //     });
+  //   });
+  // }
 
   signOut() async {
     try {

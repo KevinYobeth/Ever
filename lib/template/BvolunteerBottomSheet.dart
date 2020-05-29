@@ -2,66 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:Ever/template/colors.dart';
 
 bool _volunteerDone = false;
-List<divisionRadio> divisions = List<divisionRadio>();
-
-class divisionRadio extends StatefulWidget {
-  bool isSelected;
-  String divisionName;
-  int index;
-
-  divisionRadio({Key key, this.isSelected, this.divisionName, this.index})
-      : super(key: key);
-
-  @override
-  _divisionRadioState createState() =>
-      _divisionRadioState(isSelected, divisionName, index);
-}
-
-class _divisionRadioState extends State<divisionRadio> {
-  bool isSelected;
-  String divisionName;
-  int index;
-
-  _divisionRadioState(this.isSelected, this.divisionName, this.index);
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      child: Container(
-        child: Center(
-          child: Text(
-            '$divisionName',
-            style: TextStyle(
-                fontFamily: 'Montserrat',
-                color: Colors.grey[700],
-                fontSize: 10,
-                fontWeight: FontWeight.bold),
-          ),
-        ),
-        decoration: BoxDecoration(
-          color: white,
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(
-            color: green,
-            width: isSelected ? 3 : 0,
-          ),
-        ),
-        height: 35,
-        width: 100,
-      ),
-      onTap: () {
-        print(divisions[index].divisionName);
-        setState(() {
-          divisions.forEach((element) {
-            element.isSelected = false;
-          });
-          divisions[index].isSelected = true;
-        });
-      },
-    );
-    ;
-  }
-}
 
 class volunteerSheet extends StatefulWidget {
   final List divisionList;
@@ -74,53 +14,39 @@ class volunteerSheet extends StatefulWidget {
 
 class _volunteerSheetState extends State<volunteerSheet> {
   final List divisionList;
+  List divisions;
 
   _volunteerSheetState(this.divisionList);
 
   @override
-  void initState() {
-    if (divisions.isEmpty) {
-      for (int i = 0; i < divisionList.length; i++)
-        divisions.add(divisionRadio(
-          divisionName: divisionList[i]['divisionName'],
-          isSelected: false,
-          index: i,
-        ));
-    }
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    // Widget divisionName(bool isSelected, String name, int index) {
-    //   return InkWell(
-    //     child: Container(
-    //       child: Center(
-    //         child: Text(
-    //           '$name',
-    //           style: TextStyle(
-    //               fontFamily: 'Montserrat',
-    //               color: Colors.grey[700],
-    //               fontSize: 10,
-    //               fontWeight: FontWeight.bold),
-    //         ),
-    //       ),
-    //       decoration: BoxDecoration(
-    //         color: white,
-    //         borderRadius: BorderRadius.circular(10),
-    //         border: Border.all(
-    //           color: green,
-    //           width: isSelected ? 2 : 0,
-    //         ),
-    //       ),
-    //       height: 35,
-    //       width: 100,
-    //     ),
-    //     onTap: () {
-    //       print(index);
-    //     },
-    //   );
-    // }
+    Widget divisionName(bool isSelected, String name) {
+      return InkWell(
+        child: Container(
+          child: Center(
+            child: Text(
+              '$name',
+              style: TextStyle(
+                  fontFamily: 'Montserrat',
+                  color: Colors.grey[700],
+                  fontSize: 10,
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
+          decoration: BoxDecoration(
+            color: white,
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(
+              color: green,
+              width: isSelected ? 2 : 0,
+            ),
+          ),
+          height: 35,
+          width: 100,
+        ),
+        onTap: () {},
+      );
+    }
 
     Widget shirtSize(String size) {
       return InkWell(
@@ -142,9 +68,7 @@ class _volunteerSheetState extends State<volunteerSheet> {
           height: 35,
           width: 35,
         ),
-        onTap: () {
-          print(divisions);
-        },
+        onTap: () {},
       );
     }
 
@@ -203,7 +127,8 @@ class _volunteerSheetState extends State<volunteerSheet> {
                                   spacing: 10.0,
                                   runSpacing: 10.0,
                                   children: <Widget>[
-                                    for (var div in divisions) div
+                                    for (var div in divisionList)
+                                      divisionName(false, div['divisionName'])
                                   ],
                                 ),
                                 SizedBox(
