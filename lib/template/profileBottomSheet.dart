@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:Ever/template/colors.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:Ever/template/profileEventCard.dart';
 
 File _image;
 bool _uploaded = false;
@@ -315,7 +316,7 @@ class _userProfileState extends State<userProfile> {
           child: Stack(
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.fromLTRB(170, 10, 170, 0),
+                padding: EdgeInsets.symmetric(horizontal: 180, vertical: 10),
                 child: Container(
                   height: 7,
                   width: 60,
@@ -431,7 +432,14 @@ class _userProfileState extends State<userProfile> {
                                     ),
                                   ),
                                   SizedBox(
-                                    height: 20,
+                                    height: 200,
+                                    child: ListView(
+                                      scrollDirection: Axis.horizontal,
+                                      children: <Widget>[
+                                        proEventCard(),
+                                        proEventCard(),
+                                      ],
+                                    ),
                                   ),
                                   Text(
                                     'Past Events',
@@ -443,7 +451,13 @@ class _userProfileState extends State<userProfile> {
                                     ),
                                   ),
                                   SizedBox(
-                                    height: 20,
+                                    height: 200,
+                                    child: ListView(
+                                      scrollDirection: Axis.horizontal,
+                                      children: <Widget>[
+                                        proEventCard(),
+                                      ],
+                                    ),
                                   ),
                                   Text(
                                     'Notifications',
@@ -451,6 +465,15 @@ class _userProfileState extends State<userProfile> {
                                       fontFamily: 'Montserrat',
                                       fontSize: 20,
                                       color: white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Text(
+                                    'Notifications is empty',
+                                    style: TextStyle(
+                                      fontFamily: 'Montserrat',
+                                      fontSize: 15,
+                                      color: lighterGray,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),

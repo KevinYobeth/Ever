@@ -6,6 +6,7 @@ import 'package:Ever/template/donationBottomSheet.dart';
 import 'package:Ever/template/sponsorBottomSheet.dart';
 import 'package:Ever/template/volunteerBottomSheet.dart';
 
+
 Widget divisionContent(List division) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -168,7 +169,7 @@ class _eventDetailState extends State<eventDetail> {
           child: Stack(
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.fromLTRB(170, 10, 170, 0),
+                padding: EdgeInsets.symmetric(horizontal: 180, vertical: 10),
                 child: Container(
                   height: 7,
                   width: 60,

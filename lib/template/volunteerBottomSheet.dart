@@ -86,7 +86,7 @@ class _volunteerSheetState extends State<volunteerSheet> {
               child: Stack(
                 children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.fromLTRB(170, 10, 170, 0),
+                    padding: EdgeInsets.symmetric(horizontal: 180, vertical: 10),
                     child: Container(
                       height: 7,
                       width: 60,
@@ -212,7 +212,7 @@ class _volunteerSheetState extends State<volunteerSheet> {
               child: Stack(
                 children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.fromLTRB(170, 10, 170, 0),
+                    padding: EdgeInsets.symmetric(horizontal: 180, vertical: 10),
                     child: Container(
                       height: 7,
                       width: 60,
