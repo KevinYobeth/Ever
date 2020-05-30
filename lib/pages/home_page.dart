@@ -151,13 +151,13 @@ class _HomePageState extends State<HomePage> {
     //db.reference().child("event").push().set(hishot.toJson());
   }
 
-  _removeEvent() {
-    db.reference().child("event").child("3").remove().then((_) {
-      setState(() {
-        _acaraList.removeAt(4);
-      });
-    });
-  }
+  // _removeEvent() {
+  //   db.reference().child("event").child("3").remove().then((_) {
+  //     setState(() {
+  //       _acaraList.removeAt(4);
+  //     });
+  //   });
+  // }
 
   signOut() async {
     try {
@@ -175,6 +175,7 @@ class _HomePageState extends State<HomePage> {
         shrinkWrap: false,
         itemCount: _acaraList.length,
         itemBuilder: (BuildContext context, int index) {
+          String eventKey = _acaraList[index].key;
           String eventName = _acaraList[index].eventName;
           String eventOrganizer = _acaraList[index].eventOrganizer;
           String eventThumb = _acaraList[index].eventThumb;
@@ -201,6 +202,7 @@ class _HomePageState extends State<HomePage> {
                 context: context,
                 builder: (BuildContext context) {
                   return eventDetail(
+                    eventID: eventKey,
                     eventName: eventName,
                     eventOrganizer: eventOrganizer,
                     isNonProfit: isNonProfit,

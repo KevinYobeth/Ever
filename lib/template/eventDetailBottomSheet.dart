@@ -1,3 +1,4 @@
+import 'package:Ever/pages/home_page.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:Ever/template/colors.dart';
@@ -5,6 +6,7 @@ import 'package:Ever/template/eventCard.dart';
 import 'package:Ever/template/donationBottomSheet.dart';
 import 'package:Ever/template/sponsorBottomSheet.dart';
 import 'package:Ever/template/volunteerBottomSheet.dart';
+import 'package:intl/intl.dart';
 
 
 Widget divisionContent(List division) {
@@ -25,6 +27,7 @@ Widget divisionContent(List division) {
 }
 
 class eventDetail extends StatefulWidget {
+  final String eventID;
   final String eventName;
   final bool isNonProfit;
   final String eventThumb;
@@ -41,27 +44,29 @@ class eventDetail extends StatefulWidget {
   final String packageContent;
   final String packagePrice;
 
-  const eventDetail(
-      {Key key,
-      this.eventName,
-      this.isNonProfit,
-      this.eventThumb,
-      this.eventDate,
-      this.eventTime,
-      this.eventPlace,
-      this.eventDesc,
-      this.eventCriteria,
-      this.eventDivision,
-      this.eventSponsor,
-      this.eventBenefits,
-      this.eventOrganizer,
-      this.packageName,
-      this.packageContent,
-      this.packagePrice})
-      : super(key: key);
+  const eventDetail({
+    Key key,
+    this.eventID,
+    this.eventName,
+    this.isNonProfit,
+    this.eventThumb,
+    this.eventDate,
+    this.eventTime,
+    this.eventPlace,
+    this.eventDesc,
+    this.eventCriteria,
+    this.eventDivision,
+    this.eventSponsor,
+    this.eventBenefits,
+    this.eventOrganizer,
+    this.packageName,
+    this.packageContent,
+    this.packagePrice,
+  }) : super(key: key);
 
   @override
   _eventDetailState createState() => _eventDetailState(
+      eventID,
       eventName,
       isNonProfit,
       eventThumb,
@@ -82,9 +87,11 @@ class eventDetail extends StatefulWidget {
 class _eventDetailState extends State<eventDetail> {
   @override
   void initState() {
+    fetchVolunteer();
     fetchOrganization();
   }
 
+  final String eventID;
   final String eventName;
   final bool isNonProfit;
   final String eventThumb;
@@ -102,6 +109,7 @@ class _eventDetailState extends State<eventDetail> {
   final String packagePrice;
 
   _eventDetailState(
+      this.eventID,
       this.eventName,
       this.isNonProfit,
       this.eventThumb,
@@ -122,6 +130,7 @@ class _eventDetailState extends State<eventDetail> {
   String _organizationNumber = '{Organization Number}';
   String _organizationName = '{Organization Name}';
   String _organizationCP = '{Organization CP}';
+  bool _volunteerDone;
 
   fetchOrganization() {
     final DatabaseReference db = FirebaseDatabase.instance.reference();
@@ -148,6 +157,20 @@ class _eventDetailState extends State<eventDetail> {
       setState(() {
         _organizationCP = data.value;
       });
+    });
+  }
+
+  fetchVolunteer() {
+    final DatabaseReference db = FirebaseDatabase.instance.reference();
+
+    db
+        .child("event/$eventID/eventVolunteer/$userID")
+        .once()
+        .then((DataSnapshot data) {
+      if (data.value == null)
+        _volunteerDone = false;
+      else
+        _volunteerDone = true;
     });
   }
 
@@ -220,7 +243,10 @@ class _eventDetailState extends State<eventDetail> {
                                   fontSize: 30,
                                   fontWeight: FontWeight.bold,
                                 )),
-                            Text("$eventDate, $eventTime",
+                            Text(
+                                DateFormat('EEEE, dd MMM yyyy')
+                                        .format(DateTime.parse(eventDate)) +
+                                    ", $eventTime",
                                 style: TextStyle(
                                     fontFamily: 'Montserrat',
                                     color: Colors.red,
@@ -394,7 +420,13 @@ class _eventDetailState extends State<eventDetail> {
                                           Color.fromRGBO(255, 255, 255, 0),
                                       builder: (BuildContext context) {
                                         return volunteerSheet(
+                                          eventID: eventID,
+                                          eventDate: eventDate,
+                                          eventName: eventName,
+                                          eventThumb: eventThumb,
+                                          userID: userID,
                                           divisionList: eventDivision,
+                                          volunteerDone: _volunteerDone,
                                         );
                                       });
                                 },

@@ -1,194 +1,77 @@
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:Ever/template/colors.dart';
 
 bool _volunteerDone = false;
-List<divisionRadio> divisions = List<divisionRadio>();
-
-String _divisionName;
-String _shirtSize;
-
-final FirebaseDatabase db = FirebaseDatabase.instance;
-
-class divisionRadio extends StatefulWidget {
-  bool isSelected;
-  String divisionName;
-  int index;
-
-  divisionRadio({Key key, this.isSelected, this.divisionName, this.index})
-      : super(key: key);
-
-  @override
-  _divisionRadioState createState() =>
-      _divisionRadioState(isSelected, divisionName, index);
-}
-
-class _divisionRadioState extends State<divisionRadio> {
-  bool isSelected;
-  String divisionName;
-  int index;
-
-  _divisionRadioState(this.isSelected, this.divisionName, this.index);
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      child: Container(
-        child: Center(
-          child: Text(
-            '$divisionName',
-            style: TextStyle(
-                fontFamily: 'Montserrat',
-                color: Colors.grey[700],
-                fontSize: 10,
-                fontWeight: FontWeight.bold),
-          ),
-        ),
-        decoration: BoxDecoration(
-          color: white,
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(
-            color: green,
-            width: isSelected ? 3 : 0,
-          ),
-        ),
-        height: 35,
-        width: 100,
-      ),
-      onTap: () {
-        //print(divisions[index].divisionName);
-        setState(() {
-          divisions.forEach((element) {
-            element.isSelected = false;
-          });
-          divisions[index].isSelected = true;
-          _divisionName = divisions[index].divisionName;
-          //print(_divisionName);
-        });
-      },
-    );
-  }
-}
-
-class shirtRadio extends StatefulWidget {
-  bool isSelected;
-  String shirtSize;
-  int index;
-
-  shirtRadio({Key key, this.isSelected, this.shirtSize, this.index})
-      : super(key: key);
-
-  @override
-  _shirtRadioState createState() =>
-      _shirtRadioState(isSelected, shirtSize, index);
-}
-
-class _shirtRadioState extends State<shirtRadio> {
-  bool isSelected;
-  String shirtSize;
-  int index;
-
-  _shirtRadioState(this.isSelected, this.shirtSize, this.index);
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      child: Container(
-        child: Center(
-          child: Text(
-            '$shirtSize',
-            style: TextStyle(
-                fontFamily: 'Montserrat',
-                color: Colors.grey[700],
-                fontSize: 11,
-                fontWeight: FontWeight.bold),
-          ),
-        ),
-        decoration: BoxDecoration(
-            color: white,
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: green, width: isSelected ? 3 : 0)),
-        height: 35,
-        width: 35,
-      ),
-      onTap: () {
-        setState(() {
-          this.isSelected = !this.isSelected;
-          if (isSelected) {
-            _shirtSize = this.shirtSize;
-          } else {
-            _shirtSize = '';
-          }
-        });
-        //print(_shirtSize);
-      },
-    );
-  }
-}
 
 class volunteerSheet extends StatefulWidget {
-  final String eventID;
   final List divisionList;
-  final String userID;
-  final String eventName;
-  final String eventThumb;
-  final String eventDate;
-  final bool volunteerDone;
 
-  const volunteerSheet(
-      {Key key,
-      this.eventID,
-      this.divisionList,
-      this.userID,
-      this.eventName,
-      this.eventThumb,
-      this.eventDate,
-      this.volunteerDone})
-      : super(key: key);
+  const volunteerSheet({Key key, this.divisionList}) : super(key: key);
 
   @override
-  _volunteerSheetState createState() => _volunteerSheetState(eventID,
-      divisionList, userID, eventName, eventThumb, eventDate, volunteerDone);
+  _volunteerSheetState createState() => _volunteerSheetState(divisionList);
 }
 
 class _volunteerSheetState extends State<volunteerSheet> {
-  final String eventID;
   final List divisionList;
-  final String userID;
-  final String eventName;
-  final String eventThumb;
-  final String eventDate;
-  final bool volunteerDone;
+  List divisions;
 
-  _volunteerSheetState(this.eventID, this.divisionList, this.userID,
-      this.eventName, this.eventThumb, this.eventDate, this.volunteerDone);
-
-  @override
-  void initState() {
-    if (volunteerDone) {
-      _volunteerDone = true;
-    } else {
-      _volunteerDone = false;
-    }
-
-    if (divisions.isEmpty) {
-      for (int i = 0; i < divisionList.length; i++)
-        divisions.add(divisionRadio(
-          divisionName: divisionList[i]['divisionName'],
-          isSelected: false,
-          index: i,
-        ));
-    }
-
-    divisions.forEach((element) {
-      element.isSelected = false;
-    });
-
-    super.initState();
-  }
+  _volunteerSheetState(this.divisionList);
 
   @override
   Widget build(BuildContext context) {
+    Widget divisionName(bool isSelected, String name) {
+      return InkWell(
+        child: Container(
+          child: Center(
+            child: Text(
+              '$name',
+              style: TextStyle(
+                  fontFamily: 'Montserrat',
+                  color: Colors.grey[700],
+                  fontSize: 10,
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
+          decoration: BoxDecoration(
+            color: white,
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(
+              color: green,
+              width: isSelected ? 2 : 0,
+            ),
+          ),
+          height: 35,
+          width: 100,
+        ),
+        onTap: () {},
+      );
+    }
+
+    Widget shirtSize(String size) {
+      return InkWell(
+        child: Container(
+          child: Center(
+            child: Text(
+              '$size',
+              style: TextStyle(
+                  fontFamily: 'Montserrat',
+                  color: Colors.grey[700],
+                  fontSize: 11,
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
+          decoration: BoxDecoration(
+              color: white,
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: green, width: 2)),
+          height: 35,
+          width: 35,
+        ),
+        onTap: () {},
+      );
+    }
+
     return !_volunteerDone
         ? FractionallySizedBox(
             heightFactor: (MediaQuery.of(context).size.height * 0.8) /
@@ -204,7 +87,7 @@ class _volunteerSheetState extends State<volunteerSheet> {
               child: Stack(
                 children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 180, vertical: 10),
+                    padding: EdgeInsets.fromLTRB(170, 10, 170, 0),
                     child: Container(
                       height: 7,
                       width: 60,
@@ -244,7 +127,8 @@ class _volunteerSheetState extends State<volunteerSheet> {
                                   spacing: 10.0,
                                   runSpacing: 10.0,
                                   children: <Widget>[
-                                    for (var div in divisions) div
+                                    for (var div in divisionList)
+                                      divisionName(false, div['divisionName'])
                                   ],
                                 ),
                                 SizedBox(
@@ -265,26 +149,11 @@ class _volunteerSheetState extends State<volunteerSheet> {
                                 Wrap(
                                   spacing: 15.0,
                                   children: <Widget>[
-                                    shirtRadio(
-                                        index: 0,
-                                        isSelected: false,
-                                        shirtSize: 'XS'),
-                                    shirtRadio(
-                                        index: 1,
-                                        isSelected: false,
-                                        shirtSize: 'S'),
-                                    shirtRadio(
-                                        index: 2,
-                                        isSelected: false,
-                                        shirtSize: 'M'),
-                                    shirtRadio(
-                                        index: 3,
-                                        isSelected: false,
-                                        shirtSize: 'L'),
-                                    shirtRadio(
-                                        index: 4,
-                                        isSelected: false,
-                                        shirtSize: 'XL'),
+                                    shirtSize('XS'),
+                                    shirtSize('S'),
+                                    shirtSize('M'),
+                                    shirtSize('L'),
+                                    shirtSize('XL'),
                                   ],
                                 ),
                                 SizedBox(
@@ -320,35 +189,7 @@ class _volunteerSheetState extends State<volunteerSheet> {
                         ),
                         onPressed: () {
                           setState(() {
-                            if (_divisionName != null && _shirtSize != null) {
-                              Map userSide = {
-                                "userDivision": _divisionName,
-                                "userShirtSize": _shirtSize,
-                                "volunteerDate": DateTime.now().toString(),
-                                "eventName": eventName,
-                                "eventThumb": eventThumb,
-                                "eventDate": eventDate
-                              };
-
-                              Map eventSide = {
-                                "userDivision": _divisionName,
-                                "userShirtSize": _shirtSize,
-                                "volunteerDate": DateTime.now().toString()
-                              };
-
-                              db
-                                  .reference()
-                                  .child(
-                                      "user/$userID/userActiveEvent/$eventID")
-                                  .set(userSide);
-
-                              db
-                                  .reference()
-                                  .child(
-                                      "event/$eventID/eventVolunteer/$userID")
-                                  .set(eventSide);
-                              _volunteerDone = true;
-                            }
+                            _volunteerDone = true;
                           });
                         },
                       ),
@@ -372,7 +213,7 @@ class _volunteerSheetState extends State<volunteerSheet> {
               child: Stack(
                 children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 180, vertical: 10),
+                    padding: EdgeInsets.fromLTRB(170, 10, 170, 0),
                     child: Container(
                       height: 7,
                       width: 60,
