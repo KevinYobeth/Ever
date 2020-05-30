@@ -175,6 +175,7 @@ class _HomePageState extends State<HomePage> {
         shrinkWrap: false,
         itemCount: _acaraList.length,
         itemBuilder: (BuildContext context, int index) {
+          String eventKey = _acaraList[index].key;
           String eventName = _acaraList[index].eventName;
           String eventOrganizer = _acaraList[index].eventOrganizer;
           String eventThumb = _acaraList[index].eventThumb;
@@ -201,6 +202,7 @@ class _HomePageState extends State<HomePage> {
                 context: context,
                 builder: (BuildContext context) {
                   return eventDetail(
+                    eventID: eventKey,
                     eventName: eventName,
                     eventOrganizer: eventOrganizer,
                     isNonProfit: isNonProfit,
