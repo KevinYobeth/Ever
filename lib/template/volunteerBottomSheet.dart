@@ -204,7 +204,8 @@ class _volunteerSheetState extends State<volunteerSheet> {
               child: Stack(
                 children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 180, vertical: 10),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 180, vertical: 10),
                     child: Container(
                       height: 7,
                       width: 60,
@@ -327,7 +328,8 @@ class _volunteerSheetState extends State<volunteerSheet> {
                                 "volunteerDate": DateTime.now().toString(),
                                 "eventName": eventName,
                                 "eventThumb": eventThumb,
-                                "eventDate": eventDate
+                                "eventDate": eventDate,
+                                "eventID": eventID
                               };
 
                               Map eventSide = {
@@ -372,7 +374,8 @@ class _volunteerSheetState extends State<volunteerSheet> {
               child: Stack(
                 children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 180, vertical: 10),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 180, vertical: 10),
                     child: Container(
                       height: 7,
                       width: 60,
