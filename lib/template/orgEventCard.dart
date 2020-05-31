@@ -2,7 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:Ever/template/colors.dart';
 import 'package:Ever/template/orgAddEventDetail.dart';
 
-class orgAddEventCard extends StatelessWidget {
+class addEvent extends StatefulWidget {
+  final Function refresh;
+
+  const addEvent({Key key, this.refresh}) : super(key: key);
+
+  @override
+  _addEventState createState() => _addEventState(refresh);
+}
+
+class _addEventState extends State<addEvent> {
+  final Function refresh;
+
+  _addEventState(this.refresh);
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -62,8 +75,20 @@ class orgAddEventCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
-            onPressed: (){
-              orgAddEventDetail(context);
+            onPressed: () {
+              widget.refresh();
+
+              var eventDetailController = showBottomSheet(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return addEventDetail();
+                  });
+
+              eventDetailController.closed.then((value) {
+                setState(() {
+                  widget.refresh();
+                });
+              });
             },
           ),
         ],

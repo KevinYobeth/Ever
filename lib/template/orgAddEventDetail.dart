@@ -239,125 +239,126 @@ Widget continueButton() {
   );
 }
 
-void orgAddEventDetail(context) {
-  showBottomSheet(
-      context: context,
-      builder: (BuildContext bc) {
-        return Container(
-          child: FractionallySizedBox(
-            heightFactor: (MediaQuery.of(context).size.height - 120.0) /
-                MediaQuery.of(context).size.height,
-            child: Container(
-              height: 1000,
-              decoration: BoxDecoration(
-                color: darkBackgroundColor,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20),
+class addEventDetail extends StatefulWidget {
+  @override
+  _addEventDetailState createState() => _addEventDetailState();
+}
+
+class _addEventDetailState extends State<addEventDetail> {
+  @override
+  Widget build(BuildContext context) {
+    return FractionallySizedBox(
+      heightFactor: (MediaQuery.of(context).size.height - 120.0) /
+          MediaQuery.of(context).size.height,
+      child: Container(
+        height: 1000,
+        decoration: BoxDecoration(
+          color: darkBackgroundColor,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20),
+            topRight: Radius.circular(20),
+          ),
+        ),
+        child: Stack(
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 180, vertical: 10),
+              child: Container(
+                height: 7,
+                width: 60,
+                decoration: BoxDecoration(
+                  color: Color.fromRGBO(255, 255, 255, 0.4),
+                  borderRadius: BorderRadius.circular(20),
                 ),
               ),
-              child: Stack(
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 180, vertical: 10),
-                    child: Container(
-                      height: 7,
-                      width: 60,
-                      decoration: BoxDecoration(
-                        color: Color.fromRGBO(255, 255, 255, 0.4),
-                        borderRadius: BorderRadius.circular(20),
+            ),
+            DraggableScrollableSheet(
+              initialChildSize: 0.95,
+              minChildSize: 0.5,
+              builder:
+                  (BuildContext context, ScrollController scrollController) {
+                return SingleChildScrollView(
+                  physics: BouncingScrollPhysics(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(25, 10, 0, 15),
+                        child: Text(
+                          'Create Event',
+                          style: TextStyle(
+                            color: white,
+                            fontSize: 30,
+                            fontFamily: 'Montserrat',
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                  DraggableScrollableSheet(
-                    initialChildSize: 0.95,
-                    minChildSize: 0.5,
-                    builder: (BuildContext context,
-                        ScrollController scrollController) {
-                      return SingleChildScrollView(
-                        physics: BouncingScrollPhysics(),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 25.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(25, 10, 0, 15),
-                              child: Text(
-                                'Create Event',
-                                style: TextStyle(
-                                  color: white,
-                                  fontSize: 30,
-                                  fontFamily: 'Montserrat',
-                                  fontWeight: FontWeight.bold,
+                            InkWell(
+                              child: Container(
+                                child: Center(
+                                  child: Text(
+                                    'Non-Profit',
+                                    style: TextStyle(
+                                      color: darkBackgroundColor,
+                                      fontSize: 15,
+                                      fontFamily: 'Montserrat',
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
                                 ),
+                                height: 50,
+                                width: 160,
+                                decoration: BoxDecoration(
+                                    color: white,
+                                    borderRadius: BorderRadius.circular(5)),
                               ),
+                              onTap: () {
+                                orgCreateEvent(context, true);
+                              },
                             ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10),
-                              child: Row(
-                                children: <Widget>[
-                                  FlatButton(
-                                    child: Container(
-                                      child: Center(
-                                        child: Text(
-                                          'Non-Profit',
-                                          style: TextStyle(
-                                            color: darkBackgroundColor,
-                                            fontSize: 15,
-                                            fontFamily: 'Montserrat',
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                      height: 50,
-                                      width: 160,
-                                      decoration: BoxDecoration(
-                                          color: white,
-                                          borderRadius:
-                                              BorderRadius.circular(5)),
+                            Spacer(),
+                            InkWell(
+                              child: Container(
+                                child: Center(
+                                  child: Text(
+                                    'Profit',
+                                    style: TextStyle(
+                                      color: darkBackgroundColor,
+                                      fontSize: 15,
+                                      fontFamily: 'Montserrat',
+                                      fontWeight: FontWeight.bold,
                                     ),
-                                    onPressed: () {
-                                      orgCreateEvent(context, true);
-                                    },
                                   ),
-                                  FlatButton(
-                                    child: Container(
-                                      child: Center(
-                                        child: Text(
-                                          'Profit',
-                                          style: TextStyle(
-                                            color: darkBackgroundColor,
-                                            fontSize: 15,
-                                            fontFamily: 'Montserrat',
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                      height: 50,
-                                      width: 160,
-                                      decoration: BoxDecoration(
-                                          color: white,
-                                          borderRadius:
-                                              BorderRadius.circular(5)),
-                                    ),
-                                    onPressed: () {
-                                      orgCreateEvent(context, false);
-                                    },
-                                  ),
-                                ],
+                                ),
+                                height: 50,
+                                width: 160,
+                                decoration: BoxDecoration(
+                                    color: white,
+                                    borderRadius: BorderRadius.circular(5)),
                               ),
+                              onTap: () {
+                                orgCreateEvent(context, false);
+                              },
                             ),
                           ],
                         ),
-                      );
-                    },
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                );
+              },
             ),
-          ),
-        );
-      });
+          ],
+        ),
+      ),
+    );
+  }
 }
 
 void orgCreateEvent(context, bool isNonProfit) {

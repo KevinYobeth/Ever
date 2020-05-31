@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:Ever/models/user.dart';
 import 'package:Ever/pages/home_page.dart';
 import 'package:Ever/pages/orgHomePage.dart';
-import 'package:Ever/template/style.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -408,7 +407,7 @@ class _userProfileState extends State<userProfile> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 230),
+                padding: const EdgeInsets.only(top: 250),
                 child: DraggableScrollableSheet(
                   initialChildSize: 0.95,
                   minChildSize: 0.5,
@@ -434,6 +433,7 @@ class _userProfileState extends State<userProfile> {
                                   SizedBox(
                                     height: 200,
                                     child: ListView(
+                                      physics: BouncingScrollPhysics(),
                                       scrollDirection: Axis.horizontal,
                                       children: <Widget>[
                                         proEventCard(),
@@ -453,6 +453,7 @@ class _userProfileState extends State<userProfile> {
                                   SizedBox(
                                     height: 200,
                                     child: ListView(
+                                      physics: BouncingScrollPhysics(),
                                       scrollDirection: Axis.horizontal,
                                       children: <Widget>[
                                         proEventCard(),
@@ -627,7 +628,10 @@ class _userProfileState extends State<userProfile> {
                                                       context,
                                                       MaterialPageRoute(
                                                           builder: (context) =>
-                                                              orgHomePage()));
+                                                              orgHomePage(
+                                                                userData:
+                                                                    userData,
+                                                              )));
                                               });
                                             },
                                           ),
