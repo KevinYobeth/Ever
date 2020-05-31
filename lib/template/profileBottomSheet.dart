@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:Ever/models/user.dart';
+import 'package:Ever/models/userEvent.dart';
 import 'package:Ever/pages/home_page.dart';
 import 'package:Ever/pages/orgHomePage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -42,6 +43,7 @@ class userProfile extends StatefulWidget {
 class _userProfileState extends State<userProfile> {
   final User userData;
   final Function signOut;
+  List _userActiveEvents;
 
   _userProfileState(this.userData, this.signOut);
 
@@ -54,6 +56,7 @@ class _userProfileState extends State<userProfile> {
 
   @override
   void initState() {
+    _userActiveEvents = userData.userActiveEvent.values.toList();
     getUID();
     _editProfile = 0;
   }
@@ -432,13 +435,35 @@ class _userProfileState extends State<userProfile> {
                                   ),
                                   SizedBox(
                                     height: 200,
-                                    child: ListView(
+                                    child: ListView.builder(
                                       physics: BouncingScrollPhysics(),
                                       scrollDirection: Axis.horizontal,
-                                      children: <Widget>[
-                                        proEventCard(),
-                                        proEventCard(),
-                                      ],
+                                      itemCount: _userActiveEvents.length,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        String eventDate =
+                                            _userActiveEvents[index]
+                                                ["eventDate"];
+                                        String eventThumb =
+                                            _userActiveEvents[index]
+                                                ["eventThumb"];
+
+                                        if (_userActiveEvents.length > 0) {
+                                          return profileEventCard(
+                                            eventThumb: eventThumb,
+                                            eventDate: eventDate,
+                                          );
+                                        } else {
+                                          return Padding(
+                                            padding: const EdgeInsets.all(10.0),
+                                            child: Center(
+                                                child: Text(
+                                              'No event yet',
+                                              style: TextStyle(color: white),
+                                            )),
+                                          );
+                                        }
+                                      },
                                     ),
                                   ),
                                   Text(
@@ -456,7 +481,7 @@ class _userProfileState extends State<userProfile> {
                                       physics: BouncingScrollPhysics(),
                                       scrollDirection: Axis.horizontal,
                                       children: <Widget>[
-                                        proEventCard(),
+                                        //profileEventCard(),
                                       ],
                                     ),
                                   ),

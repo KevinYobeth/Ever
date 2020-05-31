@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:Ever/template/colors.dart';
+import 'package:intl/intl.dart';
 
-class proEventCard extends StatelessWidget {
+class profileEventCard extends StatelessWidget {
+  final String eventThumb;
+  final String eventDate;
+
+  const profileEventCard({this.eventThumb, this.eventDate});
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(20),
+      padding: EdgeInsets.only(right: 10.0, top: 20.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -15,7 +21,7 @@ class proEventCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  '7',
+                  DateFormat('dd').format(DateTime.parse(eventDate)),
                   style: TextStyle(
                     color: white,
                     fontSize: 40,
@@ -24,7 +30,7 @@ class proEventCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'Des',
+                  DateFormat('MMM').format(DateTime.parse(eventDate)),
                   style: TextStyle(
                     color: white,
                     fontSize: 20,
@@ -37,10 +43,13 @@ class proEventCard extends StatelessWidget {
           ),
           Container(
             width: 280,
-            height: 170,
+            height: 144,
             decoration: BoxDecoration(
               color: Colors.blueGrey[100],
               borderRadius: BorderRadius.circular(10),
+              image: DecorationImage(
+                image: NetworkImage(eventThumb),
+              ),
             ),
           ),
         ],
