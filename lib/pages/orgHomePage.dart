@@ -1,3 +1,4 @@
+import 'package:Ever/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:Ever/template/colors.dart';
 import 'package:Ever/template/orgEventCard.dart';
@@ -6,11 +7,26 @@ final scaffoldState = GlobalKey<ScaffoldState>();
 bool _eventCardIsUp = false;
 
 class orgHomePage extends StatefulWidget {
+  final User userData;
+
+  const orgHomePage({Key key, this.userData}) : super(key: key);
+
   @override
-  _orgHomePageState createState() => _orgHomePageState();
+  _orgHomePageState createState() => _orgHomePageState(userData);
 }
 
 class _orgHomePageState extends State<orgHomePage> {
+  final User userData;
+
+  _orgHomePageState(this.userData);
+
+  refresh() {
+    print('Hello');
+    setState(() {
+      _eventCardIsUp = !_eventCardIsUp;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,9 +61,14 @@ class _orgHomePageState extends State<orgHomePage> {
                           child: CircleAvatar(
                             radius: 20,
                             backgroundColor: lighterGray,
+                            backgroundImage: NetworkImage(userData
+                                        .userProfileImg ==
+                                    'null'
+                                ? 'https://firebasestorage.googleapis.com/v0/b/ever-a01f1.appspot.com/o/ProfileImg%2FDefaultProfile.jpg?alt=media&token=77cc3836-1483-46bf-9230-cf290f9395fb'
+                                : userData.userProfileImg),
                           ),
-                          onTap: (){
-
+                          onTap: () {
+                            Navigator.pop(context);
                           },
                         ),
                       ],
@@ -79,16 +100,19 @@ class _orgHomePageState extends State<orgHomePage> {
                         fontWeight: FontWeight.bold),
                   ),
                 ),
-                  SizedBox(
-                    height: 200,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: <Widget>[
-                        orgAddEventCard(),
-                        orgEventCard(),
-                      ],
-                    ),
+                SizedBox(
+                  height: 200,
+                  child: ListView(
+                    physics: BouncingScrollPhysics(),
+                    scrollDirection: Axis.horizontal,
+                    children: <Widget>[
+                      addEvent(
+                        refresh: refresh,
+                      ),
+                      orgEventCard(),
+                    ],
                   ),
+                ),
                 Padding(
                   padding: const EdgeInsets.only(left: 20),
                   child: Text(
