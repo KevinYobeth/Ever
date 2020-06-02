@@ -466,7 +466,7 @@ class _userProfileState extends State<userProfile> {
 
                                         if (_userEvents.length > 0 &&
                                             eDate.isAfter(DateTime.now())) {
-                                          return profileEventCard(
+                                          return eventCardMin(
                                             eventThumb: eventThumb,
                                             eventDate: eventDate,
                                           );
@@ -502,7 +502,7 @@ class _userProfileState extends State<userProfile> {
 
                                         if (_userEvents.length > 0 &&
                                             eDate.isBefore(DateTime.now())) {
-                                          return profileEventCard(
+                                          return eventCardMin(
                                             eventThumb: eventThumb,
                                             eventDate: eventDate,
                                           );
