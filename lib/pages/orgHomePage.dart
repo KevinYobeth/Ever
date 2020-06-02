@@ -2,7 +2,6 @@ import 'package:Ever/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:Ever/template/colors.dart';
 import 'package:Ever/template/orgEventCard.dart';
-import 'package:Ever/template/profileEventCard.dart';
 
 final scaffoldState = GlobalKey<ScaffoldState>();
 bool _eventCardIsUp = false;
