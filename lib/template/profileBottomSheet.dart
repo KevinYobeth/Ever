@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:Ever/models/user.dart';
@@ -43,21 +44,35 @@ class userProfile extends StatefulWidget {
 class _userProfileState extends State<userProfile> {
   final User userData;
   final Function signOut;
+
   List _userActiveEvents;
+  List<UserEvent> _userEvents;
 
-  _userProfileState(this.userData, this.signOut);
+  Query _userEventsQuery;
 
-  void getUID() async {
-    FirebaseUser userD =
-        await FirebaseAuth.instance.currentUser().then((value) {
-      user = value.uid;
+  StreamSubscription<Event> _onEventsAddedSubscription;
+
+  onEventAdded(Event userEvents) {
+    setState(() {
+      _userEvents.add(UserEvent.fromSnapshot(userEvents.snapshot));
     });
   }
 
+  _userProfileState(this.userData, this.signOut);
+
   @override
   void initState() {
-    _userActiveEvents = userData.userActiveEvent.values.toList();
-    getUID();
+    //_userActiveEvents = userData.userActiveEvent.values.toList();
+
+    _userEvents = new List();
+    _userEventsQuery = db
+        .reference()
+        .child("user/$userID/userEvent")
+        .orderByChild("eventDate");
+
+    _onEventsAddedSubscription =
+        _userEventsQuery.onChildAdded.listen(onEventAdded);
+
     _editProfile = 0;
   }
 
@@ -438,30 +453,25 @@ class _userProfileState extends State<userProfile> {
                                     child: ListView.builder(
                                       physics: BouncingScrollPhysics(),
                                       scrollDirection: Axis.horizontal,
-                                      itemCount: _userActiveEvents.length,
+                                      itemCount: _userEvents.length,
                                       itemBuilder:
                                           (BuildContext context, int index) {
                                         String eventDate =
-                                            _userActiveEvents[index]
-                                                ["eventDate"];
+                                            _userEvents[index].eventDate;
                                         String eventThumb =
-                                            _userActiveEvents[index]
-                                                ["eventThumb"];
+                                            _userEvents[index].eventThumb;
 
-                                        if (_userActiveEvents.length > 0) {
+                                        DateTime eDate = DateTime.parse(
+                                            _userEvents[index].eventDate);
+
+                                        if (_userEvents.length > 0 &&
+                                            eDate.isAfter(DateTime.now())) {
                                           return profileEventCard(
                                             eventThumb: eventThumb,
                                             eventDate: eventDate,
                                           );
                                         } else {
-                                          return Padding(
-                                            padding: const EdgeInsets.all(10.0),
-                                            child: Center(
-                                                child: Text(
-                                              'No event yet',
-                                              style: TextStyle(color: white),
-                                            )),
-                                          );
+                                          return Container();
                                         }
                                       },
                                     ),
@@ -477,12 +487,29 @@ class _userProfileState extends State<userProfile> {
                                   ),
                                   SizedBox(
                                     height: 200,
-                                    child: ListView(
+                                    child: ListView.builder(
                                       physics: BouncingScrollPhysics(),
                                       scrollDirection: Axis.horizontal,
-                                      children: <Widget>[
-                                        //profileEventCard(),
-                                      ],
+                                      itemCount: _userEvents.length,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        String eventDate =
+                                            _userEvents[index].eventDate;
+                                        String eventThumb =
+                                            _userEvents[index].eventThumb;
+                                        DateTime eDate = DateTime.parse(
+                                            _userEvents[index].eventDate);
+
+                                        if (_userEvents.length > 0 &&
+                                            eDate.isBefore(DateTime.now())) {
+                                          return profileEventCard(
+                                            eventThumb: eventThumb,
+                                            eventDate: eventDate,
+                                          );
+                                        } else {
+                                          return Container();
+                                        }
+                                      },
                                     ),
                                   ),
                                   Text(

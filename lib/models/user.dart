@@ -4,7 +4,6 @@ import 'package:firebase_database/firebase_database.dart';
 class User {
   String key;
   bool isVerified;
-  Map userActiveEvent;
   String userOrganization;
   String userDOB;
   String userEmail;
@@ -16,7 +15,6 @@ class User {
 
   User(
       {this.isVerified,
-      this.userActiveEvent,
       this.userOrganization,
       this.userDOB,
       this.userEmail,
@@ -29,7 +27,6 @@ class User {
   User.fromSnapshot(DataSnapshot snapshot)
       : key = snapshot.key,
         isVerified = snapshot.value["isVerified"],
-        userActiveEvent = snapshot.value["userActiveEvent"],
         userOrganization = snapshot.value["organizationName"],
         userDOB = snapshot.value["userDOB"],
         userEmail = snapshot.value["userEmail"],
@@ -42,7 +39,6 @@ class User {
   toJson() {
     return {
       "userOrganization": userOrganization,
-      "userActiveEvent": userActiveEvent,
       "userDOB": userDOB,
       "userEmail": userEmail,
       "userGender": userGender,
