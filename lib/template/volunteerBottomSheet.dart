@@ -340,8 +340,7 @@ class _volunteerSheetState extends State<volunteerSheet> {
 
                               db
                                   .reference()
-                                  .child(
-                                      "user/$userID/userActiveEvent/$eventID")
+                                  .child("user/$userID/userEvent/$eventID")
                                   .set(userSide);
 
                               db
