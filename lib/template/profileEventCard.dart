@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:Ever/template/colors.dart';
 import 'package:intl/intl.dart';
 
-class profileEventCard extends StatelessWidget {
+class eventCardMin extends StatelessWidget {
   final String eventThumb;
   final String eventDate;
 
-  const profileEventCard({this.eventThumb, this.eventDate});
+  const eventCardMin({this.eventThumb, this.eventDate});
 
   @override
   Widget build(BuildContext context) {
