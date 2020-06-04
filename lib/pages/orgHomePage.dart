@@ -30,6 +30,7 @@ class _orgHomePageState extends State<orgHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       key: scaffoldState,
       backgroundColor: lightBackgroundColor,
       body: Column(
