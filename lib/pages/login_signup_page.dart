@@ -76,8 +76,6 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
             'userDOB': _dateOfBirth,
             'userGender': _gender,
             'userIdenURL': 'UserIdenURL',
-            'userActiveEvent': 'null',
-            'userPastEvent': 'null',
             'isVerified': false,
             'userProfileImg': 'null',
           });
