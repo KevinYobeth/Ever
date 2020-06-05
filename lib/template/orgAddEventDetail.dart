@@ -16,13 +16,15 @@ String _eventBenefits;
 String _eventGenderReq;
 String _eventAgeMinReq;
 String _eventAgeMaxReq;
-String _eventDivisionName;
-String _eventDivisionMax;
+List<String> _eventDivisionName = List<String>();
+List<String> _eventDivisionMax = List<String>();
+
 String _eventAccountNum;
 String _eventPackageName;
 String _eventPackagePrice;
 String _eventPackageDesc;
 String _eventBannerURL;
+String _eventOrganizerID;
 bool _eventNonProfit;
 
 final _page1 = new GlobalKey<FormState>();
@@ -32,497 +34,6 @@ final _page4 = new GlobalKey<FormState>();
 final _page5 = new GlobalKey<FormState>();
 final _page6 = new GlobalKey<FormState>();
 final _page7 = new GlobalKey<FormState>();
-
-Widget showEventnameInput() {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: <Widget>[
-      Padding(
-        padding: const EdgeInsets.only(left: 33),
-        child: Text(
-          'Event Name',
-          style: TextStyle(
-            color: darkBackgroundColor,
-            fontSize: 15,
-            fontFamily: 'Montserrat',
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-      Padding(
-        padding: EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 8.0),
-        child: new TextFormField(
-          maxLines: 1,
-          obscureText: false,
-          autofocus: false,
-          decoration: new InputDecoration(
-              hintText: 'Event Name',
-              icon: new Icon(
-                Icons.account_circle,
-                color: Colors.grey,
-              )),
-          validator: (value) {
-            if (value.length < 4)
-              return 'Event name must contain more than 4 letters.';
-            else
-              return null;
-          },
-          onSaved: (value) {
-            _eventName = value.trim();
-          },
-        ),
-      ),
-    ],
-  );
-}
-
-Widget showEventDateInput() {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: <Widget>[
-      Padding(
-        padding: const EdgeInsets.only(left: 33),
-        child: Text(
-          'Event Date',
-          style: TextStyle(
-            color: darkBackgroundColor,
-            fontSize: 15,
-            fontFamily: 'Montserrat',
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-      Padding(
-        padding: EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 8.0),
-        child: new TextFormField(
-          maxLines: 1,
-          obscureText: false,
-          autofocus: false,
-          decoration: new InputDecoration(
-              hintText: 'Event Date',
-              icon: new Icon(
-                Icons.date_range,
-                color: Colors.grey,
-              )),
-          validator: (value) {},
-          onSaved: (value) {
-            _eventDate = value.trim();
-          },
-        ),
-      ),
-    ],
-  );
-}
-
-Widget showEventLocationInput() {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: <Widget>[
-      Padding(
-        padding: const EdgeInsets.only(left: 33),
-        child: Text(
-          'Event Location',
-          style: TextStyle(
-            color: darkBackgroundColor,
-            fontSize: 15,
-            fontFamily: 'Montserrat',
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-      Padding(
-        padding: EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 8.0),
-        child: new TextFormField(
-          maxLines: 1,
-          obscureText: false,
-          autofocus: false,
-          decoration: new InputDecoration(
-              hintText: 'Event Location',
-              icon: new Icon(
-                Icons.location_on,
-                color: Colors.grey,
-              )),
-          validator: (value) {},
-          onSaved: (value) {
-            _eventLocation = value.trim();
-          },
-        ),
-      ),
-    ],
-  );
-}
-
-Widget showDescriptionInput() {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: <Widget>[
-      Padding(
-        padding: const EdgeInsets.only(left: 30),
-        child: Text(
-          'Event Description',
-          style: TextStyle(
-            color: darkBackgroundColor,
-            fontSize: 15,
-            fontFamily: 'Montserrat',
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-      Padding(
-        padding: EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 8.0),
-        child: new TextFormField(
-          maxLines: 4,
-          obscureText: false,
-          autofocus: false,
-          decoration: new InputDecoration(
-            hintText: 'Description',
-          ),
-          validator: (value) {
-            if (value.length < 10)
-              return 'Event description must contain more than 10 letters.';
-            else
-              return null;
-          },
-          onSaved: (value) {
-            _eventDescription = value.trim();
-          },
-        ),
-      ),
-    ],
-  );
-}
-
-Widget showBenefitsInput() {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: <Widget>[
-      Padding(
-        padding: const EdgeInsets.only(left: 30),
-        child: Text(
-          'Event Benefits',
-          style: TextStyle(
-            color: darkBackgroundColor,
-            fontSize: 15,
-            fontFamily: 'Montserrat',
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-      Padding(
-        padding: EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 8.0),
-        child: new TextFormField(
-          maxLines: 4,
-          obscureText: false,
-          autofocus: false,
-          decoration: new InputDecoration(
-            hintText: 'Benefits (Use, to create new line)',
-          ),
-          validator: (value) {
-            if (value.length == 0) {
-              return 'Event benefits must contain something';
-            } else {
-              return null;
-            }
-          },
-          onSaved: (value) {
-            _eventBenefits = value.replaceAll(',', r'\n').trim();
-          },
-        ),
-      ),
-    ],
-  );
-}
-
-Widget showAgeInput() {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: <Widget>[
-      Padding(
-        padding: const EdgeInsets.only(left: 30),
-        child: Text(
-          'Age Criteria',
-          style: TextStyle(
-            color: darkBackgroundColor,
-            fontSize: 15,
-            fontFamily: 'Montserrat',
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-      showMinInput(),
-      showMaxInput(),
-    ],
-  );
-}
-
-Widget showMinInput() {
-  return Padding(
-    padding: EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 8.0),
-    child: new TextFormField(
-      maxLines: 1,
-      obscureText: false,
-      autofocus: false,
-      decoration: new InputDecoration(
-        hintText: 'Min',
-      ),
-      validator: (value) {},
-      onSaved: (value) {
-        _eventAgeMinReq = value.trim();
-      },
-    ),
-  );
-}
-
-Widget showMaxInput() {
-  return Padding(
-    padding: EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 8.0),
-    child: new TextFormField(
-      maxLines: 1,
-      obscureText: false,
-      autofocus: false,
-      decoration: new InputDecoration(
-        hintText: 'Max',
-      ),
-      validator: (value) {},
-      onSaved: (value) {
-        _eventAgeMaxReq = value.trim();
-      },
-    ),
-  );
-}
-
-Widget showDivisionNameInput() {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: <Widget>[
-      Padding(
-        padding: const EdgeInsets.only(left: 30),
-        child: Text(
-          'Division',
-          style: TextStyle(
-            color: darkBackgroundColor,
-            fontSize: 15,
-            fontFamily: 'Montserrat',
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-      Padding(
-        padding: EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 8.0),
-        child: new TextFormField(
-          maxLines: 1,
-          obscureText: false,
-          autofocus: false,
-          decoration: new InputDecoration(
-            hintText: 'Name',
-          ),
-          validator: (value) {},
-          onSaved: (value) {
-            _eventDivisionName = value.trim();
-          },
-        ),
-      ),
-    ],
-  );
-}
-
-Widget showDivisionMaxInput() {
-  return Padding(
-    padding: EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 8.0),
-    child: new TextFormField(
-      maxLines: 1,
-      obscureText: false,
-      autofocus: false,
-      decoration: new InputDecoration(
-        hintText: 'Max',
-      ),
-      validator: (value) {},
-      onSaved: (value) {
-        _eventDivisionMax = value.trim();
-      },
-    ),
-  );
-}
-
-Widget showAccountInput() {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: <Widget>[
-      Padding(
-        padding: const EdgeInsets.only(left: 30),
-        child: Text(
-          'Event Account Number',
-          style: TextStyle(
-            color: darkBackgroundColor,
-            fontSize: 15,
-            fontFamily: 'Montserrat',
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-      Padding(
-        padding: EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 8.0),
-        child: new TextFormField(
-          maxLines: 1,
-          obscureText: false,
-          autofocus: false,
-          decoration: new InputDecoration(
-            hintText: 'Account Number',
-          ),
-          validator: (value) {
-            if (value.length < 10) {
-              return 'Account number must be more than 10 characters';
-            } else {
-              return null;
-            }
-          },
-          onSaved: (value) {
-            _eventAccountNum = value.trim();
-          },
-        ),
-      ),
-    ],
-  );
-}
-
-Widget showPackageNameInput() {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: <Widget>[
-      Padding(
-        padding: const EdgeInsets.only(left: 30),
-        child: Text(
-          'Package Name',
-          style: TextStyle(
-            color: darkBackgroundColor,
-            fontSize: 15,
-            fontFamily: 'Montserrat',
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-      Padding(
-        padding: EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 8.0),
-        child: new TextFormField(
-          maxLines: 1,
-          obscureText: false,
-          autofocus: false,
-          decoration: new InputDecoration(
-            hintText: 'Package Name',
-          ),
-          validator: (value) {
-            if (value.length < 4) {
-              return 'Package name must be longer than 4 characters';
-            } else {
-              return null;
-            }
-          },
-          onSaved: (value) {
-            _eventPackageName = value.trim();
-          },
-        ),
-      ),
-    ],
-  );
-}
-
-Widget showPackagePriceInput() {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: <Widget>[
-      Padding(
-        padding: const EdgeInsets.only(left: 30),
-        child: Text(
-          'Package Price',
-          style: TextStyle(
-            color: darkBackgroundColor,
-            fontSize: 15,
-            fontFamily: 'Montserrat',
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-      Padding(
-        padding: EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 8.0),
-        child: new TextFormField(
-          maxLines: 1,
-          obscureText: false,
-          autofocus: false,
-          decoration: new InputDecoration(
-            hintText: 'Package Price',
-          ),
-          validator: (value) {},
-          onSaved: (value) {
-            _eventPackagePrice = value.trim();
-          },
-        ),
-      ),
-    ],
-  );
-}
-
-Widget showPackageDescInput() {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: <Widget>[
-      Padding(
-        padding: const EdgeInsets.only(left: 30),
-        child: Text(
-          'Package Description',
-          style: TextStyle(
-            color: darkBackgroundColor,
-            fontSize: 15,
-            fontFamily: 'Montserrat',
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-      Padding(
-        padding: EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 8.0),
-        child: new TextFormField(
-          maxLines: 1,
-          obscureText: false,
-          autofocus: false,
-          decoration: new InputDecoration(
-            hintText: 'Package Description (Use, to create new line)',
-          ),
-          validator: (value) {
-            if (value.length < 4) {
-              return 'Package description must be longer than 4 characters';
-            } else {
-              return null;
-            }
-          },
-          onSaved: (value) {
-            _eventPackageDesc = value.trim();
-          },
-        ),
-      ),
-    ],
-  );
-}
-
-Widget continueButton() {
-  return Container(
-    height: 35,
-    width: 100,
-    child: Center(
-      child: Text(
-        'Continue',
-        style: TextStyle(
-          fontFamily: 'Montserrat',
-          fontSize: 12,
-          color: white,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    ),
-    decoration: BoxDecoration(
-        gradient: LinearGradient(
-            colors: [gradientLighterOrange, gradientDarkerOrange]),
-        borderRadius: BorderRadius.circular(20)),
-  );
-}
 
 class addEventDetail extends StatefulWidget {
   @override
@@ -666,21 +177,512 @@ class _orgCreateEventState extends State<orgCreateEvent> {
 
   _orgCreateEventState(this.isNonProfit);
 
-  void _handleGenderRadioChange(int value) {
-    setState(() {
-      _radioValue = value;
-      switch (_radioValue) {
-        case 0:
-          _eventGenderReq = 'Male';
-          break;
-        case 1:
-          _eventGenderReq = 'Female';
-          break;
-      }
-    });
+  Widget showEventnameInput() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(left: 33),
+          child: Text(
+            'Event Name',
+            style: TextStyle(
+              color: darkBackgroundColor,
+              fontSize: 15,
+              fontFamily: 'Montserrat',
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 8.0),
+          child: new TextFormField(
+            maxLines: 1,
+            obscureText: false,
+            autofocus: false,
+            decoration: new InputDecoration(
+                hintText: 'Event Name',
+                icon: new Icon(
+                  Icons.account_circle,
+                  color: Colors.grey,
+                )),
+            validator: (value) {
+              if (value.length < 4)
+                return 'Event name must contain more than 4 letters.';
+              else
+                return null;
+            },
+            onSaved: (value) {
+              _eventName = value.trim();
+            },
+          ),
+        ),
+      ],
+    );
   }
 
-  int _radioValue = 0;
+  Widget showEventDateInput() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(left: 33),
+          child: Text(
+            'Event Date',
+            style: TextStyle(
+              color: darkBackgroundColor,
+              fontSize: 15,
+              fontFamily: 'Montserrat',
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 8.0),
+          child: new TextFormField(
+            maxLines: 1,
+            obscureText: false,
+            autofocus: false,
+            decoration: new InputDecoration(
+                hintText: 'Event Date',
+                icon: new Icon(
+                  Icons.date_range,
+                  color: Colors.grey,
+                )),
+            validator: (value) {},
+            onSaved: (value) {
+              _eventDate = value.trim();
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget showEventLocationInput() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(left: 33),
+          child: Text(
+            'Event Location',
+            style: TextStyle(
+              color: darkBackgroundColor,
+              fontSize: 15,
+              fontFamily: 'Montserrat',
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 8.0),
+          child: new TextFormField(
+            maxLines: 1,
+            obscureText: false,
+            autofocus: false,
+            decoration: new InputDecoration(
+                hintText: 'Event Location',
+                icon: new Icon(
+                  Icons.location_on,
+                  color: Colors.grey,
+                )),
+            validator: (value) {},
+            onSaved: (value) {
+              _eventLocation = value.trim();
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget showDescriptionInput() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(left: 30),
+          child: Text(
+            'Event Description',
+            style: TextStyle(
+              color: darkBackgroundColor,
+              fontSize: 15,
+              fontFamily: 'Montserrat',
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 8.0),
+          child: new TextFormField(
+            maxLines: 4,
+            obscureText: false,
+            autofocus: false,
+            decoration: new InputDecoration(
+              hintText: 'Description',
+            ),
+            validator: (value) {
+              if (value.length < 10)
+                return 'Event description must contain more than 10 letters.';
+              else
+                return null;
+            },
+            onSaved: (value) {
+              _eventDescription = value.trim();
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget showBenefitsInput() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(left: 30),
+          child: Text(
+            'Event Benefits',
+            style: TextStyle(
+              color: darkBackgroundColor,
+              fontSize: 15,
+              fontFamily: 'Montserrat',
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 8.0),
+          child: new TextFormField(
+            maxLines: 4,
+            obscureText: false,
+            autofocus: false,
+            decoration: new InputDecoration(
+              hintText: 'Benefits (Use, to create new line)',
+            ),
+            validator: (value) {
+              if (value.length == 0) {
+                return 'Event benefits must contain something';
+              } else {
+                return null;
+              }
+            },
+            onSaved: (value) {
+              _eventBenefits = value.replaceAll(',', r'\n').trim();
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget showAgeInput() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(left: 30),
+          child: Text(
+            'Age Criteria',
+            style: TextStyle(
+              color: darkBackgroundColor,
+              fontSize: 15,
+              fontFamily: 'Montserrat',
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        Row(
+          children: <Widget>[
+            Expanded(child: showMinInput()),
+            Expanded(child: showMaxInput()),
+          ],
+        )
+      ],
+    );
+  }
+
+  Widget showMinInput() {
+    return Padding(
+      padding: EdgeInsets.fromLTRB(30.0, 0.0, 10.0, 8.0),
+      child: new TextFormField(
+        maxLines: 1,
+        obscureText: false,
+        autofocus: false,
+        decoration: new InputDecoration(
+          hintText: 'Min',
+        ),
+        validator: (value) {},
+        onSaved: (value) {
+          _eventAgeMinReq = value.trim();
+        },
+      ),
+    );
+  }
+
+  Widget showMaxInput() {
+    return Padding(
+      padding: EdgeInsets.fromLTRB(10.0, 0.0, 30.0, 8.0),
+      child: new TextFormField(
+        maxLines: 1,
+        obscureText: false,
+        autofocus: false,
+        decoration: new InputDecoration(
+          hintText: 'Max',
+        ),
+        validator: (value) {},
+        onSaved: (value) {
+          _eventAgeMaxReq = value.trim();
+        },
+      ),
+    );
+  }
+
+  Widget showDivisionInput() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(left: 30),
+          child: Text(
+            'Division',
+            style: TextStyle(
+              color: darkBackgroundColor,
+              fontSize: 15,
+              fontFamily: 'Montserrat',
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        Row(
+          children: <Widget>[
+            Expanded(flex: 5, child: showDivisionNameInput()),
+            Expanded(flex: 2, child: showDivisionMaxInput()),
+          ],
+        )
+      ],
+    );
+  }
+
+  Widget showDivisionNameInput() {
+    return Padding(
+      padding: EdgeInsets.fromLTRB(30.0, 0.0, 10.0, 8.0),
+      child: new TextFormField(
+        maxLines: 1,
+        obscureText: false,
+        autofocus: false,
+        decoration: new InputDecoration(
+          hintText: 'Division Name',
+        ),
+        validator: (value) {},
+        onSaved: (value) {
+          _eventDivisionName.add(value.trim());
+        },
+      ),
+    );
+  }
+
+  Widget showDivisionMaxInput() {
+    return Padding(
+      padding: EdgeInsets.fromLTRB(0.0, 0.0, 30.0, 8.0),
+      child: new TextFormField(
+        maxLines: 1,
+        obscureText: false,
+        autofocus: false,
+        decoration: new InputDecoration(
+          hintText: 'Max',
+        ),
+        validator: (value) {},
+        onSaved: (value) {
+          _eventDivisionMax.add(value.trim());
+        },
+      ),
+    );
+  }
+
+  Widget showAccountInput() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(left: 30),
+          child: Text(
+            'Event Account Number',
+            style: TextStyle(
+              color: darkBackgroundColor,
+              fontSize: 15,
+              fontFamily: 'Montserrat',
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 8.0),
+          child: new TextFormField(
+            maxLines: 1,
+            obscureText: false,
+            autofocus: false,
+            decoration: new InputDecoration(
+              hintText: 'Account Number',
+            ),
+            validator: (value) {
+              if (value.length < 10) {
+                return 'Account number must be more than 10 characters';
+              } else {
+                return null;
+              }
+            },
+            onSaved: (value) {
+              _eventAccountNum = value.trim();
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget showPackageNameInput() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(left: 30),
+          child: Text(
+            'Package Name',
+            style: TextStyle(
+              color: darkBackgroundColor,
+              fontSize: 15,
+              fontFamily: 'Montserrat',
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 8.0),
+          child: new TextFormField(
+            maxLines: 1,
+            obscureText: false,
+            autofocus: false,
+            decoration: new InputDecoration(
+              hintText: 'Package Name',
+            ),
+            validator: (value) {
+              if (value.length < 4) {
+                return 'Package name must be longer than 4 characters';
+              } else {
+                return null;
+              }
+            },
+            onSaved: (value) {
+              _eventPackageName = value.trim();
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget showPackagePriceInput() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(left: 30),
+          child: Text(
+            'Package Price',
+            style: TextStyle(
+              color: darkBackgroundColor,
+              fontSize: 15,
+              fontFamily: 'Montserrat',
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 8.0),
+          child: new TextFormField(
+            maxLines: 1,
+            obscureText: false,
+            autofocus: false,
+            decoration: new InputDecoration(
+              hintText: 'Package Price',
+            ),
+            validator: (value) {},
+            onSaved: (value) {
+              _eventPackagePrice = value.trim();
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget showPackageDescInput() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(left: 30),
+          child: Text(
+            'Package Description',
+            style: TextStyle(
+              color: darkBackgroundColor,
+              fontSize: 15,
+              fontFamily: 'Montserrat',
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 8.0),
+          child: new TextFormField(
+            maxLines: 1,
+            obscureText: false,
+            autofocus: false,
+            decoration: new InputDecoration(
+              hintText: 'Package Description (Use, to create new line)',
+            ),
+            validator: (value) {
+              if (value.length < 4) {
+                return 'Package description must be longer than 4 characters';
+              } else {
+                return null;
+              }
+            },
+            onSaved: (value) {
+              _eventPackageDesc = value.trim();
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget continueButton() {
+    return Container(
+      height: 35,
+      width: 100,
+      child: Center(
+        child: Text(
+          'Continue',
+          style: TextStyle(
+            fontFamily: 'Montserrat',
+            fontSize: 12,
+            color: white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+      decoration: BoxDecoration(
+          gradient: LinearGradient(
+              colors: [gradientLighterOrange, gradientDarkerOrange]),
+          borderRadius: BorderRadius.circular(20)),
+    );
+  }
+
+  bool maleVal = false;
+  bool femaleVal = false;
 
   Widget showGenderInput() {
     return Column(
@@ -702,18 +704,32 @@ class _orgCreateEventState extends State<orgCreateEvent> {
           padding: EdgeInsets.symmetric(horizontal: 30.0),
           child: Row(
             children: <Widget>[
-              Radio(
-                value: 0,
-                groupValue: _radioValue,
-                onChanged: _handleGenderRadioChange,
+              Checkbox(
+                value: maleVal,
+                onChanged: (bool value) {
+                  setState(() {
+                    maleVal = value;
+                  });
+                },
               ),
-              Text('Male'),
-              Radio(
-                value: 1,
-                groupValue: _radioValue,
-                onChanged: _handleGenderRadioChange,
+              Text(
+                'Male',
+                style: TextStyle(
+                    fontFamily: 'Montserrat', fontWeight: FontWeight.bold),
               ),
-              Text('Female'),
+              Checkbox(
+                value: femaleVal,
+                onChanged: (bool value) {
+                  setState(() {
+                    femaleVal = value;
+                  });
+                },
+              ),
+              Text(
+                'Female',
+                style: TextStyle(
+                    fontFamily: 'Montserrat', fontWeight: FontWeight.bold),
+              ),
             ],
           ),
         ),
@@ -785,8 +801,58 @@ class _orgCreateEventState extends State<orgCreateEvent> {
     );
   }
 
+  void _addEvent(
+      {eventBenefits,
+      eventGenderReq,
+      eventAgeMinReq,
+      eventAgeMaxReq,
+      eventDate,
+      eventDescription,
+      eventDivision,
+      eventName,
+      eventOrganizer,
+      eventLocation,
+      eventBanner,
+      eventTime,
+      eventNonProfit}) {
+    final FirebaseDatabase db = FirebaseDatabase.instance;
+
+    Acara event = new Acara(
+        eventBenefits: eventBenefits,
+        eventCriteria:
+            'Gender: $eventGenderReq \nAge: $eventAgeMinReq - $eventAgeMaxReq years old',
+        eventDate: eventDate,
+        eventDesc: eventDescription,
+        eventDivision: eventDivision,
+        eventName: eventName,
+        eventOrganizer: eventOrganizer,
+        eventPlace: eventLocation,
+        eventThumb: eventBanner,
+        eventTime: eventTime,
+        isNonProfit: eventNonProfit);
+
+    var key = db.reference().child("event").push();
+    key.set(event.toJson());
+
+    db.reference().child("user/");
+  }
+
+  void getUID() async {
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    setState(() {
+      _eventOrganizerID = user.uid;
+    });
+  }
+
+  @override
+  void initState() {
+    getUID();
+  }
+
   @override
   Widget build(BuildContext context) {
+    print(_eventOrganizerID);
     return Container(
       decoration: BoxDecoration(
         color: white,
@@ -927,10 +993,10 @@ class _orgCreateEventState extends State<orgCreateEvent> {
                                           key: _page5,
                                           child: Column(
                                             children: <Widget>[
-                                              showDivisionNameInput(),
-                                              showDivisionMaxInput(),
+                                              showDivisionInput(),
+                                              showDivisionInput(),
                                               Center(
-                                                child: FlatButton(
+                                                child: InkWell(
                                                   child: Container(
                                                     width: 300,
                                                     height: 50,
@@ -953,7 +1019,7 @@ class _orgCreateEventState extends State<orgCreateEvent> {
                                                             color:
                                                                 lighterGray)),
                                                   ),
-                                                  onPressed: () {},
+                                                  onTap: () {},
                                                 ),
                                               ),
                                               Padding(
@@ -1114,10 +1180,10 @@ class _orgCreateEventState extends State<orgCreateEvent> {
                                                             // print(_eventGenderReq);
                                                             // print(_eventAgeMinReq);
                                                             // print(_eventAgeMaxReq);
-                                                            // print(
-                                                            //     _eventDivisionName);
-                                                            // print(
-                                                            //     _eventDivisionMax);
+                                                            print(
+                                                                _eventDivisionName);
+                                                            print(
+                                                                _eventDivisionMax);
                                                             // print(_eventAccountNum);
                                                             // print(
                                                             //     _eventPackageName);
@@ -1127,64 +1193,75 @@ class _orgCreateEventState extends State<orgCreateEvent> {
                                                             //     _eventPackagePrice);
                                                             // print(
                                                             //     _eventBannerURL);
+
+                                                            if (maleVal &&
+                                                                femaleVal) {
+                                                              _eventGenderReq =
+                                                                  "Male / Female";
+                                                            } else if (maleVal &&
+                                                                femaleVal ==
+                                                                    false) {
+                                                              _eventGenderReq =
+                                                                  "Male Only";
+                                                            } else if (maleVal ==
+                                                                    false &&
+                                                                femaleVal) {
+                                                              _eventGenderReq =
+                                                                  "Female Only";
+                                                            } else {
+                                                              _eventGenderReq =
+                                                                  "Male / Female";
+                                                            }
+                                                            List
+                                                                _eventDivision =
+                                                                [];
+                                                            for (var i = 0;
+                                                                i <
+                                                                    _eventDivisionName
+                                                                        .length;
+                                                                i++) {
+                                                              Map map = {
+                                                                'divisionName':
+                                                                    _eventDivisionName[
+                                                                        i],
+                                                                'divisionCapacity':
+                                                                    int.parse(
+                                                                        _eventDivisionMax[
+                                                                            i])
+                                                              };
+                                                              _eventDivision
+                                                                  .add(map);
+                                                            }
+
+                                                            _addEvent(
+                                                              eventName:
+                                                                  _eventName,
+                                                              eventDate:
+                                                                  _eventDate,
+                                                              eventLocation:
+                                                                  _eventLocation,
+                                                              eventDescription:
+                                                                  _eventDescription,
+                                                              eventBenefits:
+                                                                  _eventBenefits,
+                                                              eventGenderReq:
+                                                                  _eventGenderReq,
+                                                              eventAgeMinReq:
+                                                                  _eventAgeMinReq,
+                                                              eventAgeMaxReq:
+                                                                  _eventAgeMaxReq,
+                                                              eventDivision:
+                                                                  _eventDivision,
+                                                              eventOrganizer:
+                                                                  _eventOrganizerID,
+                                                              eventTime:
+                                                                  '10:00 - 17:00',
+                                                              eventBanner:
+                                                                  _eventBannerURL,
+                                                              eventNonProfit:
+                                                                  _eventNonProfit,
+                                                            );
                                                             //Navigator.pop(context);
-
-                                                            List divisi = [
-                                                              {
-                                                                "divisionName":
-                                                                    "Event",
-                                                                "divisionCapacity":
-                                                                    25
-                                                              },
-                                                              {
-                                                                "divisionName":
-                                                                    "Funding",
-                                                                "divisionCapacity":
-                                                                    25
-                                                              },
-                                                              {
-                                                                "divisionName":
-                                                                    "Documentation",
-                                                                "divisionCapacity":
-                                                                    20
-                                                              },
-                                                            ];
-
-                                                            final FirebaseDatabase
-                                                                db =
-                                                                FirebaseDatabase
-                                                                    .instance;
-
-                                                            Acara event = new Acara(
-                                                                eventBenefits:
-                                                                    _eventBenefits,
-                                                                eventCriteria:
-                                                                    'Gender: Male / Female \nAge: $_eventAgeMinReq - $_eventAgeMaxReq years old',
-                                                                eventDate:
-                                                                    _eventDate,
-                                                                eventDesc:
-                                                                    _eventDescription,
-                                                                eventDivision:
-                                                                    divisi,
-                                                                eventName:
-                                                                    _eventName,
-                                                                eventOrganizer:
-                                                                    'Akmkp0bMCrdI4Zc5HIBt9vJwPzC3',
-                                                                eventPlace:
-                                                                    _eventLocation,
-                                                                eventThumb:
-                                                                    _eventBannerURL,
-                                                                eventTime:
-                                                                    '10:00-17:00',
-                                                                isNonProfit:
-                                                                    _eventNonProfit);
-
-                                                            db
-                                                                .reference()
-                                                                .child("event")
-                                                                .push()
-                                                                .set(event
-                                                                    .toJson());
                                                           },
                                                           child: Container(
                                                             height: 35,
@@ -1204,17 +1281,19 @@ class _orgCreateEventState extends State<orgCreateEvent> {
                                                                 ),
                                                               ),
                                                             ),
-                                                            decoration: BoxDecoration(
-                                                                gradient:
-                                                                    LinearGradient(
-                                                                        colors: [
-                                                                      gradientLighterOrange,
-                                                                      gradientDarkerOrange
-                                                                    ]),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            20)),
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              gradient:
+                                                                  LinearGradient(
+                                                                      colors: [
+                                                                    gradientLighterOrange,
+                                                                    gradientDarkerOrange
+                                                                  ]),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          20),
+                                                            ),
                                                           ),
                                                         ),
                                                       ],
