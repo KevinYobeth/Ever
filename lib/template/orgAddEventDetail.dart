@@ -527,7 +527,10 @@ class _orgCreateEventState extends State<orgCreateEvent> {
         decoration: new InputDecoration(
           hintText: 'Division Name',
         ),
-        validator: (value) {},
+        validator: (value) {
+          if (value.length <= 0)
+            return 'Division Name must be longer than 1 characters';
+        },
         onSaved: (value) {
           _eventDivisionName.add(value.trim());
         },
@@ -542,10 +545,13 @@ class _orgCreateEventState extends State<orgCreateEvent> {
         maxLines: 1,
         obscureText: false,
         autofocus: false,
+        keyboardType: TextInputType.number,
         decoration: new InputDecoration(
           hintText: 'Max',
         ),
-        validator: (value) {},
+        validator: (value) {
+          if (value.length <= 0) return 'Must be filled';
+        },
         onSaved: (value) {
           _eventDivisionMax.add(value.trim());
         },
@@ -655,6 +661,7 @@ class _orgCreateEventState extends State<orgCreateEvent> {
           padding: EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 8.0),
           child: new TextFormField(
             maxLines: 1,
+            keyboardType: TextInputType.number,
             obscureText: false,
             autofocus: false,
             decoration: new InputDecoration(
@@ -733,23 +740,31 @@ class _orgCreateEventState extends State<orgCreateEvent> {
     );
   }
 
-  Widget addButton(int page) {
-    return Container(
-      height: 35,
-      width: 100,
-      child: Center(
-        child: Text(
-          'Add More',
-          style: TextStyle(
-            fontFamily: 'Montserrat',
-            fontSize: 12,
-            color: white,
-            fontWeight: FontWeight.bold,
+  Widget addButton(GlobalKey<FormState> page) {
+    return InkWell(
+      child: Container(
+        height: 35,
+        width: 100,
+        child: Center(
+          child: Text(
+            'Add More',
+            style: TextStyle(
+              fontFamily: 'Montserrat',
+              fontSize: 12,
+              color: white,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
+        decoration: BoxDecoration(
+            color: black, borderRadius: BorderRadius.circular(20)),
       ),
-      decoration:
-          BoxDecoration(color: black, borderRadius: BorderRadius.circular(20)),
+      onTap: () {
+        if (page.currentState.validate()) {
+          page.currentState.save();
+          page.currentState.reset();
+        }
+      },
     );
   }
 
@@ -1081,58 +1096,54 @@ class _orgCreateEventState extends State<orgCreateEvent> {
                                     )
                                   : _pageContinue == 4
                                       ? Form(
-                                          autovalidate: true,
                                           key: _page5,
                                           child: Column(
                                             children: <Widget>[
                                               showDivisionInput(),
-                                              showDivisionInput(),
-                                              Center(
-                                                child: InkWell(
-                                                  child: Container(
-                                                    width: 300,
-                                                    height: 50,
-                                                    child: Center(
-                                                      child: Text(
-                                                        'Add More Division',
-                                                        style: TextStyle(
-                                                          color: lighterGray,
-                                                          fontSize: 15,
-                                                          fontFamily:
-                                                              'Montserrat',
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    decoration: BoxDecoration(
-                                                        color: white,
-                                                        border: Border.all(
-                                                            color:
-                                                                lighterGray)),
-                                                  ),
-                                                  onTap: () {},
-                                                ),
-                                              ),
                                               Padding(
                                                 padding: const EdgeInsets.only(
-                                                    left: 250),
-                                                child: FlatButton(
-                                                    onPressed: () {
-                                                      setState(() {
-                                                        if (_page5.currentState
-                                                            .validate()) {
-                                                          _page5.currentState
-                                                              .save();
-                                                          isNonProfit
-                                                              ? _pageContinue =
-                                                                  5
-                                                              : _pageContinue =
-                                                                  6;
-                                                        }
-                                                      });
-                                                    },
-                                                    child: continueButton()),
+                                                    right: 22.0),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.end,
+                                                  children: <Widget>[
+                                                    InkWell(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            if (_page7
+                                                                .currentState
+                                                                .validate()) {
+                                                              _page7
+                                                                  .currentState
+                                                                  .save();
+                                                              _pageContinue = 7;
+                                                            }
+                                                          });
+                                                        },
+                                                        child:
+                                                            addButton(_page5)),
+                                                    SizedBox(width: 20.0),
+                                                    InkWell(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            if (_page5
+                                                                .currentState
+                                                                .validate()) {
+                                                              _page5
+                                                                  .currentState
+                                                                  .save();
+                                                              isNonProfit
+                                                                  ? _pageContinue =
+                                                                      5
+                                                                  : _pageContinue =
+                                                                      6;
+                                                            }
+                                                          });
+                                                        },
+                                                        child:
+                                                            continueButton()),
+                                                  ],
+                                                ),
                                               ),
                                             ],
                                           ),
@@ -1148,29 +1159,32 @@ class _orgCreateEventState extends State<orgCreateEvent> {
                                                     padding:
                                                         const EdgeInsets.only(
                                                             left: 250),
-                                                    child: FlatButton(
-                                                        onPressed: () {
-                                                          //orgAddBenefits(context, isNonProfit);
-                                                          setState(() {
-                                                            if (_page6
-                                                                .currentState
-                                                                .validate()) {
-                                                              _page6
-                                                                  .currentState
-                                                                  .save();
-                                                              _pageContinue = 7;
-                                                            }
-                                                          });
-                                                        },
-                                                        child:
-                                                            continueButton()),
+                                                    child: Row(
+                                                      children: <Widget>[
+                                                        FlatButton(
+                                                            onPressed: () {
+                                                              setState(() {
+                                                                if (_page6
+                                                                    .currentState
+                                                                    .validate()) {
+                                                                  _page6
+                                                                      .currentState
+                                                                      .save();
+                                                                  _pageContinue =
+                                                                      7;
+                                                                }
+                                                              });
+                                                            },
+                                                            child:
+                                                                continueButton()),
+                                                      ],
+                                                    ),
                                                   ),
                                                 ],
                                               ),
                                             )
                                           : _pageContinue == 6
                                               ? Form(
-                                                  autovalidate: true,
                                                   key: _page7,
                                                   child: Column(
                                                     children: <Widget>[
@@ -1202,9 +1216,8 @@ class _orgCreateEventState extends State<orgCreateEvent> {
                                                                     }
                                                                   });
                                                                 },
-                                                                child:
-                                                                    addButton(
-                                                                        2)),
+                                                                child: addButton(
+                                                                    _page7)),
                                                             SizedBox(
                                                                 width: 20.0),
                                                             InkWell(
@@ -1298,10 +1311,10 @@ class _orgCreateEventState extends State<orgCreateEvent> {
                                                             // print(_eventGenderReq);
                                                             // print(_eventAgeMinReq);
                                                             // print(_eventAgeMaxReq);
-                                                            print(
-                                                                _eventDivisionName);
-                                                            print(
-                                                                _eventDivisionMax);
+                                                            // print(
+                                                            //     _eventDivisionName);
+                                                            // print(
+                                                            //     _eventDivisionMax);
                                                             // print(_eventAccountNum);
                                                             // print(
                                                             //     _eventPackageName);
@@ -1311,7 +1324,6 @@ class _orgCreateEventState extends State<orgCreateEvent> {
                                                             //     _eventPackagePrice);
                                                             // print(
                                                             //     _eventBannerURL);
-
                                                             if (maleVal &&
                                                                 femaleVal) {
                                                               _eventGenderReq =
