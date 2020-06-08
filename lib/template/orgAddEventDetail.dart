@@ -7,9 +7,11 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:Ever/template/colors.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 
 String _eventName;
 String _eventDate;
+String _eventTime;
 String _eventLocation;
 String _eventDescription;
 String _eventBenefits;
@@ -19,10 +21,11 @@ String _eventAgeMaxReq;
 List<String> _eventDivisionName = List<String>();
 List<String> _eventDivisionMax = List<String>();
 
+List<String> _eventPackageName = List<String>();
+List<String> _eventPackagePrice = List<String>();
+List<String> _eventPackageDesc = List<String>();
+
 String _eventAccountNum;
-String _eventPackageName;
-String _eventPackagePrice;
-String _eventPackageDesc;
 String _eventBannerURL;
 String _eventOrganizerID;
 bool _eventNonProfit;
@@ -221,40 +224,89 @@ class _orgCreateEventState extends State<orgCreateEvent> {
   }
 
   Widget showEventDateInput() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.only(left: 33),
-          child: Text(
-            'Event Date',
-            style: TextStyle(
-              color: darkBackgroundColor,
-              fontSize: 15,
-              fontFamily: 'Montserrat',
-              fontWeight: FontWeight.bold,
-            ),
+    return Padding(
+      padding: const EdgeInsets.only(left: 33.0, bottom: 8),
+      child: Row(
+        children: <Widget>[
+          Icon(
+            Icons.calendar_today,
+            color: Colors.grey,
           ),
-        ),
-        Padding(
-          padding: EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 8.0),
-          child: new TextFormField(
-            maxLines: 1,
-            obscureText: false,
-            autofocus: false,
-            decoration: new InputDecoration(
-                hintText: 'Event Date',
-                icon: new Icon(
-                  Icons.date_range,
-                  color: Colors.grey,
-                )),
-            validator: (value) {},
-            onSaved: (value) {
-              _eventDate = value.trim();
-            },
-          ),
-        ),
-      ],
+          _eventDate == null
+              ? Padding(
+                  padding: const EdgeInsets.only(left: 15.0),
+                  child: FlatButton(
+                    color: Colors.grey[300],
+                    child: Text('Event Date'),
+                    onPressed: () {
+                      showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime.now(),
+                              lastDate: DateTime(DateTime.now().year + 2))
+                          .then((date) {
+                        setState(() {
+                          if (date != null) _eventDate = date.toString();
+                        });
+                      });
+                    },
+                  ),
+                )
+              : Padding(
+                  padding: const EdgeInsets.only(left: 15.0),
+                  child: FlatButton(
+                    color: Colors.grey[300],
+                    child: Text(DateFormat('dd MMM yyyy')
+                        .format(DateTime.parse(_eventDate))),
+                    onPressed: () {
+                      showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime.now(),
+                              lastDate: DateTime(DateTime.now().year + 2))
+                          .then((date) {
+                        setState(() {
+                          _eventDate = date.toString();
+                        });
+                      });
+                    },
+                  ),
+                ),
+          _eventTime == null
+              ? Padding(
+                  padding: const EdgeInsets.only(left: 15.0),
+                  child: FlatButton(
+                    color: Colors.grey[300],
+                    child: Text('Event Time'),
+                    onPressed: () {
+                      showTimePicker(
+                              context: context, initialTime: TimeOfDay.now())
+                          .then((time) {
+                        setState(() {
+                          if (time != null) _eventTime = time.toString();
+                        });
+                      });
+                    },
+                  ),
+                )
+              : Padding(
+                  padding: const EdgeInsets.only(left: 15.0),
+                  child: FlatButton(
+                    color: Colors.grey[300],
+                    child: Text(_eventTime.substring(10, 15)),
+                    onPressed: () {
+                      showTimePicker(
+                              context: context, initialTime: TimeOfDay.now())
+                          .then((time) {
+                        setState(() {
+                          _eventTime = time.toString();
+                        });
+                      });
+                    },
+                  ),
+                ),
+        ],
+      ),
     );
   }
 
@@ -575,7 +627,7 @@ class _orgCreateEventState extends State<orgCreateEvent> {
               }
             },
             onSaved: (value) {
-              _eventPackageName = value.trim();
+              _eventPackageName.add(value.trim());
             },
           ),
         ),
@@ -610,7 +662,7 @@ class _orgCreateEventState extends State<orgCreateEvent> {
             ),
             validator: (value) {},
             onSaved: (value) {
-              _eventPackagePrice = value.trim();
+              _eventPackagePrice.add(value.trim());
             },
           ),
         ),
@@ -651,7 +703,7 @@ class _orgCreateEventState extends State<orgCreateEvent> {
               }
             },
             onSaved: (value) {
-              _eventPackageDesc = value.trim();
+              _eventPackageDesc.add(value.trim());
             },
           ),
         ),
@@ -678,6 +730,26 @@ class _orgCreateEventState extends State<orgCreateEvent> {
           gradient: LinearGradient(
               colors: [gradientLighterOrange, gradientDarkerOrange]),
           borderRadius: BorderRadius.circular(20)),
+    );
+  }
+
+  Widget addButton(int page) {
+    return Container(
+      height: 35,
+      width: 100,
+      child: Center(
+        child: Text(
+          'Add More',
+          style: TextStyle(
+            fontFamily: 'Montserrat',
+            fontSize: 12,
+            color: white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+      decoration:
+          BoxDecoration(color: black, borderRadius: BorderRadius.circular(20)),
     );
   }
 
@@ -814,7 +886,8 @@ class _orgCreateEventState extends State<orgCreateEvent> {
       eventLocation,
       eventBanner,
       eventTime,
-      eventNonProfit}) {
+      eventNonProfit,
+      eventSponsor}) {
     final FirebaseDatabase db = FirebaseDatabase.instance;
 
     Acara event = new Acara(
@@ -824,6 +897,7 @@ class _orgCreateEventState extends State<orgCreateEvent> {
         eventDate: eventDate,
         eventDesc: eventDescription,
         eventDivision: eventDivision,
+        eventSponsor: eventSponsor,
         eventName: eventName,
         eventOrganizer: eventOrganizer,
         eventPlace: eventLocation,
@@ -848,11 +922,29 @@ class _orgCreateEventState extends State<orgCreateEvent> {
   @override
   void initState() {
     getUID();
+    _eventName;
+    _eventDate;
+    _eventTime;
+    _eventLocation;
+    _eventDescription;
+    _eventBenefits;
+    _eventGenderReq;
+    _eventAgeMinReq;
+    _eventAgeMaxReq;
+    _eventDivisionName = List<String>();
+    _eventDivisionMax = List<String>();
+
+    _eventAccountNum;
+    _eventPackageName;
+    _eventPackagePrice;
+    _eventPackageDesc;
+    _eventBannerURL;
+    _eventOrganizerID;
+    _eventNonProfit;
   }
 
   @override
   Widget build(BuildContext context) {
-    print(_eventOrganizerID);
     return Container(
       decoration: BoxDecoration(
         color: white,
@@ -1088,25 +1180,51 @@ class _orgCreateEventState extends State<orgCreateEvent> {
                                                       Padding(
                                                         padding:
                                                             const EdgeInsets
-                                                                    .only(
-                                                                left: 250),
-                                                        child: FlatButton(
-                                                            onPressed: () {
-                                                              //orgAddBenefits(context, isNonProfit);
-                                                              setState(() {
-                                                                if (_page7
-                                                                    .currentState
-                                                                    .validate()) {
-                                                                  _page7
-                                                                      .currentState
-                                                                      .save();
-                                                                  _pageContinue =
-                                                                      7;
-                                                                }
-                                                              });
-                                                            },
-                                                            child:
-                                                                continueButton()),
+                                                                    .symmetric(
+                                                                horizontal:
+                                                                    22.0),
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .end,
+                                                          children: <Widget>[
+                                                            InkWell(
+                                                                onTap: () {
+                                                                  setState(() {
+                                                                    if (_page7
+                                                                        .currentState
+                                                                        .validate()) {
+                                                                      _page7
+                                                                          .currentState
+                                                                          .save();
+                                                                      _pageContinue =
+                                                                          7;
+                                                                    }
+                                                                  });
+                                                                },
+                                                                child:
+                                                                    addButton(
+                                                                        2)),
+                                                            SizedBox(
+                                                                width: 20.0),
+                                                            InkWell(
+                                                                onTap: () {
+                                                                  setState(() {
+                                                                    if (_page7
+                                                                        .currentState
+                                                                        .validate()) {
+                                                                      _page7
+                                                                          .currentState
+                                                                          .save();
+                                                                      _pageContinue =
+                                                                          7;
+                                                                    }
+                                                                  });
+                                                                },
+                                                                child:
+                                                                    continueButton()),
+                                                          ],
+                                                        ),
                                                       ),
                                                     ],
                                                   ),
@@ -1233,35 +1351,97 @@ class _orgCreateEventState extends State<orgCreateEvent> {
                                                                   .add(map);
                                                             }
 
-                                                            _addEvent(
-                                                              eventName:
-                                                                  _eventName,
-                                                              eventDate:
-                                                                  _eventDate,
-                                                              eventLocation:
-                                                                  _eventLocation,
-                                                              eventDescription:
-                                                                  _eventDescription,
-                                                              eventBenefits:
-                                                                  _eventBenefits,
-                                                              eventGenderReq:
-                                                                  _eventGenderReq,
-                                                              eventAgeMinReq:
-                                                                  _eventAgeMinReq,
-                                                              eventAgeMaxReq:
-                                                                  _eventAgeMaxReq,
-                                                              eventDivision:
-                                                                  _eventDivision,
-                                                              eventOrganizer:
-                                                                  _eventOrganizerID,
-                                                              eventTime:
-                                                                  '10:00 - 17:00',
-                                                              eventBanner:
-                                                                  _eventBannerURL,
-                                                              eventNonProfit:
-                                                                  _eventNonProfit,
-                                                            );
-                                                            //Navigator.pop(context);
+                                                            List _eventSponsor =
+                                                                [];
+                                                            for (var i = 0;
+                                                                i <
+                                                                    _eventPackageName
+                                                                        .length;
+                                                                i++) {
+                                                              Map map = {
+                                                                'packageName':
+                                                                    _eventPackageName[
+                                                                        i],
+                                                                'packagePrice':
+                                                                    int.parse(
+                                                                        _eventPackagePrice[
+                                                                            i]),
+                                                                'packageDetails':
+                                                                    _eventPackageDesc[
+                                                                        i]
+                                                              };
+                                                              _eventSponsor
+                                                                  .add(map);
+                                                            }
+
+                                                            print(
+                                                                _eventSponsor);
+                                                            print(
+                                                                _eventNonProfit);
+
+                                                            if (_eventNonProfit) {
+                                                              _addEvent(
+                                                                  eventName:
+                                                                      _eventName,
+                                                                  eventDate:
+                                                                      _eventDate,
+                                                                  eventLocation:
+                                                                      _eventLocation,
+                                                                  eventDescription:
+                                                                      _eventDescription,
+                                                                  eventBenefits:
+                                                                      _eventBenefits,
+                                                                  eventGenderReq:
+                                                                      _eventGenderReq,
+                                                                  eventAgeMinReq:
+                                                                      _eventAgeMinReq,
+                                                                  eventAgeMaxReq:
+                                                                      _eventAgeMaxReq,
+                                                                  eventDivision:
+                                                                      _eventDivision,
+                                                                  eventOrganizer:
+                                                                      _eventOrganizerID,
+                                                                  eventTime:
+                                                                      _eventTime,
+                                                                  eventBanner:
+                                                                      _eventBannerURL,
+                                                                  eventNonProfit:
+                                                                      _eventNonProfit);
+                                                            } else {
+                                                              _addEvent(
+                                                                eventName:
+                                                                    _eventName,
+                                                                eventDate:
+                                                                    _eventDate,
+                                                                eventLocation:
+                                                                    _eventLocation,
+                                                                eventDescription:
+                                                                    _eventDescription,
+                                                                eventBenefits:
+                                                                    _eventBenefits,
+                                                                eventGenderReq:
+                                                                    _eventGenderReq,
+                                                                eventAgeMinReq:
+                                                                    _eventAgeMinReq,
+                                                                eventAgeMaxReq:
+                                                                    _eventAgeMaxReq,
+                                                                eventDivision:
+                                                                    _eventDivision,
+                                                                eventOrganizer:
+                                                                    _eventOrganizerID,
+                                                                eventTime:
+                                                                    _eventTime,
+                                                                eventBanner:
+                                                                    _eventBannerURL,
+                                                                eventNonProfit:
+                                                                    _eventNonProfit,
+                                                                eventSponsor:
+                                                                    _eventSponsor,
+                                                              );
+                                                            }
+
+                                                            Navigator.pop(
+                                                                context);
                                                           },
                                                           child: Container(
                                                             height: 35,
