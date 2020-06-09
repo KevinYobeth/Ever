@@ -923,7 +923,18 @@ class _orgCreateEventState extends State<orgCreateEvent> {
     var key = db.reference().child("event").push();
     key.set(event.toJson());
 
-    db.reference().child("user/");
+    Map organizationEvent = {
+      "eventName": eventName,
+      "eventDate": eventDate,
+      "eventThumb": eventBanner,
+      "eventCreateTime": DateTime.now().toString()
+    };
+
+    db
+        .reference()
+        .child("user/$_eventOrganizerID/organizationEvent")
+        .push()
+        .set(organizationEvent);
   }
 
   void getUID() async {
