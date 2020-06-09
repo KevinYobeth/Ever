@@ -90,6 +90,14 @@ class _addEventState extends State<addEvent> {
 }
 
 class orgEventCard extends StatelessWidget {
+  final String eventDate;
+  final String eventBanner;
+  final bool isAddEvent;
+
+  const orgEventCard(
+      {Key key, this.eventDate, this.eventBanner, this.isAddEvent})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Padding(

@@ -45,7 +45,6 @@ class _userProfileState extends State<userProfile> {
   final User userData;
   final Function signOut;
 
-  List _userActiveEvents;
   List<UserEvent> _userEvents;
 
   Query _userEventsQuery;
@@ -62,7 +61,6 @@ class _userProfileState extends State<userProfile> {
 
   @override
   void initState() {
-    //_userActiveEvents = userData.userActiveEvent.values.toList();
 
     _userEvents = new List();
     _userEventsQuery = db

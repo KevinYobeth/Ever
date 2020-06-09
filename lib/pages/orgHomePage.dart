@@ -1,4 +1,5 @@
 import 'package:Ever/models/user.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:Ever/template/colors.dart';
 import 'package:Ever/template/orgEventCard.dart';
@@ -103,15 +104,13 @@ class _orgHomePageState extends State<orgHomePage> {
                 ),
                 SizedBox(
                   height: 200,
-                  child: ListView(
+                  child: ListView.builder(
                     physics: BouncingScrollPhysics(),
                     scrollDirection: Axis.horizontal,
-                    children: <Widget>[
-                      addEvent(
-                        refresh: refresh,
-                      ),
-                      orgEventCard(),
-                    ],
+                    itemCount: 3,
+                    itemBuilder: (BuildContext context, int index) {
+                      return orgEventCard();
+                    },
                   ),
                 ),
                 Padding(
