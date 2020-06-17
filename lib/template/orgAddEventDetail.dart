@@ -338,7 +338,9 @@ class _orgCreateEventState extends State<orgCreateEvent> {
                   Icons.location_on,
                   color: Colors.grey,
                 )),
-            validator: (value) {},
+            validator: (value) {
+              if (value.length == 0) return 'Location must be filled';
+            },
             onSaved: (value) {
               _eventLocation = value.trim();
             },
@@ -421,7 +423,7 @@ class _orgCreateEventState extends State<orgCreateEvent> {
               }
             },
             onSaved: (value) {
-              _eventBenefits = value.replaceAll(',', r'\n').trim();
+              _eventBenefits = value.replaceAll(',', '\n').trim();
             },
           ),
         ),
@@ -1002,7 +1004,6 @@ class _orgCreateEventState extends State<orgCreateEvent> {
                   physics: BouncingScrollPhysics(),
                   child: _pageContinue == 0
                       ? Form(
-                          autovalidate: true,
                           key: _page1,
                           child: Column(
                             children: <Widget>[
@@ -1029,7 +1030,6 @@ class _orgCreateEventState extends State<orgCreateEvent> {
                         )
                       : _pageContinue == 1
                           ? Form(
-                              autovalidate: true,
                               key: _page2,
                               child: Column(
                                 children: <Widget>[
@@ -1080,7 +1080,6 @@ class _orgCreateEventState extends State<orgCreateEvent> {
                                 )
                               : _pageContinue == 3
                                   ? Form(
-                                      autovalidate: true,
                                       key: _page4,
                                       child: Column(
                                         children: <Widget>[
@@ -1161,7 +1160,6 @@ class _orgCreateEventState extends State<orgCreateEvent> {
                                         )
                                       : _pageContinue == 5
                                           ? Form(
-                                              autovalidate: true,
                                               key: _page6,
                                               child: Column(
                                                 children: <Widget>[
@@ -1287,7 +1285,7 @@ class _orgCreateEventState extends State<orgCreateEvent> {
                                                         ),
                                                         SizedBox(height: 20),
                                                         Text(
-                                                          'Event submitted successfully',
+                                                          'Event added successfully',
                                                           style: TextStyle(
                                                             color:
                                                                 darkBackgroundColor,
@@ -1299,7 +1297,7 @@ class _orgCreateEventState extends State<orgCreateEvent> {
                                                           ),
                                                         ),
                                                         Text(
-                                                          'Please wait for event approval',
+                                                          'Thankyou for your contribution!',
                                                           style: TextStyle(
                                                             color:
                                                                 darkBackgroundColor,
