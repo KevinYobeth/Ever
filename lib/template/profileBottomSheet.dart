@@ -279,7 +279,10 @@ class _userProfileState extends State<userProfile> {
           },
           onSaved: (value) {
             //userData.userEmail = value.trim();
-            db.reference().child('user/$user/organizationID').set(value);
+            db
+                .reference()
+                .child('user/${userData.key}/organizationID')
+                .set(value);
           }),
     );
   }
@@ -307,7 +310,10 @@ class _userProfileState extends State<userProfile> {
           },
           onSaved: (value) {
             //userData.userEmail = value.trim();
-            db.reference().child('user/$user/organizationNumber').set(value);
+            db
+                .reference()
+                .child('user/${userData.key}/organizationNumber')
+                .set(value);
           }),
     );
   }
@@ -778,9 +784,10 @@ class _userProfileState extends State<userProfile> {
                                                     db
                                                         .reference()
                                                         .child(
-                                                            'user/$user/isVerified')
+                                                            'user/${userData.key}/isVerified')
                                                         .set(true);
-                                                    print('Saved');
+                                                    userData.isVerified = true;
+                                                    _editProfile = 1;
                                                   }
                                                 });
                                               },

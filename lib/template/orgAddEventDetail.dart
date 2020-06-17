@@ -1054,7 +1054,6 @@ class _orgCreateEventState extends State<orgCreateEvent> {
                             )
                           : _pageContinue == 2
                               ? Form(
-                                  autovalidate: true,
                                   key: _page3,
                                   child: Column(
                                     children: <Widget>[
