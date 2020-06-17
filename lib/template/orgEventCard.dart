@@ -2,6 +2,7 @@ import 'package:Ever/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:Ever/template/colors.dart';
 import 'package:Ever/template/orgAddEventDetail.dart';
+import 'package:intl/intl.dart';
 
 class addEvent extends StatefulWidget {
   final Function refresh;
@@ -111,7 +112,7 @@ class orgEventCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  '7',
+                  DateFormat('dd').format(DateTime.parse(eventDate)),
                   style: TextStyle(
                     color: darkBackgroundColor,
                     fontSize: 40,
@@ -120,7 +121,7 @@ class orgEventCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'Des',
+                  DateFormat('MMM').format(DateTime.parse(eventDate)),
                   style: TextStyle(
                     color: darkBackgroundColor,
                     fontSize: 20,
@@ -132,9 +133,10 @@ class orgEventCard extends StatelessWidget {
             ),
           ),
           Container(
-            width: 300,
-            height: 170,
+            width: 310,
+            height: 200,
             decoration: BoxDecoration(
+              image: DecorationImage(image: NetworkImage(eventBanner)),
               color: Colors.blueGrey[100],
               borderRadius: BorderRadius.circular(10),
             ),
