@@ -7,6 +7,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:Ever/template/colors.dart';
 import 'package:Ever/template/orgEventCard.dart';
+import 'package:Ever/template/orgProfileBottomSheet.dart';
 
 final scaffoldState = GlobalKey<ScaffoldState>();
 bool _eventCardIsUp = false;
@@ -95,7 +96,20 @@ class _orgHomePageState extends State<orgHomePage> {
                                 : userData.userProfileImg),
                           ),
                           onTap: () {
-                            Navigator.pop(context);
+                            //Navigator.pop(context);
+                            setState(() {
+                              _eventCardIsUp = true;
+                            });
+                            var sheetController =
+                                scaffoldState.currentState.showBottomSheet(
+                              (context) => orgProfile(userData: userData),
+                            );
+
+                            sheetController.closed.then((value) {
+                              setState(() {
+                                _eventCardIsUp = false;
+                              });
+                            });
                           },
                         ),
                       ],
