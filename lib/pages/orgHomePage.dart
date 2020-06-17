@@ -146,18 +146,19 @@ class _orgHomePageState extends State<orgHomePage> {
                   child: ListView.builder(
                     physics: BouncingScrollPhysics(),
                     scrollDirection: Axis.horizontal,
-                    itemCount: _orgEventList.length,
+                    itemCount:
+                        _orgEventList.isEmpty ? 1 : _orgEventList.length + 1,
                     itemBuilder: (BuildContext context, int index) {
+                      if (index == 0) {
+                        return addEvent(refresh: refresh);
+                      }
+                      index -= 1;
+
                       String eventName = _orgEventList[index].eventName;
                       String eventDate = _orgEventList[index].eventDate;
                       String eventThumb = _orgEventList[index].eventThumb;
 
                       DateTime eDate = DateTime.parse(eventDate);
-
-                      if (index == 0) {
-                        return addEvent(refresh: refresh);
-                      }
-                      index -= 1;
 
                       if (index == _orgEventList.length + 1) {
                         return addEvent(refresh: refresh);

@@ -200,20 +200,17 @@ class _orgProfileState extends State<orgProfile> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
-                                Text(
-                                  'Login into personal account? ',
-                                  style: TextStyle(
-                                    fontFamily: 'Montserrat',
-                                    fontSize: 15,
-                                    color: white,
-                                  ),
-                                ),
+                                Text('Login into personal account? ',
+                                    style: TextStyle(
+                                        color: white,
+                                        fontFamily: 'Montserrat',
+                                        fontSize: 12)),
                                 InkWell(
                                   child: Text(
                                     'Click Here',
                                     style: TextStyle(
                                       fontFamily: 'Montserrat',
-                                      fontSize: 15,
+                                      fontSize: 12,
                                       color: orange,
                                       fontWeight: FontWeight.bold,
                                     ),
