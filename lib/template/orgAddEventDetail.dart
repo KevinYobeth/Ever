@@ -1172,8 +1172,8 @@ class _orgCreateEventState extends State<orgCreateEvent> {
                                                             left: 250),
                                                     child: Row(
                                                       children: <Widget>[
-                                                        FlatButton(
-                                                            onPressed: () {
+                                                        InkWell(
+                                                            onTap: () {
                                                               setState(() {
                                                                 if (_page6
                                                                     .currentState

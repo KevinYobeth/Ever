@@ -61,7 +61,6 @@ class _userProfileState extends State<userProfile> {
 
   @override
   void initState() {
-
     _userEvents = new List();
     _userEventsQuery = db
         .reference()
