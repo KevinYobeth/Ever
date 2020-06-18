@@ -246,7 +246,8 @@ class _eventDetailState extends State<eventDetail> {
                             Text(
                                 DateFormat('EEEE, dd MMM yyyy')
                                         .format(DateTime.parse(eventDate)) +
-                                    ", $eventTime",
+                                    ", " +
+                                    eventTime.substring(10, 15),
                                 style: TextStyle(
                                     fontFamily: 'Montserrat',
                                     color: Colors.red,

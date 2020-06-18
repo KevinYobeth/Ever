@@ -48,8 +48,7 @@ class eventCardMin extends StatelessWidget {
               color: Colors.blueGrey[100],
               borderRadius: BorderRadius.circular(10),
               image: DecorationImage(
-                image: NetworkImage(eventThumb),
-              ),
+                  image: NetworkImage(eventThumb), fit: BoxFit.cover),
             ),
           ),
         ],
