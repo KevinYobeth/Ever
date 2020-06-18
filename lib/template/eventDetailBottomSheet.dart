@@ -8,7 +8,6 @@ import 'package:Ever/template/sponsorBottomSheet.dart';
 import 'package:Ever/template/volunteerBottomSheet.dart';
 import 'package:intl/intl.dart';
 
-
 Widget divisionContent(List division) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -218,7 +217,8 @@ class _eventDetailState extends State<eventDetail> {
                             Container(
                               decoration: BoxDecoration(
                                   image: DecorationImage(
-                                      image: NetworkImage(eventThumb)),
+                                      image: NetworkImage(eventThumb),
+                                      fit: BoxFit.cover),
                                   borderRadius: BorderRadius.circular(10)),
                               width: 350,
                               height: 180,

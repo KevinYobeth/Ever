@@ -64,7 +64,7 @@ class _userProfileState extends State<userProfile> {
     _userEvents = new List();
     _userEventsQuery = db
         .reference()
-        .child("user/$userID/userEvent")
+        .child("user/${userData.key}/userEvent")
         .orderByChild("eventDate");
 
     _onEventsAddedSubscription =
@@ -87,13 +87,17 @@ class _userProfileState extends State<userProfile> {
 
   Future uploadImage(User userData) async {
     StorageReference _reference =
-        FirebaseStorage.instance.ref().child('/ProfileImg/$user');
+        FirebaseStorage.instance.ref().child('/ProfileImg/${userData.key}');
     StorageUploadTask uploadTask = _reference.putFile(_image);
     StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
     _uploaded = true;
     String downloadAddress = await _reference.getDownloadURL();
     downloadURL = downloadAddress;
-    db.reference().child('user/$user').child('userProfileImg').set(downloadURL);
+    db
+        .reference()
+        .child('user/${userData.key}')
+        .child('userProfileImg')
+        .set(downloadURL);
     setState(() {
       userData.userProfileImg = downloadURL;
       widget.notifyParent();
@@ -123,7 +127,7 @@ class _userProfileState extends State<userProfile> {
           },
           onSaved: (value) {
             _userName = value.trim();
-            db.reference().child('user/$user/userName').set(value);
+            db.reference().child('user/${userData.key}/userName').set(value);
           }),
     );
   }
@@ -153,7 +157,7 @@ class _userProfileState extends State<userProfile> {
           },
           onSaved: (value) {
             userData.userEmail = value.trim();
-            db.reference().child('user/$user/userEmail').set(value);
+            db.reference().child('user/${userData.key}/userEmail').set(value);
           }),
     );
   }
