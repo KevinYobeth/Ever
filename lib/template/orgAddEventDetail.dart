@@ -241,9 +241,10 @@ class _orgCreateEventState extends State<orgCreateEvent> {
                     onPressed: () {
                       showDatePicker(
                               context: context,
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime.now(),
-                              lastDate: DateTime(DateTime.now().year + 2))
+                              initialDate:
+                                  DateTime.now().add(Duration(days: 1)),
+                              firstDate: DateTime.now().add(Duration(days: 1)),
+                              lastDate: DateTime(DateTime.now().year + 5))
                           .then((date) {
                         setState(() {
                           if (date != null) _eventDate = date.toString();
@@ -261,9 +262,10 @@ class _orgCreateEventState extends State<orgCreateEvent> {
                     onPressed: () {
                       showDatePicker(
                               context: context,
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime.now(),
-                              lastDate: DateTime(DateTime.now().year + 2))
+                              initialDate:
+                                  DateTime.now().add(Duration(days: 1)),
+                              firstDate: DateTime.now().add(Duration(days: 1)),
+                              lastDate: DateTime(DateTime.now().year + 5))
                           .then((date) {
                         setState(() {
                           _eventDate = date.toString();
@@ -457,17 +459,25 @@ class _orgCreateEventState extends State<orgCreateEvent> {
     );
   }
 
+  int _tempMinAge = 0;
+  int _tempMaxAge = 0;
+
   Widget showMinInput() {
     return Padding(
       padding: EdgeInsets.fromLTRB(30.0, 0.0, 10.0, 8.0),
       child: new TextFormField(
+        keyboardType: TextInputType.number,
         maxLines: 1,
         obscureText: false,
         autofocus: false,
         decoration: new InputDecoration(
           hintText: 'Min',
         ),
-        validator: (value) {},
+        validator: (value) {
+          if (value.length != 0) _tempMinAge = int.parse(value);
+
+          if (value.length == 0) return 'Min age must be filled';
+        },
         onSaved: (value) {
           _eventAgeMinReq = value.trim();
         },
@@ -479,13 +489,18 @@ class _orgCreateEventState extends State<orgCreateEvent> {
     return Padding(
       padding: EdgeInsets.fromLTRB(10.0, 0.0, 30.0, 8.0),
       child: new TextFormField(
+        keyboardType: TextInputType.number,
         maxLines: 1,
         obscureText: false,
         autofocus: false,
         decoration: new InputDecoration(
           hintText: 'Max',
         ),
-        validator: (value) {},
+        validator: (value) {
+          if (value.length != 0) _tempMaxAge = int.parse(value);
+
+          if (value.length == 0) return 'Max age must be filled';
+        },
         onSaved: (value) {
           _eventAgeMaxReq = value.trim();
         },
@@ -580,6 +595,7 @@ class _orgCreateEventState extends State<orgCreateEvent> {
         Padding(
           padding: EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 8.0),
           child: new TextFormField(
+            keyboardType: TextInputType.number,
             maxLines: 1,
             obscureText: false,
             autofocus: false,
@@ -1090,14 +1106,23 @@ class _orgCreateEventState extends State<orgCreateEvent> {
                                                 left: 250),
                                             child: FlatButton(
                                                 onPressed: () {
-                                                  setState(() {
-                                                    if (_page4.currentState
-                                                        .validate()) {
-                                                      _page4.currentState
-                                                          .save();
-                                                      _pageContinue = 4;
+                                                  if (_page4.currentState
+                                                      .validate()) {
+                                                    if (maleVal || femaleVal) {
+                                                      if (_tempMinAge <
+                                                          _tempMaxAge) {
+                                                        setState(() {
+                                                          if (_page4
+                                                              .currentState
+                                                              .validate()) {
+                                                            _page4.currentState
+                                                                .save();
+                                                            _pageContinue = 4;
+                                                          }
+                                                        });
+                                                      }
                                                     }
-                                                  });
+                                                  }
                                                 },
                                                 child: continueButton()),
                                           ),
