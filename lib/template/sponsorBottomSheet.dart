@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:Ever/template/colors.dart';
 
@@ -63,7 +65,8 @@ class _sponsorDetailSheetState extends State<sponsorDetailSheet> {
               child: Stack(
                 children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 180, vertical: 10),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 180, vertical: 10),
                     child: Container(
                       height: 7,
                       width: 60,
@@ -202,7 +205,8 @@ class _sponsorDetailSheetState extends State<sponsorDetailSheet> {
               child: Stack(
                 children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 180, vertical: 10),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 180, vertical: 10),
                     child: Container(
                       height: 7,
                       width: 60,
@@ -284,6 +288,9 @@ class _sponsorDetailSheetState extends State<sponsorDetailSheet> {
                         onPressed: () {
                           Navigator.pop(context);
                           Navigator.pop(context);
+                          Timer(Duration(seconds: 1), () {
+                            _sponsorDone = false;
+                          });
                         },
                       ),
                     ),

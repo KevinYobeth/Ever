@@ -257,7 +257,10 @@ class _userProfileState extends State<userProfile> {
           },
           onSaved: (value) {
             _userPhone = value.trim();
-            db.reference().child('user/$user/userPhone').set(_userPhone);
+            db
+                .reference()
+                .child('user/${userData.key}/userPhone')
+                .set(_userPhone);
           }),
     );
   }

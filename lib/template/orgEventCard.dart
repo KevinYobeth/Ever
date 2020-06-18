@@ -136,7 +136,8 @@ class orgEventCard extends StatelessWidget {
             width: 310,
             height: 200,
             decoration: BoxDecoration(
-              image: DecorationImage(image: NetworkImage(eventBanner)),
+              image: DecorationImage(
+                  image: NetworkImage(eventBanner), fit: BoxFit.cover),
               color: Colors.blueGrey[100],
               borderRadius: BorderRadius.circular(10),
             ),
