@@ -67,8 +67,7 @@ class eventCard extends StatelessWidget {
         height: 180,
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: NetworkImage(eventThumb),
-          ),
+              image: NetworkImage(eventThumb), fit: BoxFit.cover),
           color: Colors.blueGrey[600],
           borderRadius: BorderRadius.circular(10),
         ),

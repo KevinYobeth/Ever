@@ -873,6 +873,7 @@ class _orgCreateEventState extends State<orgCreateEvent> {
                     )
                   : Image(
                       image: NetworkImage(_eventBannerURL),
+                      fit: BoxFit.cover,
                     ),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
