@@ -16,7 +16,7 @@ Latest Version of *Visual Studio Code*: https://code.visualstudio.com/
 Latest Version of *Android Studio*: https://developer.android.com/studio  
 
 ## Progress
-Frontend: 10%  
+Frontend: 100%  
 Backend: 95%
 
 ## Built With
