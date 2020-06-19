@@ -968,8 +968,8 @@ class _orgCreateEventState extends State<orgCreateEvent> {
   void initState() {
     getUID();
     _eventName;
-    _eventDate;
-    _eventTime;
+    _eventDate = null;
+    _eventTime = null;
     _eventLocation;
     _eventDescription;
     _eventBenefits;
@@ -980,10 +980,10 @@ class _orgCreateEventState extends State<orgCreateEvent> {
     _eventDivisionMax = List<String>();
 
     _eventAccountNum;
-    _eventPackageName;
-    _eventPackagePrice;
-    _eventPackageDesc;
-    _eventBannerURL;
+    _eventPackageName = List<String>();
+    _eventPackagePrice = List<String>();
+    _eventPackageDesc = List<String>();
+    _eventBannerURL = null;
     _eventOrganizerID;
     _eventNonProfit;
   }
@@ -1287,10 +1287,13 @@ class _orgCreateEventState extends State<orgCreateEvent> {
                                                                   left: 250),
                                                           child: FlatButton(
                                                               onPressed: () {
-                                                                setState(() {
-                                                                  _pageContinue =
-                                                                      8;
-                                                                });
+                                                                if (_eventBannerURL !=
+                                                                    null) {
+                                                                  setState(() {
+                                                                    _pageContinue =
+                                                                        8;
+                                                                  });
+                                                                }
                                                               },
                                                               child:
                                                                   continueButton()),

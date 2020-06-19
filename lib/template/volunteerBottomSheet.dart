@@ -171,14 +171,15 @@ class _volunteerSheetState extends State<volunteerSheet> {
       _volunteerDone = false;
     }
 
-    if (divisions.isEmpty) {
-      for (int i = 0; i < divisionList.length; i++)
-        divisions.add(divisionRadio(
-          divisionName: divisionList[i]['divisionName'],
-          isSelected: false,
-          index: i,
-        ));
-    }
+    //if (divisions.isEmpty) {
+    divisions = [];
+    for (int i = 0; i < divisionList.length; i++)
+      divisions.add(divisionRadio(
+        divisionName: divisionList[i]['divisionName'],
+        isSelected: false,
+        index: i,
+      ));
+    //}
 
     divisions.forEach((element) {
       element.isSelected = false;
