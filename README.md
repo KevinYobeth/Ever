@@ -17,7 +17,7 @@ Latest Version of *Android Studio*: https://developer.android.com/studio
 
 ## Progress
 Frontend: 100%  
-Backend: 99.9%
+Backend: 100%
 
 ## Built With
 
@@ -30,3 +30,5 @@ Backend: 99.9%
 * **Mesyella** - [Mesyella](https://github.com/Mesyella)
 
 See also the list of [contributors](https://github.com/KevinYobeth/Flutter-Ever/contributors) who participated in this project.
+
+### Known Bugs
