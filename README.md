@@ -5,7 +5,7 @@ EVER or Event Volunteer is an application for volunteer to find an event and for
 ## Getting Started  
  
 To run this code, git clone this repository using the code 
-```
+``` 
 git clone https://github.com/KevinYobeth/Flutter-Ever
 ```
 and run it using android studio or visual studio code
