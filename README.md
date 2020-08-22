@@ -33,3 +33,5 @@ See also the list of [contributors](https://github.com/KevinYobeth/Flutter-Ever/
 
 ## Screenshots of app running
 ![Home Page](/assets/Screenshot/1.png)
+![Home Page](/assets/Screenshot/2.png)
+![Home Page](/assets/Screenshot/3.png)
