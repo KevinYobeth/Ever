@@ -41,3 +41,6 @@ See also the list of [contributors](https://github.com/KevinYobeth/Flutter-Ever/
 
 ### In App Video
 <img src="/assets/appRecord.gif" alt="drawing" width="200"/>
+
+## APK Download
+You can download the APK [here](https://github.com/KevinYobeth/Flutter-Ever/releases/download/v1.01beta.1/Ever1.01.apk) or by clicking the release tags on [EVER github repository](https://github.com/KevinYobeth/Flutter-Ever)
