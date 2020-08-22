@@ -32,6 +32,12 @@ See also the list of [contributors](https://github.com/KevinYobeth/Flutter-Ever/
 - Shirt size not resetting   
 
 ## Screenshots of app running
-![Home Page](/assets/Screenshot/1.png)
-![Home Page](/assets/Screenshot/2.png)
-![Home Page](/assets/Screenshot/3.png)
+<img src="/assets/Screenshot/1.png" alt="drawing" width="200"/> <img src="/assets/Screenshot/2.png" alt="drawing" width="200"/>
+<img src="/assets/Screenshot/3.png" alt="drawing" width="200"/> <img src="/assets/Screenshot/4.png" alt="drawing" width="200"/>
+
+
+<img src="/assets/Screenshot/5.png" alt="drawing" width="200"/> <img src="/assets/Screenshot/6.png" alt="drawing" width="200"/>
+<img src="/assets/Screenshot/7.png" alt="drawing" width="200"/> <img src="/assets/Screenshot/8.png" alt="drawing" width="200"/>
+
+### In App Video
+<img src="/assets/appRecord.gif" alt="drawing" width="200"/>
