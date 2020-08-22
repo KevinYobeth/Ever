@@ -32,3 +32,4 @@ See also the list of [contributors](https://github.com/KevinYobeth/Flutter-Ever/
 - Shirt size not resetting   
 
 ## Screenshots of app running
+![Home Page](/assets/Screenshot/1.png)
